@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TutorWebApi.Domain\TutorWebApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
