@@ -18,4 +18,8 @@
     <ProjectReference Include="..\TutorWebApi.Infrastructure\TutorWebApi.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

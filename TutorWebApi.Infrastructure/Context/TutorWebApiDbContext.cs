@@ -24,6 +24,31 @@ namespace TutorWebApi.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
+            #region 
+            var subjects = new List<Subject>()
+            {
+                new Subject { Id = 1, Name = "Polish" },
+                new Subject { Id = 2, Name = "English" },
+                new Subject { Id = 3, Name = "French" },
+                new Subject { Id = 4, Name = "German" },
+                new Subject { Id = 5, Name = "Front-end Programming" },
+                new Subject { Id = 6, Name = "Back-End Programming" },
+                new Subject { Id = 7, Name = "Database" },
+                new Subject { Id = 8, Name = "Maths" },
+                new Subject { Id = 9, Name = "Physics" },
+                new Subject { Id = 10, Name = "Chemistry" },
+                new Subject { Id = 11, Name = "Geography" },
+                new Subject { Id = 12, Name = "History" },
+                new Subject { Id = 13, Name = "Science" },
+                new Subject { Id = 14, Name = "Art" },
+                new Subject { Id = 15, Name = "It" },
+                new Subject { Id = 16, Name = "Technology" },
+                new Subject { Id = 17, Name = "Business Studies" }
+            };
+            #endregion
+
+            modelBuilder.Entity<Subject>()
+                .HasData(subjects);
 
             modelBuilder.Entity<Achievement>()
                 .Property(a => a.Name)
