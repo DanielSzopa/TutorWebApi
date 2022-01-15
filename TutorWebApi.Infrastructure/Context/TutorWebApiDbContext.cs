@@ -24,6 +24,118 @@ namespace TutorWebApi.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
+
+            modelBuilder.Entity<Achievement>()
+                .Property(a => a.Name)
+                .HasMaxLength(150)
+                .IsRequired();
+
+            modelBuilder.Entity<Achievement>()
+                .Property(a => a.ProfilId)
+                .IsRequired();
+
+            modelBuilder.Entity<Address>()
+               .Property(a => a.Country)
+               .HasMaxLength(50)
+               .IsRequired();
+
+            modelBuilder.Entity<Address>()
+               .Property(a => a.City)
+               .HasMaxLength(50)
+               .IsRequired();
+
+            modelBuilder.Entity<Address>()
+               .Property(a => a.UserRef)
+               .IsRequired();
+
+            modelBuilder.Entity<Advert>()
+               .Property(a => a.Title)
+               .HasMaxLength(150)
+               .IsRequired();
+
+            modelBuilder.Entity<Advert>()
+               .Property(a => a.City)
+               .HasMaxLength(50)
+               .IsRequired();
+
+            modelBuilder.Entity<Advert>()
+              .Property(a => a.ProfileId)
+              .IsRequired();
+
+            modelBuilder.Entity<Advert>()
+              .Property(a => a.SubjectId)
+              .IsRequired();
+
+            modelBuilder.Entity<AdvertContact>()
+              .Property(ac => ac.AdvertRef)
+              .IsRequired();
+
+            modelBuilder.Entity<AdvertContact>()
+             .Property(ac => ac.Mail)
+             .HasMaxLength(100)
+             .IsRequired();
+
+            modelBuilder.Entity<Comment>()
+              .Property(c => c.Description)
+              .IsRequired();
+
+            modelBuilder.Entity<Comment>()
+              .Property(c => c.ProfileId)
+              .IsRequired();
+
+            modelBuilder.Entity<Comment>()
+             .Property(c => c.UserId)
+             .IsRequired();
+
+            modelBuilder.Entity<Experience>()
+              .Property(e => e.ProfileId)
+              .IsRequired();
+
+            modelBuilder.Entity<Experience>()
+              .Property(e => e.Name)
+              .HasMaxLength(150)
+              .IsRequired();
+
+            modelBuilder.Entity<Like>()
+              .Property(l => l.UserId)
+              .IsRequired();
+
+            modelBuilder.Entity<Like>()
+              .Property(l => l.ProfileId)
+              .IsRequired();
+
+            modelBuilder.Entity<Profile>()
+             .Property(p => p.UserRef)
+             .IsRequired();
+
+            modelBuilder.Entity<Subject>()
+             .Property(s => s.Name)
+             .HasMaxLength(50)
+             .IsRequired();
+
+            modelBuilder.Entity<User>()
+             .Property(u => u.FirstName)
+             .HasMaxLength(25)
+             .IsRequired();
+
+            modelBuilder.Entity<User>()
+             .Property(u => u.LastName)
+             .HasMaxLength(25)
+             .IsRequired();
+
+            modelBuilder.Entity<User>()
+            .Property(u => u.Mail)
+            .HasMaxLength(100)
+            .IsRequired();
+
+            modelBuilder.Entity<User>()
+            .Property(u => u.Password)
+            .IsRequired();
+
+            modelBuilder.Entity<User>()
+            .Property(u => u.DateOfBirth)
+            .IsRequired();
+
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Address)
                 .WithOne(a => a.User)
