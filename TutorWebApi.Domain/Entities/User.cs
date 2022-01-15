@@ -10,5 +10,6 @@
         public DateTime DateOfBirth { get; set; }
         public Address Address { get; set; }
         public Profile Profile { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

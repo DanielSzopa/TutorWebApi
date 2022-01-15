@@ -13,6 +13,7 @@ namespace TutorWebApi.Infrastructure
         public DbSet<Advert> Adverts { get; set; }
         public DbSet<AdvertContact> AdvertContacts { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public TutorWebApiDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
 
@@ -37,6 +38,21 @@ namespace TutorWebApi.Infrastructure
                 .WithOne(u => u.Profile)
                 .HasForeignKey<Profile>(p => p.UserRef);
 
+            modelBuilder.Entity<Comment>()
+                .HasKey(c => new { c.UserId, c.ProfileId });
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Comment>()
+               .HasOne(c => c.Profile)
+               .WithMany(p => p.Comments)
+               .HasForeignKey(c => c.ProfileId);
+
+            
         }
 
     }
