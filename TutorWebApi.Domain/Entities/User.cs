@@ -11,5 +11,6 @@
         public Address Address { get; set; }
         public Profile Profile { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public ICollection<Like> Likes { get; set; }
     }
 }
