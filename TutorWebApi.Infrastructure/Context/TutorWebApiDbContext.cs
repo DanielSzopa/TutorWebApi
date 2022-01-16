@@ -27,23 +27,23 @@ namespace TutorWebApi.Infrastructure
             #region 
             var subjects = new List<Subject>()
             {
-                new Subject { Id = 1, Name = "Polish" },
-                new Subject { Id = 2, Name = "English" },
-                new Subject { Id = 3, Name = "French" },
-                new Subject { Id = 4, Name = "German" },
-                new Subject { Id = 5, Name = "Front-end Programming" },
-                new Subject { Id = 6, Name = "Back-End Programming" },
-                new Subject { Id = 7, Name = "Database" },
-                new Subject { Id = 8, Name = "Maths" },
-                new Subject { Id = 9, Name = "Physics" },
-                new Subject { Id = 10, Name = "Chemistry" },
-                new Subject { Id = 11, Name = "Geography" },
-                new Subject { Id = 12, Name = "History" },
-                new Subject { Id = 13, Name = "Science" },
-                new Subject { Id = 14, Name = "Art" },
-                new Subject { Id = 15, Name = "It" },
-                new Subject { Id = 16, Name = "Technology" },
-                new Subject { Id = 17, Name = "Business Studies" }
+                new Subject { Id = 1, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Polish" },
+                new Subject { Id = 2, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "English" },
+                new Subject { Id = 3, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "French" },
+                new Subject { Id = 4, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "German" },
+                new Subject { Id = 5, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Front-end Programming" },
+                new Subject { Id = 6, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Back-End Programming" },
+                new Subject { Id = 7, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Database" },
+                new Subject { Id = 8, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Maths" },
+                new Subject { Id = 9, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Physics" },
+                new Subject { Id = 10, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Chemistry" },
+                new Subject { Id = 11, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Geography" },
+                new Subject { Id = 12, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "History" },
+                new Subject { Id = 13, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Science" },
+                new Subject { Id = 14, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Art" },
+                new Subject { Id = 15, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "It" },
+                new Subject { Id = 16, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Technology" },
+                new Subject { Id = 17, CreateId = "", CreateDate = DateTime.Now, IsActive = true, Name = "Business Studies" }
             };
             #endregion
 
@@ -204,6 +204,34 @@ namespace TutorWebApi.Infrastructure
                .WithMany(p => p.Likes)
                .HasForeignKey(l => l.ProfileId);
 
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken token = new CancellationToken())
+        {
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreateId = "";
+                        entry.Entity.CreateDate = DateTime.Now;
+                        entry.Entity.IsActive = true;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.ModifyId = "";
+                        entry.Entity.ModifyDate = DateTime.Now;
+                        break;
+                    case EntityState.Deleted:
+                        entry.Entity.ModifyId = "";
+                        entry.Entity.ModifyDate = DateTime.Now;
+                        entry.Entity.InactivateDate = DateTime.Now;
+                        entry.Entity.InactivateId = "";
+                        entry.Entity.IsActive = false;
+                        entry.State = EntityState.Modified;
+                        break;
+                }
+            }
+            return base.SaveChangesAsync(token);
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿namespace TutorWebApi.Domain
 {
-    public class Comment
+    public class Comment : AuditableEntity
     {
         public string Description { get; set; }
         public int ProfileId { get; set; }
