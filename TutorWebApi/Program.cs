@@ -1,8 +1,11 @@
+using NLog.Web;
 using TutorWebApi;
 using TutorWebApi.Application;
 using TutorWebApi.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseNLog();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

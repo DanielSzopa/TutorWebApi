@@ -20,8 +20,6 @@ namespace TutorWebApi.Application
             var user = _mapper.Map<User>(registerDto);
             var password = _passwordHasher.HashPassword(user, registerDto.Password);
             user.Password = password;
-
-            var 
            
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace TutorWebApi
+﻿using TutorWebApi.Middleware;
+
+namespace TutorWebApi
 {
     public static class ApplicationExtensions
     {
@@ -6,6 +8,11 @@
         {
             application.UseSwagger();
             application.UseSwaggerUI();
+        }
+
+        public static void AddMiddleware(this WebApplication application)
+        {
+            application.UseMiddleware<ErrorHandlingMiddleware>();
         }
     }
 }
