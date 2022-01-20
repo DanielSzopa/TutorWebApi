@@ -8,20 +8,21 @@ namespace TutorWebApi.Application
     {
         private readonly IMapper _mapper;
         private readonly IPasswordHasher<User> _passwordHasher;
-        public AccountService(IMapper mapper, IPasswordHasher<User> passwordHasher)
+        private readonly IUserRepository _userRepository;
+        public AccountService(IMapper mapper, IPasswordHasher<User> passwordHasher, IUserRepository userRepository)
         {
             _mapper = mapper;
             _passwordHasher = passwordHasher;
+            _userRepository = userRepository;
         }
         public async Task RegisterUser(RegisterDto registerDto)
         {
             var user = _mapper.Map<User>(registerDto);
-            //throw exception invalid passwordHasing
             var password = _passwordHasher.HashPassword(user, registerDto.Password);
-
             user.Password = password;
 
-            Console.WriteLine(user);
+            var 
+           
         }
     }
 }
