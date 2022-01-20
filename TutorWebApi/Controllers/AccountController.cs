@@ -17,7 +17,7 @@ namespace TutorWebApi.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAccount([FromBody]RegisterDto registerDto)
         {
-            throw new Exception("testtttt");
+            throw new Exception();
 
             await _accountService.RegisterUser(registerDto);
             return Ok();

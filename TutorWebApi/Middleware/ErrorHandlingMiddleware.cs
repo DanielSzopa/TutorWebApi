@@ -13,7 +13,7 @@
             try
             {
                 await next.Invoke(context);
-            }          
+            }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
