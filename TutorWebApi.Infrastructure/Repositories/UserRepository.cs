@@ -11,10 +11,18 @@ namespace TutorWebApi.Infrastructure
             _context = context;
         }
 
-        public async Task RegisterUser(User user)
+        public async Task RegisterUserAsync(User user)
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+        }
+
+        public User GetUserByMail(string mail)
+        {
+            var user = _context.Users
+                .FirstOrDefault(u => u.Mail == mail);
+
+            return user;
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     public interface IUserRepository
     {
-        Task RegisterUser(User user);
+        Task RegisterUserAsync(User user);
+        User GetUserByMail(string mail);
     }
 }

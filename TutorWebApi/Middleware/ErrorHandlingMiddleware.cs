@@ -1,4 +1,7 @@
-﻿namespace TutorWebApi.Middleware
+﻿using System.Net;
+using TutorWebApi.Application;
+
+namespace TutorWebApi.Middleware
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {
@@ -14,11 +17,24 @@
             {
                 await next.Invoke(context);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError(e, e.Message);
-                context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Something went wrong");
+                var response = context.Response;
+
+                switch(exception)
+                {
+                    case BadRequestException:
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    default:
+                        response.StatusCode = 500;
+                        _logger.LogError(exception, exception.Message);
+                        await context.Response.WriteAsync("Something went wrong");
+                        return;
+                }
+
+                _logger.LogError(exception, exception.Message);
+                await context.Response.WriteAsync(exception.Message);
             }
         }
     }

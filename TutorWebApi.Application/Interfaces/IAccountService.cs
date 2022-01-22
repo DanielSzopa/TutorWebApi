@@ -2,6 +2,7 @@
 {
     public interface IAccountService
     {
-         Task RegisterUser(RegisterDto registerDto);
+         Task RegisterUserAsync(RegisterDto registerDto);
+         Task<string> AuthenticateUserAsync(LoginDto loginDto);
     }
 }

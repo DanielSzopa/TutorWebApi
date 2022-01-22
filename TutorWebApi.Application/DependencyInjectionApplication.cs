@@ -16,6 +16,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
             services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
+            services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
 
             return services;
         }
