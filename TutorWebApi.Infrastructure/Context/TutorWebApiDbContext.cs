@@ -15,6 +15,7 @@ namespace TutorWebApi.Infrastructure
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
+
         public TutorWebApiDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
 

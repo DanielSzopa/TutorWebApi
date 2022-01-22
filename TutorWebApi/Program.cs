@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using NLog.Web;
 using TutorWebApi;
 using TutorWebApi.Application;
@@ -8,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseNLog();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddFluentValidation();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
