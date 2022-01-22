@@ -11,6 +11,9 @@ namespace TutorWebApi.Application
                 .ForMember(u => u.Password, opt => opt.Ignore());
 
             CreateMap<AddressDto, Address>();
+
+            CreateMap<User, UserForJwtDto>()
+                .ForMember(u => u.Country, opt => opt.MapFrom(u => u.Address.Country));
         }
     }
 }

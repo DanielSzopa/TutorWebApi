@@ -1,4 +1,5 @@
-﻿using TutorWebApi.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using TutorWebApi.Domain;
 
 namespace TutorWebApi.Infrastructure
 {
@@ -20,6 +21,7 @@ namespace TutorWebApi.Infrastructure
         public User GetUserByMail(string mail)
         {
             var user = _context.Users
+                .Include(u => u.Address)
                 .FirstOrDefault(u => u.Mail == mail);
 
             return user;

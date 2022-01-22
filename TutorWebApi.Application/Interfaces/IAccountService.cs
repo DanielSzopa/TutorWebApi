@@ -2,7 +2,8 @@
 {
     public interface IAccountService
     {
-         Task RegisterUserAsync(RegisterDto registerDto);
-         Task<string> AuthenticateUserAsync(LoginDto loginDto);
+        Task<string> AuthenticateUserAsync(LoginDto loginDto);
+        Task RegisterUserAsync(RegisterDto registerDto);   
+        Task<string> GenerateJwt(UserForJwtDto userForJwtDto);
     }
 }

@@ -3,7 +3,6 @@ using NLog.Web;
 using TutorWebApi;
 using TutorWebApi.Application;
 using TutorWebApi.Infrastructure;
-using TutorWebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +14,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.AddJwtAuthentication();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 builder.Services.AddTutorWebApiServices();
@@ -27,6 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerConfig();
 
 app.AddMiddleware();
+app.UseAuthentication();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
