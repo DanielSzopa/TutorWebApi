@@ -3,5 +3,6 @@
     public interface IProfileService
     {
         Task<int> CreateProfile(ProfileDto profileDto);
+        Task DeleteProfile();
     }
 }

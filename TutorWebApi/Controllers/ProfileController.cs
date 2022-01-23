@@ -21,5 +21,12 @@ namespace TutorWebApi.Controllers
             var profilId = await _profilService.CreateProfile(profilDto);
             return Created($"/api/v1/profile/{profilId}", null);
         }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete()
+        {
+            await _profilService.DeleteProfile();
+            return NoContent();
+        }
     }
 }

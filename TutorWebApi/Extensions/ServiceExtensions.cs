@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TutorWebApi.Application;
@@ -21,8 +22,9 @@ namespace TutorWebApi
         public static IServiceCollection AddTutorWebApiServices(this IServiceCollection services)
         {
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerProfil>();
             return services;
-        }
+        }        
 
         public static WebApplicationBuilder AddJwtAuthentication(this WebApplicationBuilder builder)
         {

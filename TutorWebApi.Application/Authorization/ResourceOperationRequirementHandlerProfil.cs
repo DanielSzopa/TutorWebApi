@@ -1,24 +1,32 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using TutorWebApi.Domain;
 
 namespace TutorWebApi.Application
 {
     public class ResourceOperationRequirementHandlerProfil : AuthorizationHandler<ResourceOperationRequirement, Profile>
     {
+        private readonly IUserContextService _userContextService;
+
+        public ResourceOperationRequirementHandlerProfil(IUserContextService userContextService)
+        {
+            _userContextService = userContextService;
+        }
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, Profile profile)
         {
-            if(requirement.ResourceOperation == ResourceOperation.Read ||
+            if (requirement.ResourceOperation == ResourceOperation.Read ||
                 requirement.ResourceOperation == ResourceOperation.Create)
             {
                 context.Succeed(requirement);
             }
 
-            var userId = Int32.Parse(context.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var userId = _userContextService.GetUserId();
 
-            //if(profile.CreateId == userId.ToString())
+            if (profile.CreateById == userId)
+            {
+                context.Succeed(requirement);
+            }
 
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }
