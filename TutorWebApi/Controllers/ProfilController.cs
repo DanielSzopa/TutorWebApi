@@ -15,9 +15,10 @@ namespace TutorWebApi.Controllers
             _profilService = profilService;
         }
 
-        public async Task<ActionResult> Create([FromBody]ProfilDto profil)
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody]ProfilDto profilDto)
         {
-
+            return Ok();
         }
     }
 }

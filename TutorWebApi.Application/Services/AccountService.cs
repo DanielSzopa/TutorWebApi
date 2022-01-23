@@ -55,7 +55,7 @@ namespace TutorWebApi.Application
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, userForJwtDto.Id.ToString()),
-                new Claim(ClaimTypes.NameIdentifier,$"{userForJwtDto.FirstName} {userForJwtDto.LastName}"),
+                new Claim(ClaimTypes.Name,$"{userForJwtDto.FirstName} {userForJwtDto.LastName}"),
                 new Claim("Country", userForJwtDto.Country)
             };
 
