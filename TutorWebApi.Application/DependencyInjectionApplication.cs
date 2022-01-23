@@ -13,10 +13,13 @@ namespace TutorWebApi.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IProfilService, ProfilService>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
             services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
             services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+            services.AddScoped<IValidator<AchievementDto>, AchievementDtoValidator>();
+            services.AddScoped<IValidator<ExperienceDto>, ExperienceDtoValidator>();
 
             return services;
         }
