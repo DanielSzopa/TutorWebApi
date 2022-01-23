@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using TutorWebApi.Domain;
 
 namespace TutorWebApi.Application
 {
@@ -26,8 +27,16 @@ namespace TutorWebApi.Application
             }
             else
             {
-                var userId = (int?)int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
-                return userId;
+                try
+                {
+                    var userId = (int?)int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                    return userId;
+                }
+                catch(Exception ex)
+                {
+                    return null;
+                }
+               
             }
         }
     }

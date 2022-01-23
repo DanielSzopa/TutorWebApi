@@ -14,6 +14,13 @@ namespace TutorWebApi.Application
 
             CreateMap<User, UserForJwtDto>()
                 .ForMember(u => u.Country, opt => opt.MapFrom(u => u.Address.Country));
+
+            CreateMap<ProfileDto, Domain.Profile>();
+
+            CreateMap<AchievementDto, Achievement>();
+
+            CreateMap<ExperienceDto, Experience>();
+
         }
     }
 }

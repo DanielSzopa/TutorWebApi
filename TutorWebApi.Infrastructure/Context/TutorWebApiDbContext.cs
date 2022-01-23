@@ -16,9 +16,10 @@ namespace TutorWebApi.Infrastructure
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
 
-        public TutorWebApiDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        private readonly IUserContextService _userContextService;
+        public TutorWebApiDbContext(DbContextOptions dbContextOptions, IUserContextService userContextService) : base(dbContextOptions)
         {
-
+            _userContextService = userContextService;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -214,16 +215,16 @@ namespace TutorWebApi.Infrastructure
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreateById = 0;
+                        entry.Entity.CreateById = _userContextService.GetUserId();
                         entry.Entity.CreateDate = DateTime.Now;
                         entry.Entity.IsActive = true;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.ModifyById = 0;
+                        entry.Entity.ModifyById = _userContextService.GetUserId();
                         entry.Entity.ModifyDate = DateTime.Now;
                         break;
                     case EntityState.Deleted:
-                        entry.Entity.ModifyById = 0;
+                        entry.Entity.ModifyById = _userContextService.GetUserId();
                         entry.Entity.ModifyDate = DateTime.Now;
                         entry.Entity.InactivateDate = DateTime.Now;
                         entry.Entity.InactivateId = "";

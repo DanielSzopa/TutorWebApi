@@ -1,6 +1,6 @@
 ﻿namespace TutorWebApi.Application
 {
-    public class ProfilDto
+    public class ProfileDto
     {
         public string Description { get; set; }
         public ICollection<AchievementDto> Achievements { get; set; }

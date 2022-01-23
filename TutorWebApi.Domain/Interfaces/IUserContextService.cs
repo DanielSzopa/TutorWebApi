@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Domain
 {
     public interface IUserContextService
     {

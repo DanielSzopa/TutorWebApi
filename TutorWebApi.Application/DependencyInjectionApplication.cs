@@ -13,7 +13,7 @@ namespace TutorWebApi.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IProfilService, ProfilService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
