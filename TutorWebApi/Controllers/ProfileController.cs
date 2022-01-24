@@ -5,7 +5,7 @@ using TutorWebApi.Application;
 namespace TutorWebApi.Controllers
 {
     [Route("/api/v1/[controller]")]
-    [ApiController]    
+    [ApiController]
     [Authorize]
     public class ProfileController : ControllerBase
     {
@@ -16,14 +16,14 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody]ProfileDto profilDto)
+        public async Task<ActionResult> Create([FromBody] ProfileDto profilDto)
         {
             var profilId = await _profilService.CreateProfile(profilDto);
             return Created($"/api/v1/profile/{profilId}", null);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete()
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] int profileId)
         {
             await _profilService.DeleteProfile();
             return NoContent();

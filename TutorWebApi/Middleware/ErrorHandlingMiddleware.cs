@@ -26,11 +26,11 @@ namespace TutorWebApi.Middleware
                     case BadRequestException:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
-                    case BadRequestForCreateException:
-                        response.StatusCode= (int)HttpStatusCode.Forbidden;
-                        break;
                     case NotFoundException:
                         response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    case ForbidException:
+                        response.StatusCode = (int)HttpStatusCode.Forbidden;
                         break;
                     default:
                         response.StatusCode = 500;

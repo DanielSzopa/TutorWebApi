@@ -26,6 +26,13 @@ namespace TutorWebApi.Infrastructure
             return result;
         }
 
+        public async Task<Profile> GetProfileById(int profileId)
+        {
+            var profile = _context.Profiles
+                .FirstOrDefault(p => p.Id == profileId);
+            return profile;
+        }
+
         public async Task<int> GetProfilIdByUser(int userId)
         {
             var profil = _context.Profiles
@@ -66,7 +73,6 @@ namespace TutorWebApi.Infrastructure
                 _context.Profiles.Remove(profile);
                 await _context.SaveChangesAsync();
             }
-        }
-
+        }    
     }
 }
