@@ -1,4 +1,5 @@
-﻿using TutorWebApi.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using TutorWebApi.Domain;
 
 namespace TutorWebApi.Infrastructure
 {
@@ -19,6 +20,23 @@ namespace TutorWebApi.Infrastructure
             return profile.Id;
         }
 
+        public async Task<int> UpdateProfile(Profile profile)
+        {
+            var newProfile =  await _context.Profiles
+                .Include(p => p.Achievements)
+                .Include(p => p.Experiences)
+                .FirstOrDefaultAsync(p => p.Id == profile.Id)
+                ;
+
+            newProfile.Description = profile.Description;
+            newProfile.Achievements = profile.Achievements;
+            newProfile.Experiences = profile.Experiences;
+
+            await _context.SaveChangesAsync();
+
+            return profile.Id;
+        }
+
         public async Task<bool> IsUserHaveProfile(int userId)
         {
             var result = _context.Profiles
@@ -29,7 +47,14 @@ namespace TutorWebApi.Infrastructure
         public async Task<Profile> GetProfileById(int profileId)
         {
             var profile = _context.Profiles
+                .Include(p => p.User)
                 .FirstOrDefault(p => p.Id == profileId);
+            var test = profile.CreateById;
+
+            var p2 = _context.Profiles.Find(profileId);
+
+            var p3 = _context.Profiles.Where(p => p.Id == profileId);
+
             return profile;
         }
 
@@ -68,11 +93,12 @@ namespace TutorWebApi.Infrastructure
             var profile = _context.Profiles
                 .FirstOrDefault(p => p.Id == profileId);
 
-            if(!(profile is null))
+            if (!(profile is null))
             {
                 _context.Profiles.Remove(profile);
                 await _context.SaveChangesAsync();
             }
-        }    
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using NLog.Web;
+using System.Text.Json.Serialization;
 using TutorWebApi;
 using TutorWebApi.Application;
 using TutorWebApi.Infrastructure;
@@ -10,6 +11,9 @@ builder.Host.UseNLog();
 
 builder.Services.AddControllers()
     .AddFluentValidation();
+    //.AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

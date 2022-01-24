@@ -37,6 +37,29 @@ namespace TutorWebApi.Application
             return profileId;
         }
 
+        public async Task<int> UpdateProfile(ProfileDto profileDto, int profileId)
+        {
+            var profile = await _profileRepository.GetProfileById(profileId);
+
+            if (profile is null)
+                throw new NotFoundException("Profile not found");
+
+            var user = _userContextService.GetUser();
+
+            var result = await _authorizationService.AuthorizeAsync(user, profile,
+                new ResourceOperationRequirement(ResourceOperation.Update));
+
+            if (!result.Succeeded)
+                throw new ForbidException("");
+
+            var updatedProfile = _mapper.Map<Domain.Profile>(profileDto);
+            updatedProfile.Id = profileId;
+            updatedProfile.UserRef = profile.UserRef;
+            var id = await _profileRepository.UpdateProfile(updatedProfile);
+
+            return id;
+        }
+
         public async Task DeleteProfile(int profileId)
         {
             var user = _userContextService.GetUser();
@@ -53,13 +76,13 @@ namespace TutorWebApi.Application
                 new ResourceOperationRequirement(ResourceOperation.Delete));
 
             if(!authorizationResult.Succeeded)
-            {
                 throw new ForbidException("");
-            }
+
 
             await _profileRepository.DeleteAllAchievementsByProfile(profileId);
             await _profileRepository.DeleteAllExperiencesByProfile(profileId);
             await _profileRepository.DeleteProfile(profileId);
         }
+       
     }
 }

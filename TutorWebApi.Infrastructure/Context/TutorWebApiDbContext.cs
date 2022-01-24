@@ -208,7 +208,7 @@ namespace TutorWebApi.Infrastructure
 
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken token = new CancellationToken())
+        public override async Task<int> SaveChangesAsync(CancellationToken token = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
             {
@@ -222,6 +222,7 @@ namespace TutorWebApi.Infrastructure
                     case EntityState.Modified:
                         entry.Entity.ModifyById = _userContextService.GetUserId();
                         entry.Entity.ModifyDate = DateTime.Now;
+                       // entry.Entity.IsActive = true;
                         break;
                     case EntityState.Deleted:
                         entry.Entity.ModifyById = _userContextService.GetUserId();
@@ -233,7 +234,7 @@ namespace TutorWebApi.Infrastructure
                         break;
                 }
             }
-            return base.SaveChangesAsync(token);
+            return await base.SaveChangesAsync(token);
         }
 
     }
