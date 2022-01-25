@@ -17,9 +17,15 @@ namespace TutorWebApi.Application
 
             CreateMap<ProfileDto, Domain.Profile>();
 
-            CreateMap<AchievementDto, Achievement>();
+            CreateMap<Domain.Profile, FullProfileDto>()
+                .ForMember(p => p.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
+                .ForMember(p => p.LastName, opt => opt.MapFrom(u => u.User.LastName));
 
-            CreateMap<ExperienceDto, Experience>();
+            CreateMap<AchievementDto, Achievement>()
+                .ReverseMap();
+
+            CreateMap<ExperienceDto, Experience>()
+                .ReverseMap();
 
         }
     }

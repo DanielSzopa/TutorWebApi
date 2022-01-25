@@ -9,31 +9,38 @@ namespace TutorWebApi.Controllers
     [Authorize]
     public class ProfileController : ControllerBase
     {
-        private readonly IProfileService _profilService;
-        public ProfileController(IProfileService profilService)
+        private readonly IProfileService _profileService;
+        public ProfileController(IProfileService profileService)
         {
-            _profilService = profilService;
+            _profileService = profileService;
         }
 
         [HttpPost]
         public async Task<ActionResult> Create([FromBody]ProfileDto profileDto)
         {
-            var profileId = await _profilService.CreateProfile(profileDto);
+            var profileId = await _profileService.CreateProfile(profileDto);
             return Created($"/api/v1/profile/{profileId}", null);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Read([FromRoute]int id)
+        {
+            var profile = await _profileService.GetProfile(id);
+            return Ok(profile);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update([FromBody]ProfileDto profileDto, [FromRoute]int id)
+        {
+            var profileId = await _profileService.UpdateProfile(profileDto, id);
+            return Ok($"Profil with id: {profileId} was updated");
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute]int id)
         {
-            await _profilService.DeleteProfile(id);
+            await _profileService.DeleteProfile(id);
             return NoContent();
-        }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update([FromBody]ProfileDto profileDto,[FromRoute]int id)
-        {
-            var profileId = await _profilService.UpdateProfile(profileDto, id);
-            return Ok($"Profil with id: {profileId} was updated");
-        }
+        }     
     }
 }

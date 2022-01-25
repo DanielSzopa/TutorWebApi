@@ -32,7 +32,7 @@ namespace TutorWebApi.Application
 
             if(result)
             {
-                var profileId = await _profileRepository.GetProfilIdByUser(userId);
+                var profileId = await _profileRepository.GetProfileIdByUser(userId);
                 var isActive = await _profileRepository.IsProfileIsActive(profileId);
                 if(isActive)
                     throw new ForbidException("It is forbidden to create a second profile");
@@ -51,6 +51,17 @@ namespace TutorWebApi.Application
             resultId = await _profileRepository.CreateProfile(mappedProfile);
 
             return resultId;
+        }
+
+
+        public async Task<FullProfileDto> GetProfile(int profileId)
+        {
+            var profile = await _profileRepository.GetFullProfileById(profileId);
+            if(profile is null)
+                throw new NotFoundException("Profile not found");
+
+            var profileDto = _mapper.Map<FullProfileDto>(profile);
+            return profileDto;
         }
 
         public async Task<int> UpdateProfile(ProfileDto profileDto, int profileId)
@@ -100,6 +111,5 @@ namespace TutorWebApi.Application
 
             await _profileRepository.DeleteProfile(profileId);
         }
-       
     }
 }

@@ -63,7 +63,19 @@ namespace TutorWebApi.Infrastructure
             return profile;
         }
 
-        public async Task<int> GetProfilIdByUser(int userId)
+        public async Task<Profile> GetFullProfileById(int profileId)
+        {
+            var profile = await _context.Profiles
+                .Include(p => p.User)
+                .Include(p =>p.Achievements.Where(a => a.IsActive == true))
+                .Include(p => p.Experiences.Where(e => e.IsActive == true))
+                .FirstOrDefaultAsync(p => p.Id ==profileId && p.IsActive);
+
+            return profile;
+                               
+        }
+
+        public async Task<int> GetProfileIdByUser(int userId)
         {
             var profile = await _context.Profiles
                 .FirstOrDefaultAsync(p => p.UserRef == userId);
