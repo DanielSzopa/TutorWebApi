@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TutorWebApi.Infrastructure;
 
@@ -11,9 +12,10 @@ using TutorWebApi.Infrastructure;
 namespace TutorWebApi.Migrations
 {
     [DbContext(typeof(TutorWebApiDbContext))]
-    partial class TutorWebApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220125174211_AudiTableChangeColumns")]
+    partial class AudiTableChangeColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,6 +302,24 @@ namespace TutorWebApi.Migrations
                     b.Property<int>("ProfileId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CreateById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifyById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("UserId", "ProfileId");
 
                     b.HasIndex("ProfileId");
@@ -381,119 +401,119 @@ namespace TutorWebApi.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6751),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7460),
                             IsActive = true,
                             Name = "Polish"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6793),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7505),
                             IsActive = true,
                             Name = "English"
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6838),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7507),
                             IsActive = true,
                             Name = "French"
                         },
                         new
                         {
                             Id = 4,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6841),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7509),
                             IsActive = true,
                             Name = "German"
                         },
                         new
                         {
                             Id = 5,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6844),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7510),
                             IsActive = true,
                             Name = "Front-end Programming"
                         },
                         new
                         {
                             Id = 6,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6848),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7515),
                             IsActive = true,
                             Name = "Back-End Programming"
                         },
                         new
                         {
                             Id = 7,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6850),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7517),
                             IsActive = true,
                             Name = "Database"
                         },
                         new
                         {
                             Id = 8,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6851),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7519),
                             IsActive = true,
                             Name = "Maths"
                         },
                         new
                         {
                             Id = 9,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6853),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7521),
                             IsActive = true,
                             Name = "Physics"
                         },
                         new
                         {
                             Id = 10,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6856),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7524),
                             IsActive = true,
                             Name = "Chemistry"
                         },
                         new
                         {
                             Id = 11,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6858),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7526),
                             IsActive = true,
                             Name = "Geography"
                         },
                         new
                         {
                             Id = 12,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6859),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7528),
                             IsActive = true,
                             Name = "History"
                         },
                         new
                         {
                             Id = 13,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6861),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7571),
                             IsActive = true,
                             Name = "Science"
                         },
                         new
                         {
                             Id = 14,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6863),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7573),
                             IsActive = true,
                             Name = "Art"
                         },
                         new
                         {
                             Id = 15,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6864),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7575),
                             IsActive = true,
                             Name = "It"
                         },
                         new
                         {
                             Id = 16,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6866),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7577),
                             IsActive = true,
                             Name = "Technology"
                         },
                         new
                         {
                             Id = 17,
-                            CreateDate = new DateTime(2022, 1, 25, 18, 46, 25, 633, DateTimeKind.Local).AddTicks(6868),
+                            CreateDate = new DateTime(2022, 1, 25, 18, 42, 11, 324, DateTimeKind.Local).AddTicks(7578),
                             IsActive = true,
                             Name = "Business Studies"
                         });

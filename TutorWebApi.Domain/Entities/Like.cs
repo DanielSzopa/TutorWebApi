@@ -1,6 +1,6 @@
 ﻿namespace TutorWebApi.Domain
 {
-    public class Like : AuditableEntity
+    public class Like
     {
         public int UserId { get; set; }
         public User User { get; set; }
