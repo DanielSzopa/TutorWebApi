@@ -38,42 +38,44 @@ namespace TutorWebApi.Infrastructure
 
         public async Task<bool> IsUserHaveProfile(int userId)
         {
-            var result = _context.Profiles
-                  .Any(p => p.UserRef == userId);
+            var result = await _context.Profiles
+                  .AnyAsync(p => p.UserRef == userId);
             return result;
         }
 
         public async Task<bool> IsProfileIsActive(int profileId)
         {
             var profile = await _context.Profiles
-                .FindAsync(profileId);
+                .FirstOrDefaultAsync(p => p.Id == profileId);
                 
-
-            return profile.IsActive;
+            if(profile.IsActive)
+                return true;
+            else
+                return false;
         }
 
         public async Task<Profile> GetProfileById(int profileId)
         {
-            var profile = _context.Profiles
+            var profile = await _context.Profiles
                 .Include(p => p.User)
-                .FirstOrDefault(p => p.Id == profileId);
+                .FirstOrDefaultAsync(p => p.Id == profileId);
 
             return profile;
         }
 
         public async Task<int> GetProfilIdByUser(int userId)
         {
-            var profil = _context.Profiles
-                .FirstOrDefault(p => p.UserRef == userId);
-            var profilId = profil.Id;
-            return profilId;
+            var profile = await _context.Profiles
+                .FirstOrDefaultAsync(p => p.UserRef == userId);
+
+            return profile.Id;
         }
 
         public async Task DeleteAllAchievementsByProfile(int profileId)
         {
             var achievements = _context.Achievements
                 .Where(a => a.ProfilId == profileId);
-            if (achievements.Any())
+            if (await achievements.AnyAsync())
             {
                 _context.Achievements.RemoveRange(achievements);
                 await _context.SaveChangesAsync();
@@ -84,7 +86,7 @@ namespace TutorWebApi.Infrastructure
         {
             var experiences = _context.Experiences
                 .Where(a => a.ProfileId == profileId);
-            if (experiences.Any())
+            if (await experiences.AnyAsync())
             {
                 _context.Experiences.RemoveRange(experiences);
                 await _context.SaveChangesAsync();
@@ -93,10 +95,10 @@ namespace TutorWebApi.Infrastructure
 
         public async Task DeleteProfile(int profileId)
         {
-            var profile = _context.Profiles
+            var profile = await _context.Profiles
                 .Include(p => p.Achievements)
                 .Include(p => p.Experiences)
-                .FirstOrDefault(p => p.Id == profileId);
+                .FirstOrDefaultAsync(p => p.Id == profileId);
 
             if (!(profile is null))
             {
