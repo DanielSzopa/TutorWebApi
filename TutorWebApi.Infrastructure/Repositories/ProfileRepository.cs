@@ -22,26 +22,34 @@ namespace TutorWebApi.Infrastructure
 
         public async Task<int> UpdateProfile(Profile profile)
         {
-            var newProfile =  await _context.Profiles
+            var newProfile = await _context.Profiles
                 .Include(p => p.Achievements)
                 .Include(p => p.Experiences)
-                .FirstOrDefaultAsync(p => p.Id == profile.Id)
-                ;
+                .FirstOrDefaultAsync(p => p.Id == profile.Id);
+                
 
             newProfile.Description = profile.Description;
             newProfile.Achievements = profile.Achievements;
             newProfile.Experiences = profile.Experiences;
 
             await _context.SaveChangesAsync();
-
             return profile.Id;
         }
 
         public async Task<bool> IsUserHaveProfile(int userId)
         {
             var result = _context.Profiles
-                  .Any(p => p.UserRef == userId && p.IsActive == true);
+                  .Any(p => p.UserRef == userId);
             return result;
+        }
+
+        public async Task<bool> IsProfileIsActive(int profileId)
+        {
+            var profile = await _context.Profiles
+                .FindAsync(profileId);
+                
+
+            return profile.IsActive;
         }
 
         public async Task<Profile> GetProfileById(int profileId)
@@ -49,11 +57,6 @@ namespace TutorWebApi.Infrastructure
             var profile = _context.Profiles
                 .Include(p => p.User)
                 .FirstOrDefault(p => p.Id == profileId);
-            var test = profile.CreateById;
-
-            var p2 = _context.Profiles.Find(profileId);
-
-            var p3 = _context.Profiles.Where(p => p.Id == profileId);
 
             return profile;
         }
@@ -91,6 +94,8 @@ namespace TutorWebApi.Infrastructure
         public async Task DeleteProfile(int profileId)
         {
             var profile = _context.Profiles
+                .Include(p => p.Achievements)
+                .Include(p => p.Experiences)
                 .FirstOrDefault(p => p.Id == profileId);
 
             if (!(profile is null))

@@ -32,8 +32,8 @@ namespace TutorWebApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update([FromBody]ProfileDto profileDto,[FromRoute]int id)
         {
-            var profileId = _profilService.UpdateProfile(profileDto, id);
-            return Ok(profileId);
+            var profileId = await _profilService.UpdateProfile(profileDto, id);
+            return Ok($"Profil with id: {profileId} was updated");
         }
     }
 }

@@ -205,6 +205,7 @@ namespace TutorWebApi.Infrastructure
                .HasOne(l => l.Profile)
                .WithMany(p => p.Likes)
                .HasForeignKey(l => l.ProfileId);
+          
 
         }
 
@@ -222,13 +223,11 @@ namespace TutorWebApi.Infrastructure
                     case EntityState.Modified:
                         entry.Entity.ModifyById = _userContextService.GetUserId();
                         entry.Entity.ModifyDate = DateTime.Now;
-                       // entry.Entity.IsActive = true;
+                        entry.Entity.IsActive = true;
                         break;
                     case EntityState.Deleted:
                         entry.Entity.ModifyById = _userContextService.GetUserId();
                         entry.Entity.ModifyDate = DateTime.Now;
-                        entry.Entity.InactivateDate = DateTime.Now;
-                        entry.Entity.InactivateId = "";
                         entry.Entity.IsActive = false;
                         entry.State = EntityState.Modified;
                         break;

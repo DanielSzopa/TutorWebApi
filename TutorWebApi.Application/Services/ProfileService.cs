@@ -23,41 +23,58 @@ namespace TutorWebApi.Application
             _authorizationService = authorizationService;
         }
 
-        public async Task<int> CreateProfile(ProfileDto profilDto)
+        public async Task<int> CreateProfile(ProfileDto profileDto)
         {
             var userId = (int)_userContextService.GetUserId();
             var result = _profileRepository.IsUserHaveProfile(userId).Result;
-            if (result)
-                throw new ForbidException("It is forbidden to create a second profile");
+            var resultId = default(int);
+            var mappedProfile = default(Domain.Profile);
 
-            var profile = _mapper.Map<Domain.Profile>(profilDto);
-            profile.UserRef = userId;
-            var profileId = await _profileRepository.CreateProfile(profile);
+            if(result)
+            {
+                var profileId = await _profileRepository.GetProfilIdByUser(userId);
+                var isActive = await _profileRepository.IsProfileIsActive(profileId);
+                if(isActive)
+                    throw new ForbidException("It is forbidden to create a second profile");
+                else
+                {
+                    mappedProfile = _mapper.Map<Domain.Profile>(profileDto);
+                    mappedProfile.UserRef = userId;
+                    mappedProfile.Id = profileId;
+                    resultId = await _profileRepository.UpdateProfile(mappedProfile);
+                    return resultId;
+                }
+            }
+                               
+            mappedProfile = _mapper.Map<Domain.Profile>(profileDto);
+            mappedProfile.UserRef = userId;
+            resultId = await _profileRepository.CreateProfile(mappedProfile);
 
-            return profileId;
+            return resultId;
         }
 
         public async Task<int> UpdateProfile(ProfileDto profileDto, int profileId)
-        {
+        {         
             var profile = await _profileRepository.GetProfileById(profileId);
-
             if (profile is null)
                 throw new NotFoundException("Profile not found");
 
-            var user = _userContextService.GetUser();
+            var isActive = await _profileRepository.IsProfileIsActive(profileId);
+            if (!isActive)
+                throw new NotFoundException("Profile not found");
 
+            var user = _userContextService.GetUser();
             var result = await _authorizationService.AuthorizeAsync(user, profile,
                 new ResourceOperationRequirement(ResourceOperation.Update));
-
             if (!result.Succeeded)
                 throw new ForbidException("");
 
             var updatedProfile = _mapper.Map<Domain.Profile>(profileDto);
             updatedProfile.Id = profileId;
             updatedProfile.UserRef = profile.UserRef;
-            var id = await _profileRepository.UpdateProfile(updatedProfile);
+            var resultId = await _profileRepository.UpdateProfile(updatedProfile);
 
-            return id;
+            return resultId;
         }
 
         public async Task DeleteProfile(int profileId)
@@ -72,15 +89,15 @@ namespace TutorWebApi.Application
 
             var profile = await _profileRepository.GetProfileById(profileId);
 
+            var isActive = await _profileRepository.IsProfileIsActive(profileId);
+            if (!isActive)
+                throw new NotFoundException("Profile not found");
+
             var authorizationResult = await _authorizationService.AuthorizeAsync(user, profile,
                 new ResourceOperationRequirement(ResourceOperation.Delete));
-
             if(!authorizationResult.Succeeded)
                 throw new ForbidException("");
 
-
-            await _profileRepository.DeleteAllAchievementsByProfile(profileId);
-            await _profileRepository.DeleteAllExperiencesByProfile(profileId);
             await _profileRepository.DeleteProfile(profileId);
         }
        

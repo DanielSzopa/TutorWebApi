@@ -4,6 +4,7 @@
     {
         Task<int> CreateProfile(Profile profile);
         Task<bool> IsUserHaveProfile(int userId);
+        Task<bool> IsProfileIsActive(int profileId);
         Task<int> GetProfilIdByUser(int userId);
         Task<Profile> GetProfileById(int profileId);
         Task<int> UpdateProfile(Profile profile);

@@ -29,6 +29,10 @@ namespace TutorWebApi.Application
             {
                 try
                 {
+                    if(user.Claims.Count() == 0)
+                    {
+                        return null;
+                    }    
                     var userId = (int?)int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
                     return userId;
                 }
