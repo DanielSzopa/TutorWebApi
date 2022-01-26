@@ -67,6 +67,7 @@ namespace TutorWebApi.Infrastructure
         {
             var profile = await _context.Profiles
                 .Include(p => p.User)
+                .ThenInclude(u => u.Address)
                 .Include(p =>p.Achievements.Where(a => a.IsActive == true))
                 .Include(p => p.Experiences.Where(e => e.IsActive == true))
                 .FirstOrDefaultAsync(p => p.Id ==profileId && p.IsActive);

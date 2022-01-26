@@ -19,7 +19,9 @@ namespace TutorWebApi.Application
 
             CreateMap<Domain.Profile, FullProfileDto>()
                 .ForMember(p => p.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
-                .ForMember(p => p.LastName, opt => opt.MapFrom(u => u.User.LastName));
+                .ForMember(p => p.LastName, opt => opt.MapFrom(u => u.User.LastName))
+                .ForMember(p => p.Country, opt => opt.MapFrom(u => u.User.Address.Country))
+                .ForMember(p => p.City, opt => opt.MapFrom(u => u.User.Address.City));
 
             CreateMap<AchievementDto, Achievement>()
                 .ReverseMap();

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Text;
 using TutorWebApi.Application;
 using TutorWebApi.Infrastructure;
@@ -50,6 +52,17 @@ namespace TutorWebApi
 
             builder.Services.AddSingleton(authenticationSettings);
             return builder;
+        }
+
+        public static IServiceCollection AddControllersExtension(this IServiceCollection services)
+        {
+            services.AddControllers()
+                .AddFluentValidation();
+
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            return services;
         }
     }
 }

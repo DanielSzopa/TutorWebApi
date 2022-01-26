@@ -34,7 +34,7 @@ namespace TutorWebApi.Application
             {
                 var profileId = await _profileRepository.GetProfileIdByUser(userId);
                 var isActive = await _profileRepository.IsProfileIsActive(profileId);
-                if(isActive)
+                if(isActive == true)
                     throw new ForbidException("It is forbidden to create a second profile");
                 else
                 {
@@ -71,7 +71,7 @@ namespace TutorWebApi.Application
                 throw new NotFoundException("Profile not found");
 
             var isActive = await _profileRepository.IsProfileIsActive(profileId);
-            if (!isActive)
+            if (isActive == false)
                 throw new NotFoundException("Profile not found");
 
             var user = _userContextService.GetUser();
@@ -101,7 +101,7 @@ namespace TutorWebApi.Application
             var profile = await _profileRepository.GetProfileById(profileId);
 
             var isActive = await _profileRepository.IsProfileIsActive(profileId);
-            if (!isActive)
+            if (isActive == false)
                 throw new NotFoundException("Profile not found");
 
             var authorizationResult = await _authorizationService.AuthorizeAsync(user, profile,
