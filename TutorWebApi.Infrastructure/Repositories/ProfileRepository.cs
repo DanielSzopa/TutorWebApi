@@ -36,6 +36,16 @@ namespace TutorWebApi.Infrastructure
             return profile.Id;
         }
 
+        public async Task<int> UpdateProfileDescription(string description, int profileId)
+        {
+            var profile = await _context.Profiles
+                .FirstOrDefaultAsync(p => p.Id == profileId);
+            profile.Description = description;
+
+            await _context.SaveChangesAsync();
+            return profile.Id;
+        }
+
         public async Task<bool> IsUserHaveProfile(int userId)
         {
             var result = await _context.Profiles

@@ -88,6 +88,21 @@ namespace TutorWebApi.Application
             return resultId;
         }
 
+        public async Task<int> UpdateProfileDescription(string description, int profileId)
+        {
+            var profile = await _profileRepository.GetProfileById(profileId);
+            if (profile is null)
+                throw new NotFoundException("Profile not found");
+
+            var isActive = await _profileRepository.IsProfileIsActive(profileId);
+            if (isActive == false)
+                throw new NotFoundException("Profile not found");
+
+            var id  = await _profileRepository
+                .UpdateProfileDescription(description, profileId);
+            return id;
+        }
+
         public async Task DeleteProfile(int profileId)
         {
             var user = _userContextService.GetUser();
