@@ -8,6 +8,9 @@ namespace TutorWebApi.Application
         public TutorWebApiMappingProfile()
         {
             CreateMap<RegisterDto, User>()
+                .ForMember(u => u.FirstName, opt => opt.MapFrom(u => u.Personal.FirstName))
+                .ForMember(u => u.LastName, opt => opt.MapFrom(u => u.Personal.LastName))
+                .ForMember(u => u.DateOfBirth, opt => opt.MapFrom(u => u.Personal.DateOfBirth))
                 .ForMember(u => u.Password, opt => opt.Ignore());
 
             CreateMap<AddressDto, Address>();

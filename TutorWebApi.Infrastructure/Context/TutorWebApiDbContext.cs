@@ -72,9 +72,22 @@ namespace TutorWebApi.Infrastructure
                .IsRequired();
 
             modelBuilder.Entity<Address>()
+              .Property(a => a.PosteCode)
+              .HasMaxLength(10)
+              .IsRequired();
+
+            modelBuilder.Entity<Address>()
+              .Property(a => a.Street)
+              .HasMaxLength(60);
+
+            modelBuilder.Entity<Address>()
+             .Property(a => a.AccommodationNumber)
+             .HasMaxLength(6);
+
+            modelBuilder.Entity<Address>()
                .Property(a => a.UserRef)
                .IsRequired();
-
+              
             modelBuilder.Entity<Advert>()
                .Property(a => a.Title)
                .HasMaxLength(150)
