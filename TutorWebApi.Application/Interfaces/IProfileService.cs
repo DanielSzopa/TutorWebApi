@@ -1,4 +1,7 @@
-﻿namespace TutorWebApi.Application
+﻿using System.Security.Claims;
+using TutorWebApi.Domain;
+
+namespace TutorWebApi.Application
 {
     public interface IProfileService
     {

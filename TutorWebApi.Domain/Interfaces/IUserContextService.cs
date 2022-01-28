@@ -4,7 +4,7 @@ namespace TutorWebApi.Domain
 {
     public interface IUserContextService
     {
-        ClaimsPrincipal GetUser();
-        int? GetUserId();
+        Task<ClaimsPrincipal> GetUser();
+        Task<int?> GetUserId();
     }
 }

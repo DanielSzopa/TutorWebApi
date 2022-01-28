@@ -229,17 +229,17 @@ namespace TutorWebApi.Infrastructure
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreateById = _userContextService.GetUserId();
+                        entry.Entity.CreateById = await _userContextService.GetUserId();
                         entry.Entity.CreateDate = DateTime.Now;
                         entry.Entity.IsActive = true;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.ModifyById = _userContextService.GetUserId();
+                        entry.Entity.ModifyById = await _userContextService.GetUserId();
                         entry.Entity.ModifyDate = DateTime.Now;
                         entry.Entity.IsActive = true;
                         break;
                     case EntityState.Deleted:
-                        entry.Entity.ModifyById = _userContextService.GetUserId();
+                        entry.Entity.ModifyById = await _userContextService.GetUserId();
                         entry.Entity.ModifyDate = DateTime.Now;
                         entry.Entity.IsActive = false;
                         entry.State = EntityState.Modified;

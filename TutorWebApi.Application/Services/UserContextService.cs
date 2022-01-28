@@ -13,14 +13,14 @@ namespace TutorWebApi.Application
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public ClaimsPrincipal GetUser()
+        public async Task<ClaimsPrincipal> GetUser()
         {
             return _httpContextAccessor.HttpContext?.User;
         }
 
-        public int? GetUserId()
+        public async Task<int?> GetUserId()
         {
-            var user = GetUser();
+            var user = await GetUser();
             if(user is null)
             {
                 return null;

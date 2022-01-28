@@ -2,7 +2,11 @@
 {
     public interface IUserRepository
     {
-        Task RegisterUserAsync(User user);
-        User GetUserByMail(string mail);
+        Task<int> RegisterUserAsync(User user);
+        Task SetCreateIdByAddress(int userId);
+        Task<User> GetUserByMail(string mail);
+        Task UpdateAddress(Address address, int userId);
+        Task<Address> GetAddressByUserId(int userId);
+
     }
 }

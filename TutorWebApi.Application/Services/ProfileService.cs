@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 using TutorWebApi.Domain;
 
 namespace TutorWebApi.Application
@@ -11,22 +12,23 @@ namespace TutorWebApi.Application
         private readonly IUserContextService _userContextService;
         private readonly IMapper _mapper;
         private readonly ILogger<ProfileService> _logger;
-        private readonly IAuthorizationService _authorizationService;
+        private readonly IResourceOperationService<Domain.Profile> _resourceOperationService;
 
         public ProfileService(IProfileRepository profileRepository, IUserContextService userContextService
-            , IMapper mapper, ILogger<ProfileService> logger, IAuthorizationService authorizationService)
+            , IMapper mapper, ILogger<ProfileService> logger,
+            IResourceOperationService<Domain.Profile> resourceOperationInterface)
         {
             _profileRepository = profileRepository;
             _userContextService = userContextService;
             _mapper = mapper;
             _logger = logger;
-            _authorizationService = authorizationService;
+            _resourceOperationService = resourceOperationInterface;
         }
 
         public async Task<int> CreateProfile(ProfileDto profileDto)
         {
-            var userId = (int)_userContextService.GetUserId();
-            var result = _profileRepository.IsUserHaveProfile(userId).Result;
+            var userId = (int)await _userContextService.GetUserId();
+            var result = await _profileRepository.IsUserHaveProfile(userId);
             var resultId = default(int);
             var mappedProfile = default(Domain.Profile);
 
@@ -67,18 +69,12 @@ namespace TutorWebApi.Application
         public async Task<int> UpdateProfile(ProfileDto profileDto, int profileId)
         {         
             var profile = await _profileRepository.GetProfileById(profileId);
-            if (profile is null)
+            if (profile is null || profile.IsActive == false)
                 throw new NotFoundException("Profile not found");
 
-            var isActive = await _profileRepository.IsProfileIsActive(profileId);
-            if (isActive == false)
-                throw new NotFoundException("Profile not found");
-
-            var user = _userContextService.GetUser();
-            var result = await _authorizationService.AuthorizeAsync(user, profile,
-                new ResourceOperationRequirement(ResourceOperation.Update));
-            if (!result.Succeeded)
-                throw new ForbidException("");
+            var user = await _userContextService.GetUser();
+            await _resourceOperationService.ResourceAuthorizationException
+                (user, profile, new ResourceOperationRequirement(ResourceOperation.Update));
 
             var updatedProfile = _mapper.Map<Domain.Profile>(profileDto);
             updatedProfile.Id = profileId;
@@ -91,12 +87,12 @@ namespace TutorWebApi.Application
         public async Task<int> UpdateProfileDescription(string description, int profileId)
         {
             var profile = await _profileRepository.GetProfileById(profileId);
-            if (profile is null)
+            if (profile is null || profile.IsActive == false)
                 throw new NotFoundException("Profile not found");
 
-            var isActive = await _profileRepository.IsProfileIsActive(profileId);
-            if (isActive == false)
-                throw new NotFoundException("Profile not found");
+            var user = await _userContextService.GetUser();
+            await _resourceOperationService.ResourceAuthorizationException
+                (user, profile, new ResourceOperationRequirement(ResourceOperation.Update));
 
             var id  = await _profileRepository
                 .UpdateProfileDescription(description, profileId);
@@ -105,8 +101,8 @@ namespace TutorWebApi.Application
 
         public async Task DeleteProfile(int profileId)
         {
-            var user = _userContextService.GetUser();
-            var userId = (int)_userContextService.GetUserId();
+            var user = await _userContextService.GetUser();
+            var userId = (int)await _userContextService.GetUserId();
             _logger.LogInformation($"Profile id: {profileId} with userRef:{userId} Delete action invoked");
 
             var result = await _profileRepository.IsUserHaveProfile(userId);
@@ -115,15 +111,11 @@ namespace TutorWebApi.Application
 
             var profile = await _profileRepository.GetProfileById(profileId);
 
-            var isActive = await _profileRepository.IsProfileIsActive(profileId);
-            if (isActive == false)
+            if (profile.IsActive == false)
                 throw new NotFoundException("Profile not found");
 
-            var authorizationResult = await _authorizationService.AuthorizeAsync(user, profile,
-                new ResourceOperationRequirement(ResourceOperation.Delete));
-            if(!authorizationResult.Succeeded)
-                throw new ForbidException("");
-
+            await _resourceOperationService.ResourceAuthorizationException
+                (user, profile, new ResourceOperationRequirement(ResourceOperation.Delete));
             await _profileRepository.DeleteProfile(profileId);
         }
     }

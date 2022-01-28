@@ -27,7 +27,7 @@ namespace TutorWebApi.Application
         {
             var message = "Invalid username or password";
 
-            var user = _userRepository.GetUserByMail(loginDto.Mail);
+            var user = await _userRepository.GetUserByMail(loginDto.Mail);
             if (user is null)
                 throw new BadRequestException(message);
 
@@ -47,7 +47,8 @@ namespace TutorWebApi.Application
             var password = _passwordHasher.HashPassword(user, registerDto.Password);
             user.Password = password;
             
-            await _userRepository.RegisterUserAsync(user);
+            var userId = await _userRepository.RegisterUserAsync(user);
+            await _userRepository.SetCreateIdByAddress(userId);
         }
 
         public async Task<string> GenerateJwt(UserForJwtDto userForJwtDto)

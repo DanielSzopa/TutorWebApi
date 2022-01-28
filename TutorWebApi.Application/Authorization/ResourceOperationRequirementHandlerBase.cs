@@ -3,15 +3,16 @@ using TutorWebApi.Domain;
 
 namespace TutorWebApi.Application
 {
-    public class ResourceOperationRequirementHandlerProfil : AuthorizationHandler<ResourceOperationRequirement, Profile>
+    public class ResourceOperationRequirementHandlerBase<T> : AuthorizationHandler<ResourceOperationRequirement, T> where T : AuditableEntity
     {
         private readonly IUserContextService _userContextService;
 
-        public ResourceOperationRequirementHandlerProfil(IUserContextService userContextService)
+        public ResourceOperationRequirementHandlerBase(IUserContextService userContextService)
         {
             _userContextService = userContextService;
         }
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, Profile profile)
+
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, T resource)
         {
             if (requirement.ResourceOperation == ResourceOperation.Read ||
                 requirement.ResourceOperation == ResourceOperation.Create)
@@ -19,9 +20,9 @@ namespace TutorWebApi.Application
                 context.Succeed(requirement);
             }
 
-            var userId = _userContextService.GetUserId();
+            var userId =  _userContextService.GetUserId().Result;
 
-            if (profile.CreateById == userId)
+            if (resource.CreateById == userId)
             {
                 context.Succeed(requirement);
             }

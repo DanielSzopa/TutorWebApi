@@ -15,8 +15,10 @@ namespace TutorWebApi.Application
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IUserContextService, UserContextService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IResourceOperationService<Profile>, ResourceOperationService<Profile>>();
 
             services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
             services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();

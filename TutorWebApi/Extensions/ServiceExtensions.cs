@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using NLog.Web;
 using System.Text;
 using TutorWebApi.Application;
 using TutorWebApi.Infrastructure;
@@ -24,7 +25,7 @@ namespace TutorWebApi
         public static IServiceCollection AddTutorWebApiServices(this IServiceCollection services)
         {
             services.AddScoped<ErrorHandlingMiddleware>();
-            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerProfil>();
+            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Domain.Profile>>();
             return services;
         }        
 
@@ -63,6 +64,14 @@ namespace TutorWebApi
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             return services;
+        }
+
+        public static WebApplicationBuilder AddNlog(this WebApplicationBuilder builder)
+        {
+            builder.Logging.SetMinimumLevel(LogLevel.Trace);
+            builder.Logging.ClearProviders();
+            builder.Host.UseNLog();
+            return builder;
         }
     }
 }

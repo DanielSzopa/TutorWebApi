@@ -12,19 +12,46 @@ namespace TutorWebApi.Infrastructure
             _context = context;
         }
 
-        public async Task RegisterUserAsync(User user)
+        public async Task<int> RegisterUserAsync(User user)
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+            return user.Id;
+        }
+        public async Task SetCreateIdByAddress(int userId)
+        {
+            var address = await _context.Addresses
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(a => a.UserRef == userId);
+            address.CreateDate = address.User.CreateDate;
+            address.CreateById = userId;
+
+            await _context.SaveChangesAsync();
         }
 
-        public User GetUserByMail(string mail)
+        public async Task<User> GetUserByMail(string mail)
         {
-            var user = _context.Users
+            var user = await _context.Users
                 .Include(u => u.Address)
-                .FirstOrDefault(u => u.Mail == mail);
+                .FirstOrDefaultAsync(u => u.Mail == mail);
 
             return user;
+        }
+
+        public async Task UpdateAddress(Address address, int userId)
+        {
+            var result = await _context.Addresses
+                .FirstOrDefaultAsync(a => a.UserRef == userId);
+
+            result = address;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Address> GetAddressByUserId(int userId)
+        {
+            var address = await _context.Addresses
+                .FirstOrDefaultAsync(a => a.UserRef == userId);
+            return address;
         }
     }
 }
