@@ -26,32 +26,6 @@ namespace TutorWebApi.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            #region 
-            var subjects = new List<Subject>()
-            {
-                new Subject { Id = 1, CreateDate = DateTime.Now, IsActive = true, Name = "Polish" },
-                new Subject { Id = 2, CreateDate = DateTime.Now, IsActive = true, Name = "English" },
-                new Subject { Id = 3, CreateDate = DateTime.Now, IsActive = true, Name = "French" },
-                new Subject { Id = 4, CreateDate = DateTime.Now, IsActive = true, Name = "German" },
-                new Subject { Id = 5, CreateDate = DateTime.Now, IsActive = true, Name = "Front-end Programming" },
-                new Subject { Id = 6, CreateDate = DateTime.Now, IsActive = true, Name = "Back-End Programming" },
-                new Subject { Id = 7, CreateDate = DateTime.Now, IsActive = true, Name = "Database" },
-                new Subject { Id = 8, CreateDate = DateTime.Now, IsActive = true, Name = "Maths" },
-                new Subject { Id = 9, CreateDate = DateTime.Now, IsActive = true, Name = "Physics" },
-                new Subject { Id = 10, CreateDate = DateTime.Now, IsActive = true, Name = "Chemistry" },
-                new Subject { Id = 11, CreateDate = DateTime.Now, IsActive = true, Name = "Geography" },
-                new Subject { Id = 12, CreateDate = DateTime.Now, IsActive = true, Name = "History" },
-                new Subject { Id = 13, CreateDate = DateTime.Now, IsActive = true, Name = "Science" },
-                new Subject { Id = 14, CreateDate = DateTime.Now, IsActive = true, Name = "Art" },
-                new Subject { Id = 15, CreateDate = DateTime.Now, IsActive = true, Name = "It" },
-                new Subject { Id = 16, CreateDate = DateTime.Now, IsActive = true, Name = "Technology" },
-                new Subject { Id = 17, CreateDate = DateTime.Now, IsActive = true, Name = "Business Studies" }
-            };
-            #endregion
-
-            modelBuilder.Entity<Subject>()
-                .HasData(subjects);
-
             modelBuilder.Entity<Achievement>()
                 .Property(a => a.Name)
                 .HasMaxLength(150)

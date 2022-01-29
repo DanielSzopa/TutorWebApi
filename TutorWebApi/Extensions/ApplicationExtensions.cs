@@ -14,5 +14,13 @@ namespace TutorWebApi
         {
             application.UseMiddleware<ErrorHandlingMiddleware>();
         }
+
+        public static async Task SeedData(this WebApplication application)
+        {
+            var scope = application.Services.CreateScope();
+            var seeder = scope.ServiceProvider.GetRequiredService<TutorWebApiSeeder>();
+
+            await seeder.Seed();
+        }
     }
 }

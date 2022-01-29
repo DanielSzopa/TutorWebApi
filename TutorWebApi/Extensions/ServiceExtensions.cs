@@ -26,6 +26,7 @@ namespace TutorWebApi
         public static IServiceCollection AddTutorWebApiServices(this IServiceCollection services)
         {
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<TutorWebApiSeeder>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Domain.Profile>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Address>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<User>>();

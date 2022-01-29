@@ -15,6 +15,7 @@ builder.Services.AddInfrastructure();
 builder.AddContext();
 
 var app = builder.Build();
+await app.SeedData();
 if (app.Environment.IsDevelopment())
     app.UseSwaggerConfig();
 app.AddMiddleware();
