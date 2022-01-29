@@ -168,16 +168,16 @@ namespace TutorWebApi.Infrastructure
             //modelBuilder.Entity<Comment>()
             //    .HasKey(c => new { c.UserId, c.ProfileId });
 
-            //modelBuilder.Entity<Comment>()
-            //    .HasOne(c => c.User)
-            //    .WithMany(u => u.Comments)
-            //    .HasForeignKey(c => c.UserId)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Comment>()
-            //   .HasOne(c => c.Profile)
-            //   .WithMany(p => p.Comments)
-            //   .HasForeignKey(c => c.ProfileId);
+            modelBuilder.Entity<Comment>()
+               .HasOne(c => c.Profile)
+               .WithMany(p => p.Comments)
+               .HasForeignKey(c => c.ProfileId);
 
             //modelBuilder.Entity<Comment>()
             //    .Property(c => c.Id)
