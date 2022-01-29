@@ -179,6 +179,9 @@ namespace TutorWebApi.Infrastructure
                .WithMany(p => p.Comments)
                .HasForeignKey(c => c.ProfileId);
 
+            modelBuilder.Entity<Comment>()
+                .Ignore(c => c.Id);
+
             modelBuilder.Entity<Like>()
                 .HasKey(l => new { l.UserId, l.ProfileId });
 
