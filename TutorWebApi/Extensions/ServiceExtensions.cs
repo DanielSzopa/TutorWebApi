@@ -30,6 +30,7 @@ namespace TutorWebApi
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Domain.Profile>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Address>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<User>>();
+            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Comment>>();
             return services;
         }
 

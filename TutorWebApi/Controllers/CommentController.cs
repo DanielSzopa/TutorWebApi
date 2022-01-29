@@ -29,9 +29,10 @@ namespace TutorWebApi.Controllers
             return Ok();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateComment()
+        [HttpPut("{commentId}")]
+        public async Task<ActionResult> UpdateComment([FromBody]CommentDto commentDto,[FromRoute]int commentId,int id)
         {
+            await _commentService.UpdateComment(commentDto,commentId,id);
             return Ok();
         }
 

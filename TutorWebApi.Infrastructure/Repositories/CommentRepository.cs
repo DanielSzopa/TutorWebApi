@@ -1,4 +1,5 @@
-﻿using TutorWebApi.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using TutorWebApi.Domain;
 
 namespace TutorWebApi.Infrastructure
 {
@@ -18,6 +19,21 @@ namespace TutorWebApi.Infrastructure
             _dbContext.SaveChangesAsync();
 
             return comment.Id;
+        }
+
+        public async Task<Comment> GetCommentById(int commentId)
+        {
+            var comment = await _dbContext.Comments
+                .FirstOrDefaultAsync(c => c.Id == commentId);
+            return comment;
+        }
+
+        public async Task UpdateComment(Comment comment)
+        {
+            var result = await _dbContext.Comments
+                 .FirstOrDefaultAsync(c => c.Id == comment.Id);
+            result.Description = comment.Description;
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

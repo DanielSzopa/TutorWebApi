@@ -180,7 +180,8 @@ namespace TutorWebApi.Infrastructure
                .HasForeignKey(c => c.ProfileId);
 
             modelBuilder.Entity<Comment>()
-                .Ignore(c => c.Id);
+                .Property(c => c.Id)
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Like>()
                 .HasKey(l => new { l.UserId, l.ProfileId });
