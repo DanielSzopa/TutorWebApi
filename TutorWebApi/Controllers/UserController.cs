@@ -9,9 +9,16 @@ namespace TutorWebApi.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-        [HttpPut]
-        public async Task<ActionResult> UpdateAddress([FromBody]AddressDto addressDto, [FromRoute]int id)
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
         {
+            _userService = userService;
+        }
+        [HttpPut]
+        public async Task<ActionResult> UpdateAddress([FromBody] AddressDto addressDto, [FromRoute] int id)
+        {
+            await _userService.UpdateAddress(addressDto, id);
             return Ok();
         }
     }

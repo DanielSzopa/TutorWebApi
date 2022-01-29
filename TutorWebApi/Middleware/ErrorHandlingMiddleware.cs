@@ -33,7 +33,7 @@ namespace TutorWebApi.Middleware
                         response.StatusCode = (int)HttpStatusCode.Forbidden;
                         break;
                     default:
-                        response.StatusCode = 500;
+                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         _logger.LogError(exception, exception.Message);
                         await context.Response.WriteAsync("Something went wrong");
                         return;

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using NLog.Web;
 using System.Text;
 using TutorWebApi.Application;
+using TutorWebApi.Domain;
 using TutorWebApi.Infrastructure;
 using TutorWebApi.Middleware;
 
@@ -26,6 +27,7 @@ namespace TutorWebApi
         {
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Domain.Profile>>();
+            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Address>>();
             return services;
         }        
 

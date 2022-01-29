@@ -19,6 +19,7 @@ namespace TutorWebApi.Application
             services.AddHttpContextAccessor();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IResourceOperationService<Profile>, ResourceOperationService<Profile>>();
+            services.AddScoped<IResourceOperationService<Address>, ResourceOperationService<Address>>();
 
             services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
             services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();

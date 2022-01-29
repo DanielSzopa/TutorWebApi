@@ -43,7 +43,12 @@ namespace TutorWebApi.Infrastructure
             var result = await _context.Addresses
                 .FirstOrDefaultAsync(a => a.UserRef == userId);
 
-            result = address;
+            result.Country = address.Country;
+            result.City = address.City;
+            result.PosteCode = address.PosteCode;
+            result.Street = address.Street;
+            result.AccommodationNumber = address.AccommodationNumber;
+
             await _context.SaveChangesAsync();
         }
 
