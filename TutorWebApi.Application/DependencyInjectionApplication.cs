@@ -14,6 +14,7 @@ namespace TutorWebApi.Application
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IUserService, UserService>();
             services.AddHttpContextAccessor();
@@ -29,6 +30,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<ExperienceDto>, ExperienceDtoValidator>();
             services.AddScoped<IValidator<AddressDto>, AddressDtoValidator>();
             services.AddScoped<IValidator<PersonalDto>, PersonalDtoValidator>();
+            services.AddScoped<IValidator<CommentDto>, CommentDtoValidator>();
 
             return services;
         }

@@ -12,6 +12,7 @@ builder.AddJwtAuthentication();
 builder.Services.AddApplication();
 builder.Services.AddTutorWebApiServices();
 builder.Services.AddInfrastructure();
+builder.Services.AddConfigureRouting();
 builder.AddContext();
 
 var app = builder.Build();

@@ -31,7 +31,7 @@ namespace TutorWebApi
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Address>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<User>>();
             return services;
-        }        
+        }
 
         public static WebApplicationBuilder AddJwtAuthentication(this WebApplicationBuilder builder)
         {
@@ -76,6 +76,12 @@ namespace TutorWebApi
             builder.Logging.ClearProviders();
             builder.Host.UseNLog();
             return builder;
+        }
+
+        public static IServiceCollection AddConfigureRouting(this IServiceCollection services)
+        {
+            services.AddRouting(options => options.LowercaseUrls = true);
+            return services;
         }
     }
 }
