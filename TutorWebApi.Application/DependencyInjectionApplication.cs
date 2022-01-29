@@ -31,7 +31,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<ExperienceDto>, ExperienceDtoValidator>();
             services.AddScoped<IValidator<AddressDto>, AddressDtoValidator>();
             services.AddScoped<IValidator<PersonalDto>, PersonalDtoValidator>();
-            services.AddScoped<IValidator<CommentDto>, CommentDtoValidator>();
+            services.AddScoped<IValidator<NewCommentDto>, CommentDtoValidator>();
 
             return services;
         }

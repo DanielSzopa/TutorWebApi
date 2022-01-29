@@ -17,20 +17,21 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateComment([FromBody]CommentDto commentDto, int id)
+        public async Task<ActionResult> CreateComment([FromBody]NewCommentDto commentDto, int id)
         {
             var commentId = await _commentService.CreateComment(commentDto,id);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetComments()
+        public async Task<ActionResult> GetAllComments(int id)
         {
-            return Ok();
+            var comments = await _commentService.GetAllComments(id);
+            return Ok(comments);
         }
 
         [HttpPut("{commentId}")]
-        public async Task<ActionResult> UpdateComment([FromBody]CommentDto commentDto,[FromRoute]int commentId,int id)
+        public async Task<ActionResult> UpdateComment([FromBody]NewCommentDto commentDto,[FromRoute]int commentId,int id)
         {
             await _commentService.UpdateComment(commentDto,commentId,id);
             return Ok();

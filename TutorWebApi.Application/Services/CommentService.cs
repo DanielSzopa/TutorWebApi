@@ -22,11 +22,9 @@ namespace TutorWebApi.Application
             _resourceOperationService = resourceOperationService;
         }
 
-        public async Task<int> CreateComment(CommentDto commentDto, int profileId)
+        public async Task<int> CreateComment(NewCommentDto commentDto, int profileId)
         {
-            var profile = await _profileRepository.GetProfileById(profileId);
-            if (profile is null || profile.IsActive == false)
-                throw new NotFoundException("Profile not found");
+            var profile = await GetProfileIfExist(profileId);
 
             var userId = (int)await _userContextService.GetUserId();
             var comment = _mapper.Map<Comment>(commentDto);
@@ -37,16 +35,18 @@ namespace TutorWebApi.Application
             return commentId;
         }
 
-        public async Task UpdateComment(CommentDto commentDto, int commentId, int profileId)
+        public async Task<IEnumerable<CommentDto>> GetAllComments(int profileId)
         {
-            var profile = await _profileRepository.GetProfileById(profileId);
-            if(profile is null || profile.IsActive == false)
-                throw new NotFoundException("Profile not found");
+            var profile = await GetProfileIfExist(profileId);
+            var comments = _commentRepository.GetAllComments(profileId);
+            var commentDtos = _mapper.Map<IEnumerable<CommentDto>>(comments);
+            return commentDtos;
+        }
 
-            var comment = await _commentRepository.GetCommentById(commentId);
-            if(comment is null || comment.IsActive == false)
-                throw new NotFoundException("Comment not found");
-
+        public async Task UpdateComment(NewCommentDto commentDto, int commentId, int profileId)
+        {
+            var profile = await GetProfileIfExist(profileId);
+            var comment = await GetCommentIfExist(commentId);
             var user = await _userContextService.GetUser();
 
             await _resourceOperationService.ResourceAuthorizationException
@@ -56,6 +56,25 @@ namespace TutorWebApi.Application
             mappedComment.Id = commentId;
 
             await _commentRepository.UpdateComment(mappedComment);
+        }
+
+
+        public async Task<Domain.Profile> GetProfileIfExist(int profileId)
+        {
+            var profile = await _profileRepository.GetProfileById(profileId);
+            if (profile is null || profile.IsActive == false)
+                throw new NotFoundException("Profile not found");
+
+            return profile;
+        }
+
+        public async Task<Comment> GetCommentIfExist(int commentId)
+        {
+            var comment = await _commentRepository.GetCommentById(commentId);
+            if (comment is null || comment.IsActive == false)
+                throw new NotFoundException("Comment not found");
+
+            return comment;
         }
     }
 }

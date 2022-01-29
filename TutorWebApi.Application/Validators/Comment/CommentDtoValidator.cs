@@ -2,7 +2,7 @@
 
 namespace TutorWebApi.Application
 {
-    public class CommentDtoValidator : AbstractValidator<CommentDto>
+    public class CommentDtoValidator : AbstractValidator<NewCommentDto>
     {
         public CommentDtoValidator()
         {

@@ -16,7 +16,7 @@ namespace TutorWebApi.Infrastructure
         {
             await _dbContext.Comments
                .AddAsync(comment);
-            _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return comment.Id;
         }
@@ -26,6 +26,15 @@ namespace TutorWebApi.Infrastructure
             var comment = await _dbContext.Comments
                 .FirstOrDefaultAsync(c => c.Id == commentId);
             return comment;
+        }
+
+        public IQueryable<Comment> GetAllComments(int profileId)
+        {
+            var comments = _dbContext.Comments
+                .Include(c => c.User)
+                .Where(c => c.ProfileId == profileId);
+
+            return comments;
         }
 
         public async Task UpdateComment(Comment comment)
