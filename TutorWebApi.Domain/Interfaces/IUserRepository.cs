@@ -3,9 +3,12 @@
     public interface IUserRepository
     {
         Task<int> RegisterUserAsync(User user);
-        Task SetCreateIdByAddress(int userId);
+        Task SetCreateIdForAddress(int userId);
+        Task SetCreateIdForUser(int userId);
         Task<User> GetUserByMail(string mail);
+        Task<User> GetUserById(int userId);
         Task UpdateAddress(Address address, int userId);
+        Task UpdatePersonal(User user);
         Task<Address> GetAddressByUserId(int userId);
 
     }

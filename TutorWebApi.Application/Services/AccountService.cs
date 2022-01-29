@@ -44,11 +44,13 @@ namespace TutorWebApi.Application
         public async Task RegisterUserAsync(RegisterDto registerDto)
         {
             var user = _mapper.Map<User>(registerDto);
+            user.Mail = user.Mail.ToLower();
             var password = _passwordHasher.HashPassword(user, registerDto.Password);
             user.Password = password;
             
             var userId = await _userRepository.RegisterUserAsync(user);
-            await _userRepository.SetCreateIdByAddress(userId);
+            await _userRepository.SetCreateIdForUser(userId);
+            await _userRepository.SetCreateIdForAddress(userId);
         }
 
         public async Task<string> GenerateJwt(UserForJwtDto userForJwtDto)

@@ -18,7 +18,7 @@ namespace TutorWebApi.Infrastructure
             await _context.SaveChangesAsync();
             return user.Id;
         }
-        public async Task SetCreateIdByAddress(int userId)
+        public async Task SetCreateIdForAddress(int userId)
         {
             var address = await _context.Addresses
                 .Include(a => a.User)
@@ -29,11 +29,28 @@ namespace TutorWebApi.Infrastructure
             await _context.SaveChangesAsync();
         }
 
+        public async Task SetCreateIdForUser(int userId)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            user.CreateById = userId;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<User> GetUserByMail(string mail)
         {
             var user = await _context.Users
                 .Include(u => u.Address)
                 .FirstOrDefaultAsync(u => u.Mail == mail);
+
+            return user;
+        }
+
+        public async Task<User> GetUserById(int userId)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;
         }
@@ -48,6 +65,19 @@ namespace TutorWebApi.Infrastructure
             result.PosteCode = address.PosteCode;
             result.Street = address.Street;
             result.AccommodationNumber = address.AccommodationNumber;
+
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task UpdatePersonal(User user)
+        {
+            var result = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+            result.FirstName = user.FirstName;
+            result.LastName = user.LastName;
+            result.DateOfBirth = user.DateOfBirth;
 
             await _context.SaveChangesAsync();
         }

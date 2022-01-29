@@ -28,6 +28,7 @@ namespace TutorWebApi
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Domain.Profile>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Address>>();
+            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<User>>();
             return services;
         }        
 
