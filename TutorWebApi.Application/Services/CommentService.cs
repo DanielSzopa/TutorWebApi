@@ -38,9 +38,17 @@ namespace TutorWebApi.Application
         public async Task<IEnumerable<CommentDto>> GetAllComments(int profileId)
         {
             var profile = await GetProfileIfExist(profileId);
-            var comments = _commentRepository.GetAllComments(profileId);
-            var commentDtos = _mapper.Map<IEnumerable<CommentDto>>(comments);
+            var comments = await _commentRepository.GetAllComments(profileId);
+            var commentDtos = _mapper.Map<List<CommentDto>>(comments);
             return commentDtos;
+        }
+
+        public async Task<CommentDto> GetCommentById(int profileId, int commentId)
+        {
+            var profile = await GetProfileIfExist(profileId);
+            var comment = await GetCommentIfExist(commentId);
+            var commentDto = _mapper.Map<CommentDto>(comment);
+            return commentDto;
         }
 
         public async Task UpdateComment(NewCommentDto commentDto, int commentId, int profileId)

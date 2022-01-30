@@ -68,10 +68,7 @@ namespace TutorWebApi.Application
 
         public async Task<int> UpdateProfile(ProfileDto profileDto, int profileId)
         {         
-            var profile = await _profileRepository.GetProfileById(profileId);
-            if (profile is null || profile.IsActive == false)
-                throw new NotFoundException("Profile not found");
-
+            var profile = await GetProfileIfExist(profileId);
             var user = await _userContextService.GetUser();
             await _resourceOperationService.ResourceAuthorizationException
                 (user, profile, new ResourceOperationRequirement(ResourceOperation.Update));
@@ -86,9 +83,7 @@ namespace TutorWebApi.Application
 
         public async Task<int> UpdateProfileDescription(string description, int profileId)
         {
-            var profile = await _profileRepository.GetProfileById(profileId);
-            if (profile is null || profile.IsActive == false)
-                throw new NotFoundException("Profile not found");
+            var profile = await GetProfileIfExist(profileId);
 
             var user = await _userContextService.GetUser();
             await _resourceOperationService.ResourceAuthorizationException
@@ -109,14 +104,20 @@ namespace TutorWebApi.Application
             if (!result)
                 throw new NotFoundException("User does not have Profile");
 
-            var profile = await _profileRepository.GetProfileById(profileId);
-
-            if (profile.IsActive == false)
-                throw new NotFoundException("Profile not found");
+            var profile = await GetProfileIfExist(profileId);
 
             await _resourceOperationService.ResourceAuthorizationException
                 (user, profile, new ResourceOperationRequirement(ResourceOperation.Delete));
             await _profileRepository.DeleteProfile(profileId);
+        }
+
+        public async Task<Domain.Profile> GetProfileIfExist(int profileId)
+        {
+            var profile = await _profileRepository.GetProfileById(profileId);
+            if (profile is null || profile.IsActive == false)
+                throw new NotFoundException("Profile not found");
+
+            return profile;
         }
     }
 }

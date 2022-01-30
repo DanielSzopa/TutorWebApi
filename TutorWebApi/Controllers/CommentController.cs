@@ -20,7 +20,7 @@ namespace TutorWebApi.Controllers
         public async Task<ActionResult> CreateComment([FromBody]NewCommentDto commentDto, int id)
         {
             var commentId = await _commentService.CreateComment(commentDto,id);
-            return Ok();
+            return Created($"/api/v1/profile/{id}/comment/{commentId}", null); 
         }
 
         [HttpGet]
@@ -28,6 +28,13 @@ namespace TutorWebApi.Controllers
         {
             var comments = await _commentService.GetAllComments(id);
             return Ok(comments);
+        }
+
+        [HttpGet("{commentId}")]
+        public async Task<ActionResult> GetComment([FromRoute]int commentId,int id)
+        {
+            var comment = await _commentService.GetCommentById(id,commentId);
+            return Ok(comment);
         }
 
         [HttpPut("{commentId}")]

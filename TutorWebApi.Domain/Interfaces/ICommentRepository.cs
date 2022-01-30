@@ -6,7 +6,7 @@ namespace TutorWebApi.Domain
     {
         Task<int> CreateComment(Comment comment);
         Task<Comment> GetCommentById(int commentId);
-        IQueryable<Comment> GetAllComments(int profileId);
+        Task<List<Comment>> GetAllComments(int profileId);
         Task UpdateComment(Comment comment);
     }
 }

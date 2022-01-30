@@ -26,7 +26,6 @@ namespace TutorWebApi.Application
         public async Task<string> AuthenticateUserAsync(LoginDto loginDto)
         {
             var message = "Invalid username or password";
-
             var user = await _userRepository.GetUserByMail(loginDto.Mail);
             if (user is null)
                 throw new BadRequestException(message);

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using TutorWebApi.Domain;
+﻿using TutorWebApi.Domain;
 
 namespace TutorWebApi.Application
 {
@@ -25,19 +24,18 @@ namespace TutorWebApi.Application
 
             CreateMap<ProfileDto, Domain.Profile>();
 
+            CreateMap<Domain.Profile, FullProfileDto>()
+                .ForMember(p => p.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
+                .ForMember(p => p.LastName, opt => opt.MapFrom(u => u.User.LastName))
+                .ForMember(p => p.Country, opt => opt.MapFrom(u => u.User.Address.Country))
+                .ForMember(p => p.City, opt => opt.MapFrom(u => u.User.Address.City));
+
             CreateMap<NewCommentDto, Comment>()
                 .ForMember(c => c.Description, opt => opt.MapFrom(c => c.Comment));
 
             CreateMap<Comment, CommentDto>()
                 .ForMember(c => c.Comment, opt => opt.MapFrom(c => c.Description))
                 .ForMember(c => c.User, opt => opt.MapFrom(c => $"{c.User.FirstName} {c.User.LastName}"));
-
-
-            CreateMap<Domain.Profile, FullProfileDto>()
-                .ForMember(p => p.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
-                .ForMember(p => p.LastName, opt => opt.MapFrom(u => u.User.LastName))
-                .ForMember(p => p.Country, opt => opt.MapFrom(u => u.User.Address.Country))
-                .ForMember(p => p.City, opt => opt.MapFrom(u => u.User.Address.City));
 
             CreateMap<AchievementDto, Achievement>()
                 .ReverseMap();

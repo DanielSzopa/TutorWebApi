@@ -24,15 +24,17 @@ namespace TutorWebApi.Infrastructure
         public async Task<Comment> GetCommentById(int commentId)
         {
             var comment = await _dbContext.Comments
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.Id == commentId);
             return comment;
         }
 
-        public IQueryable<Comment> GetAllComments(int profileId)
+        public async Task<List<Comment>> GetAllComments(int profileId)
         {
-            var comments = _dbContext.Comments
+            var comments = await _dbContext.Comments
                 .Include(c => c.User)
-                .Where(c => c.ProfileId == profileId);
+                .Where(c => c.ProfileId == profileId)
+                .ToListAsync();
 
             return comments;
         }
