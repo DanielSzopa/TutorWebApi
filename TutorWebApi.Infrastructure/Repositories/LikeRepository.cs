@@ -50,6 +50,15 @@ namespace TutorWebApi.Infrastructure
             return like;
         }
 
+        public async Task<List<Like>> GetAllActiveLikes(int profileId)
+        {
+            var likes = await _dbContext.Likes
+                .Include(l => l.User)
+                .Where(l => l.IsActive == true && l.ProfileId == profileId)
+                .ToListAsync();
+            return likes;
+        }
+
         public async Task<bool> IsUserCanLikeThisProfile(int profileId, int userId)
         {
             var like = await _dbContext.Likes

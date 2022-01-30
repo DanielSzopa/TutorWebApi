@@ -60,6 +60,14 @@ namespace TutorWebApi.Application
             }            
         }
 
+        public async Task<IEnumerable<LikeDto>> GetAllLikes(int profileId)
+        {
+            var profile = await GetProfileIfExist(profileId);
+            var likes = await _likeRepository.GetAllActiveLikes(profileId);
+            var likeDtos = _mapper.Map<IEnumerable<LikeDto>>(likes);
+            return likeDtos;
+        }
+
         public async Task<Domain.Profile> GetProfileIfExist(int profileId)
         {
             var profile = await _profileRepository.GetProfileById(profileId);

@@ -37,6 +37,9 @@ namespace TutorWebApi.Application
                 .ForMember(c => c.Comment, opt => opt.MapFrom(c => c.Description))
                 .ForMember(c => c.User, opt => opt.MapFrom(c => $"{c.User.FirstName} {c.User.LastName}"));
 
+            CreateMap<Like, LikeDto>()
+                .ForMember(l => l.User, opt => opt.MapFrom(l => $"{l.User.FirstName} {l.User.LastName}"));
+
             CreateMap<AchievementDto, Achievement>()
                 .ReverseMap();
 
