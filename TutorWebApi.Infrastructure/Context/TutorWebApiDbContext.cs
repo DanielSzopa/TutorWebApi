@@ -61,7 +61,7 @@ namespace TutorWebApi.Infrastructure
             modelBuilder.Entity<Address>()
                .Property(a => a.UserRef)
                .IsRequired();
-              
+
             modelBuilder.Entity<Advert>()
                .Property(a => a.Title)
                .HasMaxLength(150)
@@ -196,7 +196,7 @@ namespace TutorWebApi.Infrastructure
                .HasOne(l => l.Profile)
                .WithMany(p => p.Likes)
                .HasForeignKey(l => l.ProfileId);
-          
+
 
         }
 
@@ -226,6 +226,5 @@ namespace TutorWebApi.Infrastructure
             }
             return await base.SaveChangesAsync(token);
         }
-
     }
 }

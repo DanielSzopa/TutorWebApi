@@ -10,6 +10,7 @@ namespace TutorWebApi.Infrastructure
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IProfileRepository,ProfileRepository>();
             services.AddScoped<ICommentRepository,CommentRepository>();
+            services.AddScoped<ILikeRepository,LikeRepository>();
 
             return services;
         }

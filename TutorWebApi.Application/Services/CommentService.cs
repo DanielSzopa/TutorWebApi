@@ -76,15 +76,6 @@ namespace TutorWebApi.Application
             await _commentRepository.DeleteComment(commentId);
         }
 
-        public async Task<Domain.Profile> GetProfileIfExist(int profileId)
-        {
-            var profile = await _profileRepository.GetProfileById(profileId);
-            if (profile is null || profile.IsActive == false)
-                throw new NotFoundException("Profile not found");
-
-            return profile;
-        }
-
         public async Task<Comment> GetCommentIfExist(int commentId)
         {
             var comment = await _commentRepository.GetCommentById(commentId);
@@ -94,5 +85,13 @@ namespace TutorWebApi.Application
             return comment;
         }
 
+        public async Task<Domain.Profile> GetProfileIfExist(int profileId)
+        {
+            var profile = await _profileRepository.GetProfileById(profileId);
+            if (profile is null || profile.IsActive == false)
+                throw new NotFoundException("Profile not found");
+
+            return profile;
+        }
     }
 }
