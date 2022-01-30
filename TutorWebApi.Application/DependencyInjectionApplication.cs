@@ -25,6 +25,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IResourceOperationService<Address>, ResourceOperationService<Address>>();
             services.AddScoped<IResourceOperationService<User>, ResourceOperationService<User>>();
             services.AddScoped<IResourceOperationService<Comment>, ResourceOperationService<Comment>>();
+            services.AddScoped<IResourceOperationService<Like>, ResourceOperationService<Like>>();
 
             services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
             services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();

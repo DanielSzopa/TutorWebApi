@@ -27,10 +27,27 @@ namespace TutorWebApi.Infrastructure
 
             if(!(result is null))
             {
-                _dbContext.Entry(like).State = EntityState.Detached;
-                _dbContext.Likes.Remove(like);
+                _dbContext.Likes.Remove(result);
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task UpdateLike(Like like)
+        {
+            var result = await _dbContext.Likes
+                .FirstOrDefaultAsync(l => l.Id == like.Id);
+
+            result.IsActive = true;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Like> GetLike(int profileId, int userId)
+        {
+            var like = await _dbContext.Likes
+                .FirstOrDefaultAsync
+                (l => l.ProfileId == profileId && l.UserId == userId);
+
+            return like;
         }
 
         public async Task<bool> IsUserCanLikeThisProfile(int profileId, int userId)

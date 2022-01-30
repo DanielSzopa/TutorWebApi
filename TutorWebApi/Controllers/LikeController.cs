@@ -27,7 +27,7 @@ namespace TutorWebApi.Controllers
         public async Task<ActionResult> UnLike(int id)
         {
             await _likeService.Unlike(id);
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet]

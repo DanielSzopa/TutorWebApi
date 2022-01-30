@@ -9,14 +9,17 @@ namespace TutorWebApi.Application
         private readonly IUserContextService _userContextService;
         private readonly IMapper _mapper;
         private readonly IProfileRepository _profileRepository;
+        private readonly IResourceOperationService<Like> _resourceOperationService;
 
         public LikeService(ILikeRepository likeRepository,
-            IUserContextService userContextService, IMapper mapper, IProfileRepository profileRepository)
+            IUserContextService userContextService, IMapper mapper, IProfileRepository profileRepository,
+            IResourceOperationService<Like> resourceOperationService)
         {
             _likeRepository = likeRepository;
             _userContextService = userContextService;
             _mapper = mapper;
             _profileRepository = profileRepository;
+            _resourceOperationService = resourceOperationService;
         }
 
         public async Task Like(int profileId)
@@ -24,12 +27,22 @@ namespace TutorWebApi.Application
             var profile = await GetProfileIfExist(profileId);
             var userId = (int)await _userContextService.GetUserId();
 
-            var result = await _likeRepository.IsUserCanLikeThisProfile(profileId, userId);
-            if (result == false)
-                throw new BadRequestException("User can not like this profile again");
+            var like = await _likeRepository.GetLike(profile.Id, userId);
+            if (like != null)
+            {
+                if (like.IsActive == true)
+                {
+                    throw new BadRequestException("User can not like this profile again");
+                }
+                else
+                {
+                    await _likeRepository.UpdateLike(like);
+                    return;
+                }
+            }
 
-            var like = new Like { ProfileId = profileId, UserId = userId};
-            await _likeRepository.CreateLike(like);
+            var newLike = new Like { ProfileId = profileId, UserId = userId };
+            await _likeRepository.CreateLike(newLike);
         }
 
 
@@ -37,8 +50,14 @@ namespace TutorWebApi.Application
         {
             var profile = await GetProfileIfExist(profileId);
             var userId = (int)await _userContextService.GetUserId();
-            var like = new Like { ProfileId = profileId, UserId = userId };
-            await _likeRepository.DeleteLike(like);
+            var user = await _userContextService.GetUser();
+            var like = await _likeRepository.GetLike(profileId, userId);
+            if(like != null)
+            {
+                await _resourceOperationService.ResourceAuthorizationException
+                (user, like, new ResourceOperationRequirement(ResourceOperation.Delete));
+                await _likeRepository.DeleteLike(like);
+            }            
         }
 
         public async Task<Domain.Profile> GetProfileIfExist(int profileId)

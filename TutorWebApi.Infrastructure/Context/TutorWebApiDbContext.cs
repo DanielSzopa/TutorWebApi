@@ -165,9 +165,6 @@ namespace TutorWebApi.Infrastructure
                 .WithOne(u => u.Profile)
                 .HasForeignKey<Profile>(p => p.UserRef);
 
-            //modelBuilder.Entity<Comment>()
-            //    .HasKey(c => new { c.UserId, c.ProfileId });
-
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.User)
                 .WithMany(u => u.Comments)
@@ -179,12 +176,6 @@ namespace TutorWebApi.Infrastructure
                .WithMany(p => p.Comments)
                .HasForeignKey(c => c.ProfileId);
 
-            //modelBuilder.Entity<Comment>()
-            //    .Property(c => c.Id)
-            //    .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<Like>()
-                .HasKey(l => new { l.UserId, l.ProfileId });
 
             modelBuilder.Entity<Like>()
                 .HasOne(l => l.User)
