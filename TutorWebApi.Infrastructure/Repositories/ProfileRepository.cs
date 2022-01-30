@@ -26,7 +26,7 @@ namespace TutorWebApi.Infrastructure
                 .Include(p => p.Achievements)
                 .Include(p => p.Experiences)
                 .FirstOrDefaultAsync(p => p.Id == profile.Id);
-                
+
 
             newProfile.Description = profile.Description;
             newProfile.Achievements = profile.Achievements;
@@ -57,8 +57,8 @@ namespace TutorWebApi.Infrastructure
         {
             var profile = await _context.Profiles
                 .FirstOrDefaultAsync(p => p.Id == profileId);
-                
-            if(profile.IsActive)
+
+            if (profile.IsActive)
                 return true;
             else
                 return false;
@@ -73,17 +73,26 @@ namespace TutorWebApi.Infrastructure
             return profile;
         }
 
+        public async Task<List<Profile>> GetAllProfiles()
+        {
+            var profiles = await _context.Profiles
+                .Include(p => p.User)
+                .ThenInclude(u => u.Address)
+                .ToListAsync();
+            return profiles;
+        }
+
         public async Task<Profile> GetFullProfileById(int profileId)
         {
             var profile = await _context.Profiles
                 .Include(p => p.User)
                 .ThenInclude(u => u.Address)
-                .Include(p =>p.Achievements.Where(a => a.IsActive == true))
+                .Include(p => p.Achievements.Where(a => a.IsActive == true))
                 .Include(p => p.Experiences.Where(e => e.IsActive == true))
-                .FirstOrDefaultAsync(p => p.Id ==profileId && p.IsActive);
+                .FirstOrDefaultAsync(p => p.Id == profileId && p.IsActive);
 
             return profile;
-                               
+
         }
 
         public async Task<int> GetProfileIdByUser(int userId)
@@ -129,6 +138,5 @@ namespace TutorWebApi.Infrastructure
                 await _context.SaveChangesAsync();
             }
         }
-
     }
 }

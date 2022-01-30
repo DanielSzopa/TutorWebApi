@@ -8,6 +8,7 @@
         Task<int> GetProfileIdByUser(int userId);
         Task<Profile> GetProfileById(int profileId);
         Task<Profile> GetFullProfileById(int profileId);
+        Task<List<Profile>> GetAllProfiles();
         Task<int> UpdateProfile(Profile profile);
         Task<int> UpdateProfileDescription(string description, int profileId);
         Task DeleteProfile(int profileId);

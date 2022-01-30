@@ -23,6 +23,9 @@ namespace TutorWebApi.Application
                 .ForMember(u => u.Country, opt => opt.MapFrom(u => u.Address.Country));
 
             CreateMap<ProfileDto, Domain.Profile>();
+            CreateMap<Domain.Profile, SmallProfileDto>()
+                .ForMember(p => p.City, opt => opt.MapFrom(p => p.User.Address.City))
+                .ForMember(p => p.FullName, opt => opt.MapFrom(p => $"{p.User.FirstName} {p.User.LastName}"));
 
             CreateMap<Domain.Profile, FullProfileDto>()
                 .ForMember(p => p.FirstName, opt => opt.MapFrom(u => u.User.FirstName))

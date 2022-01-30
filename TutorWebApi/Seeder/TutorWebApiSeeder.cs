@@ -15,9 +15,12 @@ namespace TutorWebApi
         {
             if(await _dbContext.Database.CanConnectAsync())
             {
-                var subjects = GetSubjects();
-                await _dbContext.AddRangeAsync(subjects);
-                await _dbContext.SaveChangesAsync();
+                if(!(_dbContext.Subjects.Any()))
+                {
+                    var subjects = GetSubjects();
+                    await _dbContext.AddRangeAsync(subjects);
+                    await _dbContext.SaveChangesAsync();
+                }              
             }
         }
 

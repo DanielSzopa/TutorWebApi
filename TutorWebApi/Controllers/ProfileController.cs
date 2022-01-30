@@ -23,10 +23,16 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> ReadProfile([FromRoute]int id)
+        public async Task<ActionResult>GetProfileById([FromRoute]int id)
         {
             var profile = await _profileService.GetProfile(id);
             return Ok(profile);
+        }
+        [HttpGet]
+        public async Task<ActionResult> GetAllProfiles()
+        {
+            var profiles = await _profileService.GetAllSmallProfiles();
+            return Ok(profiles);
         }
 
         [HttpPut("{id}")]

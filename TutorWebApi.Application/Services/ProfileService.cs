@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
 using TutorWebApi.Domain;
 
 namespace TutorWebApi.Application
@@ -13,16 +11,19 @@ namespace TutorWebApi.Application
         private readonly IMapper _mapper;
         private readonly ILogger<ProfileService> _logger;
         private readonly IResourceOperationService<Domain.Profile> _resourceOperationService;
+        private readonly ILikeRepository _likeRepository;
 
         public ProfileService(IProfileRepository profileRepository, IUserContextService userContextService
             , IMapper mapper, ILogger<ProfileService> logger,
-            IResourceOperationService<Domain.Profile> resourceOperationInterface)
+            IResourceOperationService<Domain.Profile> resourceOperationInterface,
+            ILikeRepository likeRepository)
         {
             _profileRepository = profileRepository;
             _userContextService = userContextService;
             _mapper = mapper;
             _logger = logger;
             _resourceOperationService = resourceOperationInterface;
+            _likeRepository = likeRepository;
         }
 
         public async Task<int> CreateProfile(ProfileDto profileDto)
@@ -64,6 +65,17 @@ namespace TutorWebApi.Application
 
             var profileDto = _mapper.Map<FullProfileDto>(profile);
             return profileDto;
+        }
+
+        public async Task<IEnumerable<SmallProfileDto>> GetAllSmallProfiles()
+        {
+            var profiles = await _profileRepository.GetAllProfiles();
+            var profileDtos = _mapper.Map<IEnumerable<SmallProfileDto>>(profiles);
+            foreach (var dto in profileDtos)
+            {
+                dto.Likes = await _likeRepository.CountLikesByProfil(dto.Id);
+            }
+            return profileDtos;
         }
 
         public async Task<int> UpdateProfile(ProfileDto profileDto, int profileId)
