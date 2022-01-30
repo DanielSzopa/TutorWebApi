@@ -18,6 +18,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILikeService, LikeService>();
+            services.AddScoped<IAchievementService, AchievementService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 

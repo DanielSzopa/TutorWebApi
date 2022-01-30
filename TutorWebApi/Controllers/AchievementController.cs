@@ -1,0 +1,38 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TutorWebApi.Application;
+
+namespace TutorWebApi.Controllers
+{
+    [Route("/api/v1/profile/{id}/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class AchievementController : ControllerBase
+    {
+        private readonly IAchievementService _achievementService;
+
+        public AchievementController(IAchievementService achievementService)
+        {
+            _achievementService = achievementService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateAchievement([FromBody]AchievementDto achievementDto, int id)
+        {
+            return Ok();
+        }
+
+        [HttpPut("{achievementId}")]
+        public async Task<ActionResult> UpdateAchievement([FromBody] AchievementDto achievementDto, [FromRoute]int achievementId, int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{achievementId}")]
+        public async Task<ActionResult> DeleteAchievement([FromRoute] int achievementId, int id)
+        {
+            return NoContent();
+        }
+
+    }
+}
