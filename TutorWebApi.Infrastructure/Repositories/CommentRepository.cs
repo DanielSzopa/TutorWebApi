@@ -29,11 +29,11 @@ namespace TutorWebApi.Infrastructure
             return comment;
         }
 
-        public async Task<List<Comment>> GetAllComments(int profileId)
+        public async Task<List<Comment>> GetAllActiveComments(int profileId)
         {
             var comments = await _dbContext.Comments
                 .Include(c => c.User)
-                .Where(c => c.ProfileId == profileId)
+                .Where(c => c.ProfileId == profileId && c.IsActive == true)
                 .ToListAsync();
 
             return comments;
@@ -44,6 +44,15 @@ namespace TutorWebApi.Infrastructure
             var result = await _dbContext.Comments
                  .FirstOrDefaultAsync(c => c.Id == comment.Id);
             result.Description = comment.Description;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteComment(int commentId)
+        {
+            var comment = await _dbContext.Comments
+                .FirstOrDefaultAsync(c => c.Id == commentId);
+            if(!(comment is null))
+                _dbContext.Comments.Remove(comment);
             await _dbContext.SaveChangesAsync();
         }
     }

@@ -17,10 +17,10 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateComment([FromBody]NewCommentDto commentDto, int id)
+        public async Task<ActionResult> CreateComment([FromBody] NewCommentDto commentDto, int id)
         {
-            var commentId = await _commentService.CreateComment(commentDto,id);
-            return Created($"/api/v1/profile/{id}/comment/{commentId}", null); 
+            var commentId = await _commentService.CreateComment(commentDto, id);
+            return Created($"/api/v1/profile/{id}/comment/{commentId}", null);
         }
 
         [HttpGet]
@@ -31,23 +31,24 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet("{commentId}")]
-        public async Task<ActionResult> GetComment([FromRoute]int commentId,int id)
+        public async Task<ActionResult> GetComment([FromRoute] int commentId, int id)
         {
-            var comment = await _commentService.GetCommentById(id,commentId);
+            var comment = await _commentService.GetCommentById(id, commentId);
             return Ok(comment);
         }
 
         [HttpPut("{commentId}")]
-        public async Task<ActionResult> UpdateComment([FromBody]NewCommentDto commentDto,[FromRoute]int commentId,int id)
+        public async Task<ActionResult> UpdateComment([FromBody] NewCommentDto commentDto, [FromRoute] int commentId, int id)
         {
-            await _commentService.UpdateComment(commentDto,commentId,id);
+            await _commentService.UpdateComment(commentDto, commentId, id);
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteComment()
+        [HttpDelete("{commentId}")]
+        public async Task<ActionResult> DeleteComment([FromRoute]int commentId, int id)
         {
-            return Ok();
+            await _commentService.DeleteComment(id, commentId);
+            return NoContent();
         }
     }
 }

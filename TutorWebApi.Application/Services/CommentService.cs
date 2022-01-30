@@ -38,7 +38,7 @@ namespace TutorWebApi.Application
         public async Task<IEnumerable<CommentDto>> GetAllComments(int profileId)
         {
             var profile = await GetProfileIfExist(profileId);
-            var comments = await _commentRepository.GetAllComments(profileId);
+            var comments = await _commentRepository.GetAllActiveComments(profileId);
             var commentDtos = _mapper.Map<List<CommentDto>>(comments);
             return commentDtos;
         }
@@ -66,6 +66,15 @@ namespace TutorWebApi.Application
             await _commentRepository.UpdateComment(mappedComment);
         }
 
+        public async Task DeleteComment(int profileId, int commentId)
+        {
+            var profile = await GetProfileIfExist(profileId);
+            var comment = await GetCommentIfExist(commentId);
+            var user = await _userContextService.GetUser();
+            await _resourceOperationService.ResourceAuthorizationException
+                (user, comment, new ResourceOperationRequirement(ResourceOperation.Delete));
+            await _commentRepository.DeleteComment(commentId);
+        }
 
         public async Task<Domain.Profile> GetProfileIfExist(int profileId)
         {
@@ -84,5 +93,6 @@ namespace TutorWebApi.Application
 
             return comment;
         }
+
     }
 }

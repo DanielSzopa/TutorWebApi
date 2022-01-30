@@ -6,7 +6,8 @@ namespace TutorWebApi.Domain
     {
         Task<int> CreateComment(Comment comment);
         Task<Comment> GetCommentById(int commentId);
-        Task<List<Comment>> GetAllComments(int profileId);
+        Task<List<Comment>> GetAllActiveComments(int profileId);
         Task UpdateComment(Comment comment);
+        Task DeleteComment(int commentId);
     }
 }
