@@ -32,6 +32,15 @@ namespace TutorWebApi.Application
             await _likeRepository.CreateLike(like);
         }
 
+
+        public async Task Unlike(int profileId)
+        {
+            var profile = await GetProfileIfExist(profileId);
+            var userId = (int)await _userContextService.GetUserId();
+            var like = new Like { ProfileId = profileId, UserId = userId };
+            await _likeRepository.DeleteLike(like);
+        }
+
         public async Task<Domain.Profile> GetProfileIfExist(int profileId)
         {
             var profile = await _profileRepository.GetProfileById(profileId);

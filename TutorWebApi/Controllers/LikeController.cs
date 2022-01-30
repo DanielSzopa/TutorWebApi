@@ -24,8 +24,9 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> UnLike()
+        public async Task<ActionResult> UnLike(int id)
         {
+            await _likeService.Unlike(id);
             return Ok();
         }
 
