@@ -31,21 +31,21 @@ namespace TutorWebApi.Controllers
             return Ok(comments);
         }
 
-        [HttpGet("{commentId}")]
+        [HttpGet("{comment-id}")]
         public async Task<ActionResult> GetComment([FromRoute] int commentId, int id)
         {
             var comment = await _commentService.GetCommentById(id, commentId);
             return Ok(comment);
         }
 
-        [HttpPut("{commentId}")]
+        [HttpPut("{comment-id}")]
         public async Task<ActionResult> UpdateComment([FromBody] NewCommentDto commentDto, [FromRoute] int commentId, int id)
         {
             await _commentService.UpdateComment(commentDto, commentId, id);
             return Ok();
         }
 
-        [HttpDelete("{commentId}")]
+        [HttpDelete("{comment-id}")]
         public async Task<ActionResult> DeleteComment([FromRoute]int commentId, int id)
         {
             await _commentService.DeleteComment(id, commentId);
