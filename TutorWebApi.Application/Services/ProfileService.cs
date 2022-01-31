@@ -32,7 +32,7 @@ namespace TutorWebApi.Application.Services
 
         public async Task<int> CreateProfile(ProfileDto profileDto)
         {
-            var userId = (int)await _userContextService.GetUserId();
+            var userId = await _userContextService.GetUserId();
             var result = await _profileRepository.IsUserHaveProfile(userId);
             var resultId = default(int);
             var mappedProfile = default(Domain.Entities.Profile);
@@ -113,7 +113,7 @@ namespace TutorWebApi.Application.Services
         public async Task DeleteProfile(int profileId)
         {
             var user = await _userContextService.GetUser();
-            var userId = (int)await _userContextService.GetUserId();
+            var userId = await _userContextService.GetUserId();
             _logger.LogInformation($"Profile id: {profileId} with userRef:{userId} Delete action invoked");
 
             var result = await _profileRepository.IsUserHaveProfile(userId);

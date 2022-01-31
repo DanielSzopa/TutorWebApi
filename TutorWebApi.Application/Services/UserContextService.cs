@@ -18,12 +18,12 @@ namespace TutorWebApi.Application.Services
             return _httpContextAccessor.HttpContext?.User;
         }
 
-        public async Task<int?> GetUserId()
+        public async Task<int> GetUserId()
         {
             var user = await GetUser();
             if(user is null)
             {
-                return null;
+                return 0;
             }
             else
             {
@@ -31,14 +31,14 @@ namespace TutorWebApi.Application.Services
                 {
                     if(user.Claims.Count() == 0)
                     {
-                        return null;
+                        return 0;
                     }    
-                    var userId = (int?)int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                    var userId = int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
                     return userId;
                 }
                 catch(Exception ex)
                 {
-                    return null;
+                    return 0;
                 }
                
             }

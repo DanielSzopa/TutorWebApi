@@ -31,7 +31,7 @@ namespace TutorWebApi.Application.Services
         {
             var profile = await GetProfileIfExist(profileId);
 
-            var userId = (int)await _userContextService.GetUserId();
+            var userId = await _userContextService.GetUserId();
             var comment = _mapper.Map<Comment>(commentDto);
             comment.UserId = userId;
             comment.ProfileId = profileId;

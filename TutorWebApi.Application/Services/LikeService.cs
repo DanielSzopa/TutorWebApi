@@ -30,7 +30,7 @@ namespace TutorWebApi.Application.Services
         public async Task Like(int profileId)
         {
             var profile = await GetProfileIfExist(profileId);
-            var userId = (int)await _userContextService.GetUserId();
+            var userId = await _userContextService.GetUserId();
 
             var like = await _likeRepository.GetLike(profile.Id, userId);
             if (like != null)
@@ -54,7 +54,7 @@ namespace TutorWebApi.Application.Services
         public async Task Unlike(int profileId)
         {
             var profile = await GetProfileIfExist(profileId);
-            var userId = (int)await _userContextService.GetUserId();
+            var userId = await _userContextService.GetUserId();
             var user = await _userContextService.GetUser();
             var like = await _likeRepository.GetLike(profileId, userId);
             if(like != null)
