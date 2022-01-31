@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using TutorWebApi.Application.Exceptions;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Authorization
 {
     public class ResourceOperationService<T> : IResourceOperationService<T> where T : class
     {

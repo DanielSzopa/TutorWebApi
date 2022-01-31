@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using TutorWebApi.Domain;
+using TutorWebApi.Domain.Common;
+using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Authorization
 {
     public class ResourceOperationRequirementHandlerBase<T> : AuthorizationHandler<ResourceOperationRequirement, T> where T : AuditableEntity
     {
@@ -20,7 +21,7 @@ namespace TutorWebApi.Application
                 context.Succeed(requirement);
             }
 
-            var userId =  _userContextService.GetUserId().Result;
+            var userId = _userContextService.GetUserId().Result;
 
             if (resource.CreateById == userId)
             {

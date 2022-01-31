@@ -1,5 +1,5 @@
-using TutorWebApi;
 using TutorWebApi.Application;
+using TutorWebApi.Extensions;
 using TutorWebApi.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

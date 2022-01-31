@@ -1,4 +1,6 @@
-﻿namespace TutorWebApi.Application
+﻿using TutorWebApi.Application.Models.User;
+
+namespace TutorWebApi.Application.Interfaces
 {
     public interface IUserService
     {

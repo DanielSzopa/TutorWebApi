@@ -1,4 +1,6 @@
-﻿namespace TutorWebApi.Domain
+﻿using TutorWebApi.Domain.Common;
+
+namespace TutorWebApi.Domain.Entities
 {
     public class Comment : AuditableEntity
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Authorization
 {
     public enum ResourceOperation
     {

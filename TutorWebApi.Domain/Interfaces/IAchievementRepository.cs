@@ -1,4 +1,4 @@
-﻿namespace TutorWebApi.Domain
+﻿namespace TutorWebApi.Domain.Interfaces
 {
     public interface IAchievementRepository
     {

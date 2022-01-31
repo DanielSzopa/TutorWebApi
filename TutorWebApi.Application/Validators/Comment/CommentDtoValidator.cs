@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using TutorWebApi.Application.Models.Comment;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Validators.Comment
 {
     public class CommentDtoValidator : AbstractValidator<NewCommentDto>
     {

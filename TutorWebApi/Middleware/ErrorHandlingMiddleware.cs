@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using TutorWebApi.Application;
+using TutorWebApi.Application.Exceptions;
 
 namespace TutorWebApi.Middleware
 {

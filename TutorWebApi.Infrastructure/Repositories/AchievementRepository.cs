@@ -1,6 +1,7 @@
-﻿using TutorWebApi.Domain;
+﻿using TutorWebApi.Domain.Interfaces;
+using TutorWebApi.Infrastructure.Context;
 
-namespace TutorWebApi.Infrastructure
+namespace TutorWebApi.Infrastructure.Repositories
 {
     public class AchievementRepository : IAchievementRepository
     {

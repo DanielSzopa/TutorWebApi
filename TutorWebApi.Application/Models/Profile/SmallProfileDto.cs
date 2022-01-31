@@ -1,4 +1,4 @@
-﻿namespace TutorWebApi.Application
+﻿namespace TutorWebApi.Application.Models.Profile
 {
     public class SmallProfileDto
     {

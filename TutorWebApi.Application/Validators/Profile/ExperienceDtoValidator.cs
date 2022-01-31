@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using TutorWebApi.Application.Models.Profile;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Validators.Profile
 {
     public class ExperienceDtoValidator : AbstractValidator<ExperienceDto>
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TutorWebApi.Application;
+using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Account;
 
 namespace TutorWebApi.Controllers
 {

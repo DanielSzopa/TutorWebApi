@@ -2,7 +2,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using TutorWebApi.Domain;
+using TutorWebApi.Application.Authorization;
+using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Account;
+using TutorWebApi.Application.Models.Comment;
+using TutorWebApi.Application.Models.Profile;
+using TutorWebApi.Application.Models.User;
+using TutorWebApi.Application.Services;
+using TutorWebApi.Application.Validators.Account;
+using TutorWebApi.Application.Validators.Comment;
+using TutorWebApi.Application.Validators.Profile;
+using TutorWebApi.Application.Validators.User;
+using TutorWebApi.Domain.Entities;
+using TutorWebApi.Domain.Interfaces;
 
 namespace TutorWebApi.Application
 {

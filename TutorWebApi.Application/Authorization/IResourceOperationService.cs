@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Authorization
 {
     public interface IResourceOperationService<T>
     {

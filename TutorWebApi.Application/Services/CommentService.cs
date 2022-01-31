@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
-using TutorWebApi.Domain;
+using TutorWebApi.Application.Authorization;
+using TutorWebApi.Application.Exceptions;
+using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Comment;
+using TutorWebApi.Domain.Entities;
+using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Services
 {
     public class CommentService : ICommentService
     {
@@ -85,7 +90,7 @@ namespace TutorWebApi.Application
             return comment;
         }
 
-        public async Task<Domain.Profile> GetProfileIfExist(int profileId)
+        public async Task<Domain.Entities.Profile> GetProfileIfExist(int profileId)
         {
             var profile = await _profileRepository.GetProfileById(profileId);
             if (profile is null || profile.IsActive == false)

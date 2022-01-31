@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TutorWebApi.Domain;
+using TutorWebApi.Domain.Interfaces;
+using TutorWebApi.Infrastructure.Repositories;
 
 namespace TutorWebApi.Infrastructure
 {

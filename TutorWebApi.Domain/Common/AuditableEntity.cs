@@ -1,4 +1,4 @@
-﻿namespace TutorWebApi.Domain
+﻿namespace TutorWebApi.Domain.Common
 {
     public class AuditableEntity
     {

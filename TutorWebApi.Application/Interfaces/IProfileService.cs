@@ -1,7 +1,7 @@
-﻿using System.Security.Claims;
-using TutorWebApi.Domain;
+﻿using TutorWebApi.Application.Models.Profile;
+using TutorWebApi.Domain.Entities;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Interfaces
 {
     public interface IProfileService
     {

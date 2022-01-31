@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using TutorWebApi.Domain;
+using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Services
 {
     public class UserContextService : IUserContextService
     {

@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
-using TutorWebApi.Domain;
+using TutorWebApi.Application.Authorization;
+using TutorWebApi.Application.Exceptions;
+using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Profile;
+using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Services
 {
     public class ProfileService : IProfileService
     {
@@ -10,12 +14,12 @@ namespace TutorWebApi.Application
         private readonly IUserContextService _userContextService;
         private readonly IMapper _mapper;
         private readonly ILogger<ProfileService> _logger;
-        private readonly IResourceOperationService<Domain.Profile> _resourceOperationService;
+        private readonly IResourceOperationService<Domain.Entities.Profile> _resourceOperationService;
         private readonly ILikeRepository _likeRepository;
 
         public ProfileService(IProfileRepository profileRepository, IUserContextService userContextService
             , IMapper mapper, ILogger<ProfileService> logger,
-            IResourceOperationService<Domain.Profile> resourceOperationInterface,
+            IResourceOperationService<Domain.Entities.Profile> resourceOperationInterface,
             ILikeRepository likeRepository)
         {
             _profileRepository = profileRepository;
@@ -31,7 +35,7 @@ namespace TutorWebApi.Application
             var userId = (int)await _userContextService.GetUserId();
             var result = await _profileRepository.IsUserHaveProfile(userId);
             var resultId = default(int);
-            var mappedProfile = default(Domain.Profile);
+            var mappedProfile = default(Domain.Entities.Profile);
 
             if(result)
             {
@@ -41,7 +45,7 @@ namespace TutorWebApi.Application
                     throw new ForbidException("It is forbidden to create a second profile");
                 else
                 {
-                    mappedProfile = _mapper.Map<Domain.Profile>(profileDto);
+                    mappedProfile = _mapper.Map<Domain.Entities.Profile>(profileDto);
                     mappedProfile.UserRef = userId;
                     mappedProfile.Id = profileId;
                     resultId = await _profileRepository.UpdateProfile(mappedProfile);
@@ -49,7 +53,7 @@ namespace TutorWebApi.Application
                 }
             }
                                
-            mappedProfile = _mapper.Map<Domain.Profile>(profileDto);
+            mappedProfile = _mapper.Map<Domain.Entities.Profile>(profileDto);
             mappedProfile.UserRef = userId;
             resultId = await _profileRepository.CreateProfile(mappedProfile);
 
@@ -85,7 +89,7 @@ namespace TutorWebApi.Application
             await _resourceOperationService.ResourceAuthorizationException
                 (user, profile, new ResourceOperationRequirement(ResourceOperation.Update));
 
-            var updatedProfile = _mapper.Map<Domain.Profile>(profileDto);
+            var updatedProfile = _mapper.Map<Domain.Entities.Profile>(profileDto);
             updatedProfile.Id = profileId;
             updatedProfile.UserRef = profile.UserRef;
             var resultId = await _profileRepository.UpdateProfile(updatedProfile);
@@ -123,7 +127,7 @@ namespace TutorWebApi.Application
             await _profileRepository.DeleteProfile(profileId);
         }
 
-        public async Task<Domain.Profile> GetProfileIfExist(int profileId)
+        public async Task<Domain.Entities.Profile> GetProfileIfExist(int profileId)
         {
             var profile = await _profileRepository.GetProfileById(profileId);
             if (profile is null || profile.IsActive == false)

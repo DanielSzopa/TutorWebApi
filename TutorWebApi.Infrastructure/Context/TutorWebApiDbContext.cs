@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TutorWebApi.Domain;
+using TutorWebApi.Domain.Common;
+using TutorWebApi.Domain.Entities;
+using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Infrastructure
+namespace TutorWebApi.Infrastructure.Context
 {
     public class TutorWebApiDbContext : DbContext
     {

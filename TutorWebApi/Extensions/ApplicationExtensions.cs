@@ -1,6 +1,7 @@
 ﻿using TutorWebApi.Middleware;
+using TutorWebApi.Seeder;
 
-namespace TutorWebApi
+namespace TutorWebApi.Extensions
 {
     public static class ApplicationExtensions
     {

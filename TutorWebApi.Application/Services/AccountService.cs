@@ -4,9 +4,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TutorWebApi.Domain;
+using TutorWebApi.Application.Exceptions;
+using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Account;
+using TutorWebApi.Domain.Entities;
+using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Services
 {
     public class AccountService : IAccountService
     {
@@ -15,7 +19,7 @@ namespace TutorWebApi.Application
         private readonly IUserRepository _userRepository;
         private readonly AuthenticationSettings _authenticationSettings;
         public AccountService(IMapper mapper, IPasswordHasher<User> passwordHasher, IUserRepository userRepository
-            ,AuthenticationSettings authenticationSettings)
+            , AuthenticationSettings authenticationSettings)
         {
             _mapper = mapper;
             _passwordHasher = passwordHasher;
@@ -31,7 +35,7 @@ namespace TutorWebApi.Application
                 throw new BadRequestException(message);
 
             var password = _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password);
-            if(password == PasswordVerificationResult.Failed)
+            if (password == PasswordVerificationResult.Failed)
                 throw new BadRequestException(message);
 
             var userForJwt = _mapper.Map<UserForJwtDto>(user);
@@ -39,14 +43,14 @@ namespace TutorWebApi.Application
 
             return token;
         }
-      
+
         public async Task RegisterUserAsync(RegisterDto registerDto)
         {
             var user = _mapper.Map<User>(registerDto);
             user.Mail = user.Mail.ToLower();
             var password = _passwordHasher.HashPassword(user, registerDto.Password);
             user.Password = password;
-            
+
             var userId = await _userRepository.RegisterUserAsync(user);
             await _userRepository.SetCreateIdForUser(userId);
             await _userRepository.SetCreateIdForAddress(userId);

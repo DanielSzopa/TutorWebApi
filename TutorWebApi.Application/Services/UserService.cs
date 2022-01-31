@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
-using TutorWebApi.Domain;
+using TutorWebApi.Application.Authorization;
+using TutorWebApi.Application.Exceptions;
+using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.User;
+using TutorWebApi.Domain.Entities;
+using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Services
 {
     public class UserService : IUserService
     {

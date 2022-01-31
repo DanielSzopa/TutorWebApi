@@ -1,4 +1,7 @@
-﻿namespace TutorWebApi.Domain
+﻿using TutorWebApi.Domain.Common;
+using TutorWebApi.Domain.Entities;
+
+namespace TutorWebApi.Domain.Entities
 {
     public class Profile : AuditableEntity
     {

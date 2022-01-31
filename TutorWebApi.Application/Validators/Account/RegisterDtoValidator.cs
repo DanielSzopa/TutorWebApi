@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
-using TutorWebApi.Infrastructure;
+using TutorWebApi.Application.Models.Account;
+using TutorWebApi.Application.Validators.User;
+using TutorWebApi.Infrastructure.Context;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Validators.Account
 {
     public class RegisterDtoValidator : AbstractValidator<RegisterDto>
     {
@@ -26,7 +28,7 @@ namespace TutorWebApi.Application
                 .NotEmpty().WithMessage("Mail can not be empty")
                 .EmailAddress().WithMessage("Mail is not correct")
                 .MaximumLength(100).WithMessage("Mail can not have more letters than 100");
-                 
+
             RuleFor(r => r.Personal)
                 .SetValidator(new PersonalDtoValidator());
 

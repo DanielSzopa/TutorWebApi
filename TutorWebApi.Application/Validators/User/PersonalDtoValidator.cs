@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using TutorWebApi.Application.Models.User;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Validators.User
 {
     public class PersonalDtoValidator : AbstractValidator<PersonalDto>
     {

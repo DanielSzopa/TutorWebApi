@@ -1,4 +1,6 @@
-﻿namespace TutorWebApi.Domain
+﻿using TutorWebApi.Domain.Entities;
+
+namespace TutorWebApi.Domain.Interfaces
 {
     public interface IProfileRepository
     {

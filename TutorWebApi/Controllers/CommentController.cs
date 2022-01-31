@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TutorWebApi.Application;
+using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Comment;
 
 namespace TutorWebApi.Controllers
 {

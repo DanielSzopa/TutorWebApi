@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using TutorWebApi.Domain.Entities;
 
-namespace TutorWebApi.Domain
+namespace TutorWebApi.Domain.Interfaces
 {
     public interface ICommentRepository
     {

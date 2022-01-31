@@ -1,6 +1,7 @@
-﻿using TutorWebApi.Domain;
+﻿using TutorWebApi.Application.Models.Comment;
+using TutorWebApi.Domain.Entities;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Interfaces
 {
     public interface ICommentService
     {

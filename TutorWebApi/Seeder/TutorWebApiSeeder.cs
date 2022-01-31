@@ -1,7 +1,7 @@
-﻿using TutorWebApi.Domain;
-using TutorWebApi.Infrastructure;
+﻿using TutorWebApi.Domain.Entities;
+using TutorWebApi.Infrastructure.Context;
 
-namespace TutorWebApi
+namespace TutorWebApi.Seeder
 {
     public class TutorWebApiSeeder
     {
@@ -13,14 +13,14 @@ namespace TutorWebApi
         }
         public async Task Seed()
         {
-            if(await _dbContext.Database.CanConnectAsync())
+            if (await _dbContext.Database.CanConnectAsync())
             {
-                if(!(_dbContext.Subjects.Any()))
+                if (!_dbContext.Subjects.Any())
                 {
                     var subjects = GetSubjects();
                     await _dbContext.AddRangeAsync(subjects);
                     await _dbContext.SaveChangesAsync();
-                }              
+                }
             }
         }
 

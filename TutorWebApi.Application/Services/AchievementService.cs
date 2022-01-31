@@ -1,6 +1,7 @@
-﻿using TutorWebApi.Domain;
+﻿using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Services
 {
     public class AchievementService : IAchievementService
     {

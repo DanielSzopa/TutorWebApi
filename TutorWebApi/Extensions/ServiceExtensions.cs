@@ -5,13 +5,14 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NLog.Web;
 using System.Text;
-using TutorWebApi.Application;
-using TutorWebApi.Domain;
-using TutorWebApi.Infrastructure;
+using TutorWebApi.Application.Authorization;
+using TutorWebApi.Application.Models.Account;
+using TutorWebApi.Domain.Entities;
+using TutorWebApi.Infrastructure.Context;
 using TutorWebApi.Middleware;
+using TutorWebApi.Seeder;
 
-
-namespace TutorWebApi
+namespace TutorWebApi.Extensions
 {
     public static class ServiceExtensions
     {
@@ -27,7 +28,7 @@ namespace TutorWebApi
         {
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<TutorWebApiSeeder>();
-            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Domain.Profile>>();
+            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Domain.Entities.Profile>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Address>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<User>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Comment>>();

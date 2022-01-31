@@ -1,6 +1,11 @@
-﻿using TutorWebApi.Domain;
+﻿using TutorWebApi.Application.Models.Account;
+using TutorWebApi.Application.Models.Comment;
+using TutorWebApi.Application.Models.Like;
+using TutorWebApi.Application.Models.Profile;
+using TutorWebApi.Application.Models.User;
+using TutorWebApi.Domain.Entities;
 
-namespace TutorWebApi.Application
+namespace TutorWebApi.Application.Mapping
 {
     public class TutorWebApiMappingProfile : AutoMapper.Profile
     {
@@ -22,12 +27,12 @@ namespace TutorWebApi.Application
             CreateMap<User, UserForJwtDto>()
                 .ForMember(u => u.Country, opt => opt.MapFrom(u => u.Address.Country));
 
-            CreateMap<ProfileDto, Domain.Profile>();
-            CreateMap<Domain.Profile, SmallProfileDto>()
+            CreateMap<ProfileDto, Profile>();
+            CreateMap<Profile, SmallProfileDto>()
                 .ForMember(p => p.City, opt => opt.MapFrom(p => p.User.Address.City))
                 .ForMember(p => p.FullName, opt => opt.MapFrom(p => $"{p.User.FirstName} {p.User.LastName}"));
 
-            CreateMap<Domain.Profile, FullProfileDto>()
+            CreateMap<Profile, FullProfileDto>()
                 .ForMember(p => p.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
                 .ForMember(p => p.LastName, opt => opt.MapFrom(u => u.User.LastName))
                 .ForMember(p => p.Country, opt => opt.MapFrom(u => u.User.Address.Country))

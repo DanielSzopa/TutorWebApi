@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TutorWebApi.Domain;
+using TutorWebApi.Domain.Entities;
+using TutorWebApi.Domain.Interfaces;
+using TutorWebApi.Infrastructure.Context;
 
-namespace TutorWebApi.Infrastructure
+namespace TutorWebApi.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
