@@ -20,6 +20,7 @@ namespace TutorWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateAchievement([FromBody]AchievementDto achievementDto, int id)
         {
+            await _achievementService.CreateAchievement(achievementDto, id);
             return Ok();
         }
 
