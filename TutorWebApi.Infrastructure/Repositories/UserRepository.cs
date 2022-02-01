@@ -90,5 +90,12 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .FirstOrDefaultAsync(a => a.UserRef == userId);
             return address;
         }
+
+        public async Task<bool> IsMailIsTaken(string mail)
+        {
+            var result = await _context.Users
+                .AnyAsync(u => u.Mail == mail);
+            return result;
+        }
     }
 }

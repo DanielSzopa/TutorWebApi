@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TutorWebApi.Domain.Interfaces;
 using TutorWebApi.Infrastructure.Repositories;
+using TutorWebApi.Infrastructure.Seeder;
 
 namespace TutorWebApi.Infrastructure
 {
@@ -13,6 +14,8 @@ namespace TutorWebApi.Infrastructure
             services.AddScoped<ICommentRepository,CommentRepository>();
             services.AddScoped<ILikeRepository,LikeRepository>();
             services.AddScoped<IAchievementRepository,AchievementRepository>();
+
+            services.AddScoped<TutorWebApiSeeder>();
 
             return services;
         }

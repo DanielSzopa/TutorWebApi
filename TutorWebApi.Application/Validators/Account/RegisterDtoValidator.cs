@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
+using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Account;
 using TutorWebApi.Application.Validators.User;
-using TutorWebApi.Infrastructure.Context;
 
 namespace TutorWebApi.Application.Validators.Account
 {
     public class RegisterDtoValidator : AbstractValidator<RegisterDto>
     {
-        public RegisterDtoValidator(TutorWebApiDbContext dbContext)
+        public RegisterDtoValidator(IUserService userService)
         {
             RuleFor(r => r.Password)
                 .MinimumLength(8).WithMessage("Password have to have minimum 8 letters");
@@ -19,7 +19,7 @@ namespace TutorWebApi.Application.Validators.Account
             RuleFor(r => r.Mail)
                 .Custom((value, context) =>
                 {
-                    var isEmailIsTaken = dbContext.Users.Any(u => u.Mail == value);
+                    var isEmailIsTaken = userService.IsMailIsTaken(value).Result;
                     if (isEmailIsTaken)
                         context.AddFailure("Mail", "That email is taken");
                 });

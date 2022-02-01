@@ -55,5 +55,11 @@ namespace TutorWebApi.Application.Services
             mappedUser.Id = userId;
             await _userRepository.UpdatePersonal(mappedUser);
         }
+
+        public async Task<bool> IsMailIsTaken(string mail)
+        {
+            var result = await _userRepository.IsMailIsTaken(mail);
+            return result;
+        }
     }
 }

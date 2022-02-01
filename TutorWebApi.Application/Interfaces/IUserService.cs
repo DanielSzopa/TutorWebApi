@@ -6,5 +6,6 @@ namespace TutorWebApi.Application.Interfaces
     {
         Task UpdateAddress(AddressDto addressDto, int userId);
         Task UpdatePersonal(PersonalDto personalDto, int userId);
+        Task<bool> IsMailIsTaken(string mail);
     }
 }

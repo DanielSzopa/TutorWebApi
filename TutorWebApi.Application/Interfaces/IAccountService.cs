@@ -6,6 +6,6 @@ namespace TutorWebApi.Application.Interfaces
     {
         Task<string> AuthenticateUserAsync(LoginDto loginDto);
         Task RegisterUserAsync(RegisterDto registerDto);
-        Task<string> GenerateJwt(UserForJwtDto userForJwtDto);
+        string GenerateJwt(UserForJwtDto userForJwtDto);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using TutorWebApi.Domain.Entities;
 using TutorWebApi.Infrastructure.Context;
 
-namespace TutorWebApi.Seeder
+namespace TutorWebApi.Infrastructure.Seeder
 {
     public class TutorWebApiSeeder
     {

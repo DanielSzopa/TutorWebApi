@@ -12,6 +12,7 @@ namespace TutorWebApi.Domain.Interfaces
         Task UpdateAddress(Address address, int userId);
         Task UpdatePersonal(User user);
         Task<Address> GetAddressByUserId(int userId);
+        Task<bool> IsMailIsTaken(string mail);
 
     }
 }

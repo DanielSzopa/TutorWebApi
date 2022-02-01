@@ -1,5 +1,5 @@
-﻿using TutorWebApi.Middleware;
-using TutorWebApi.Seeder;
+﻿using TutorWebApi.Infrastructure.Seeder;
+using TutorWebApi.Middleware;
 
 namespace TutorWebApi.Extensions
 {

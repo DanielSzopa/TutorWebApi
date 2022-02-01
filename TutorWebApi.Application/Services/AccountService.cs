@@ -39,7 +39,7 @@ namespace TutorWebApi.Application.Services
                 throw new BadRequestException(message);
 
             var userForJwt = _mapper.Map<UserForJwtDto>(user);
-            var token = await GenerateJwt(userForJwt);
+            var token = GenerateJwt(userForJwt);
 
             return token;
         }
@@ -56,7 +56,7 @@ namespace TutorWebApi.Application.Services
             await _userRepository.SetCreateIdForAddress(userId);
         }
 
-        public async Task<string> GenerateJwt(UserForJwtDto userForJwtDto)
+        public string GenerateJwt(UserForJwtDto userForJwtDto)
         {
             var claims = new List<Claim>()
             {
