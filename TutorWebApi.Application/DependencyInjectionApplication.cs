@@ -27,7 +27,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<ICommentService, CommentService>();
-            services.AddScoped<IUserContextService, UserContextService>();
+           // services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILikeService, LikeService>();
             services.AddScoped<IAchievementService, AchievementService>();

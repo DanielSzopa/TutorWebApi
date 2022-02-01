@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TutorWebApi.Application\TutorWebApi.Application.csproj" />
-    <ProjectReference Include="..\TutorWebApi.Infrastructure\TutorWebApi.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using TutorWebApi.Domain.Interfaces;
 
-namespace TutorWebApi.Application.Services
+namespace TutorWebApi.Services
 {
     public class UserContextService : IUserContextService
     {
@@ -21,7 +20,7 @@ namespace TutorWebApi.Application.Services
         public async Task<int> GetUserId()
         {
             var user = await GetUser();
-            if(user is null)
+            if (user is null)
             {
                 return 0;
             }
@@ -29,18 +28,18 @@ namespace TutorWebApi.Application.Services
             {
                 try
                 {
-                    if(user.Claims.Count() == 0)
+                    if (user.Claims.Count() == 0)
                     {
                         return 0;
-                    }    
+                    }
                     var userId = int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
                     return userId;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return 0;
                 }
-               
+
             }
         }
     }

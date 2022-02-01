@@ -8,8 +8,10 @@ using System.Text;
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Models.Account;
 using TutorWebApi.Domain.Entities;
+using TutorWebApi.Domain.Interfaces;
 using TutorWebApi.Infrastructure.Context;
 using TutorWebApi.Middleware;
+using TutorWebApi.Services;
 
 namespace TutorWebApi.Extensions
 {
@@ -25,7 +27,8 @@ namespace TutorWebApi.Extensions
 
         public static IServiceCollection AddTutorWebApiServices(this IServiceCollection services)
         {
-            services.AddScoped<ErrorHandlingMiddleware>();           
+            services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Domain.Entities.Profile>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Address>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<User>>();
