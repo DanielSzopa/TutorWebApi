@@ -5,6 +5,7 @@ namespace TutorWebApi.Domain.Entities
 {
     public class Profile : AuditableEntity
     {
+        public int Id { get; set; }
         public string Description { get; set; }
         public int UserRef { get; set; }
         public User User { get; set; }

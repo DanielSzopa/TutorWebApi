@@ -57,7 +57,7 @@ namespace TutorWebApi.Migrations
 
                     b.HasIndex("ProfilId");
 
-                    b.ToTable("Achievements");
+                    b.ToTable("Achievements", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.Address", b =>
@@ -116,7 +116,7 @@ namespace TutorWebApi.Migrations
                     b.HasIndex("UserRef")
                         .IsUnique();
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.Advert", b =>
@@ -174,7 +174,7 @@ namespace TutorWebApi.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Adverts");
+                    b.ToTable("Adverts", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.AdvertContact", b =>
@@ -217,7 +217,7 @@ namespace TutorWebApi.Migrations
                     b.HasIndex("AdvertRef")
                         .IsUnique();
 
-                    b.ToTable("AdvertContacts");
+                    b.ToTable("AdvertContacts", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.Comment", b =>
@@ -259,7 +259,7 @@ namespace TutorWebApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.Experience", b =>
@@ -297,7 +297,7 @@ namespace TutorWebApi.Migrations
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("Experiences");
+                    b.ToTable("Experiences", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.Like", b =>
@@ -335,7 +335,7 @@ namespace TutorWebApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Likes");
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.Profile", b =>
@@ -373,7 +373,7 @@ namespace TutorWebApi.Migrations
                     b.HasIndex("UserRef")
                         .IsUnique();
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.Subject", b =>
@@ -406,7 +406,7 @@ namespace TutorWebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subjects");
+                    b.ToTable("Subjects", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.User", b =>
@@ -456,7 +456,7 @@ namespace TutorWebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("TutorWebApi.Domain.Achievement", b =>
