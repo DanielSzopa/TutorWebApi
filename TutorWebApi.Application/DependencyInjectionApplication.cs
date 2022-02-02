@@ -30,6 +30,7 @@ namespace TutorWebApi.Application
            // services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILikeService, LikeService>();
+            services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<IAchievementService, AchievementService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -40,6 +41,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IResourceOperationService<Comment>, ResourceOperationService<Comment>>();
             services.AddScoped<IResourceOperationService<Like>, ResourceOperationService<Like>>();
             services.AddScoped<IResourceOperationService<Achievement>, ResourceOperationService<Achievement>>();
+            services.AddScoped<IResourceOperationService<Experience>, ResourceOperationService<Experience>>();
 
             services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
             services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
