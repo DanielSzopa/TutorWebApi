@@ -8,7 +8,7 @@ namespace TutorWebApi.Infrastructure.Config
         public static void AddAchievementConfig(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Achievement>()
-               .Property(a => a.Name)
+               .Property(a => a.Description)
                .HasMaxLength(150)
                .IsRequired();
 
@@ -118,7 +118,7 @@ namespace TutorWebApi.Infrastructure.Config
                 .IsRequired();
 
             modelBuilder.Entity<Experience>()
-              .Property(e => e.Name)
+              .Property(e => e.Description)
               .HasMaxLength(150)
               .IsRequired();
         }
