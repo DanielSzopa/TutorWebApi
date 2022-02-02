@@ -24,17 +24,18 @@ namespace TutorWebApi.Controllers
             return Ok();
         }
 
-        [HttpPut("{achievement-id}")]
+        [HttpPut("{achievementId}")]
         public async Task<ActionResult> UpdateAchievement([FromBody] AchievementDto achievementDto, [FromRoute]int achievementId, int id)
         {
+            await _achievementService.UpdateAchievement(achievementDto,achievementId,id);
             return Ok();
         }
 
-        [HttpDelete("{achievement-id}")]
+        [HttpDelete("{achievementId}")]
         public async Task<ActionResult> DeleteAchievement([FromRoute] int achievementId, int id)
         {
+            await _achievementService.DeleteAchievement(achievementId,id);
             return NoContent();
         }
-
     }
 }
