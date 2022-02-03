@@ -28,5 +28,12 @@ namespace TutorWebApi.Controllers
             string token = await _accountService.AuthenticateUserAsync(loginDto);
             return Ok(token);
         }
+
+        [HttpPut("password")]
+        public async Task<ActionResult> ChangePassword([FromBody]ChangePasswordRequestDto changePasswordDto)
+        {
+            await _accountService.ChangePassword(changePasswordDto);
+            return Ok("Password has change");
+        }
     }
 }

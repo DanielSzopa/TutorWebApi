@@ -56,6 +56,26 @@ namespace TutorWebApi.Application.Services
             await _userRepository.SetCreateIdForAddress(userId);
         }
 
+        public async Task ChangePassword(ChangePasswordRequestDto changePasswordRequestDto)
+        {
+            var user = await _userRepository.GetUserByMail(changePasswordRequestDto.Mail);
+            var newPassword = _passwordHasher.HashPassword(user, changePasswordRequestDto.NewPassword);
+            await _userRepository.ChangePassword(newPassword, user.Id);
+        }
+
+        public async Task<bool> IsUserCanLogin(string mail, string password)
+        {
+            var user = await _userRepository.GetUserByMail(mail);
+            if (user is null)
+                return false;
+
+            var newPassword = _passwordHasher.VerifyHashedPassword(user, user.Password, password);
+            if (newPassword == PasswordVerificationResult.Failed)
+                return false;
+
+            return true;
+        }
+
         public string GenerateJwt(UserForJwtDto userForJwtDto)
         {
             var claims = new List<Claim>()

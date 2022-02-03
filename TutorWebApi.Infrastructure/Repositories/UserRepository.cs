@@ -84,6 +84,14 @@ namespace TutorWebApi.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task ChangePassword(string password, int userId)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            user.Password = password;
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<Address> GetAddressByUserId(int userId)
         {
             var address = await _context.Addresses
