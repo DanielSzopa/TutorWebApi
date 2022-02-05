@@ -71,10 +71,12 @@ namespace TutorWebApi.Application.Services
             return profileDto;
         }
 
-        public async Task<IEnumerable<SmallProfileDto>> GetAllSmallProfiles()
+        public async Task<IEnumerable<SmallProfileDto>> GetAllSmallProfiles(string searchPhrase)
         {
             var profiles = await _profileRepository.GetAllProfiles();
-            var profileDtos = _mapper.Map<IEnumerable<SmallProfileDto>>(profiles);
+            var mappedDto = _mapper.Map<IEnumerable<SmallProfileDto>>(profiles);
+            var profileDtos = mappedDto.Where(p => searchPhrase == null || (p.FullName.ToLower().Contains(searchPhrase.ToLower())
+                || p.Description.ToLower().Contains(searchPhrase.ToLower())));
             foreach (var dto in profileDtos)
             {
                 dto.Likes = await _likeRepository.CountLikesByProfil(dto.Id);

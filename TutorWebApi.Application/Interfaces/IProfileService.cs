@@ -7,7 +7,7 @@ namespace TutorWebApi.Application.Interfaces
     {
         Task<int> CreateProfile(ProfileDto profileDto);
         Task<FullProfileDto> GetProfile(int profileId);
-        Task<IEnumerable<SmallProfileDto>> GetAllSmallProfiles();
+        Task<IEnumerable<SmallProfileDto>> GetAllSmallProfiles(string searchPhrase);
         Task<int> UpdateProfile(ProfileDto profileDto, int profileId);
         Task<int> UpdateProfileDescription(string description, int profileId);
         Task DeleteProfile(int profileId);
