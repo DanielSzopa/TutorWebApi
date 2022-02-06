@@ -25,9 +25,9 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllComments(int id)
+        public async Task<ActionResult> GetAllComments([FromQuery]CommentQuery commentQuery, int id)
         {
-            var comments = await _commentService.GetAllComments(id);
+            var comments = await _commentService.GetAllComments(commentQuery, id);
             return Ok(comments);
         }
 

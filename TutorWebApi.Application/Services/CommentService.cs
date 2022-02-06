@@ -3,6 +3,7 @@ using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Comment;
+using TutorWebApi.Application.Models.Page;
 using TutorWebApi.Domain.Entities;
 using TutorWebApi.Domain.Interfaces;
 
@@ -15,16 +16,19 @@ namespace TutorWebApi.Application.Services
         private readonly IMapper _mapper;
         private readonly IUserContextService _userContextService;
         private readonly IResourceOperationService<Comment> _resourceOperationService;
+        private readonly IPaginationService _paginationService;
 
         public CommentService(ICommentRepository commentRepository, IProfileRepository profileRepository,
             IMapper mapper, IUserContextService userContextService, 
-            IResourceOperationService<Comment> resourceOperationService)
+            IResourceOperationService<Comment> resourceOperationService,
+            IPaginationService paginationService)
         {
             _commentRepository = commentRepository;
             _profileRepository = profileRepository;
             _mapper = mapper;
             _userContextService = userContextService;
             _resourceOperationService = resourceOperationService;
+            _paginationService = paginationService;
         }
 
         public async Task<int> CreateComment(NewCommentDto commentDto, int profileId)
@@ -40,12 +44,15 @@ namespace TutorWebApi.Application.Services
             return commentId;
         }
 
-        public async Task<IEnumerable<CommentDto>> GetAllComments(int profileId)
+        public async Task<PagedResult<CommentDto>> GetAllComments(CommentQuery commentQuery,int profileId)
         {
             var profile = await GetProfileIfExist(profileId);
             var comments = await _commentRepository.GetAllActiveComments(profileId);
             var commentDtos = _mapper.Map<List<CommentDto>>(comments);
-            return commentDtos;
+            commentDtos = _paginationService
+                .ReturnRecordsToShow(commentQuery.PageNumber, commentQuery.PageSize, commentDtos);
+            var result = new PagedResult<CommentDto>(commentDtos, comments.Count, commentQuery.PageSize, commentQuery.PageNumber);
+            return result;
         }
 
         public async Task<CommentDto> GetCommentById(int profileId, int commentId)

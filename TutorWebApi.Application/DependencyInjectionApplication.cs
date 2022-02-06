@@ -52,6 +52,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<NewCommentDto>, CommentDtoValidator>();
             services.AddScoped<IValidator<ChangePasswordRequestDto>, ChangePasswordRequestDtoValidator>();
             services.AddScoped<IValidator<ProfileQuery>, ProfileQueryValidator>();
+            services.AddScoped<IValidator<CommentQuery>, CommentQuaryValidator>();
 
             return services;
         }
