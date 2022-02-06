@@ -30,9 +30,9 @@ namespace TutorWebApi.Controllers
             return Ok(profile);
         }
         [HttpGet]
-        public async Task<ActionResult> GetAllProfiles([FromQuery]string? searchPhrase)
+        public async Task<ActionResult> GetAllProfiles([FromQuery]ProfileQuery profileQuery)
         {
-            var profiles = await _profileService.GetAllSmallProfiles(searchPhrase);
+            var profiles = await _profileService.GetAllSmallProfiles(profileQuery);
             return Ok(profiles);
         }
 

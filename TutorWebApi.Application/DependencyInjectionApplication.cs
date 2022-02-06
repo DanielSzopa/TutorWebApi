@@ -27,13 +27,13 @@ namespace TutorWebApi.Application
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<ICommentService, CommentService>();
-           // services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILikeService, LikeService>();
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<IAchievementService, AchievementService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IPaginationService, PaginationService>();
 
             services.AddScoped<IResourceOperationService<Profile>, ResourceOperationService<Profile>>();
             services.AddScoped<IResourceOperationService<Address>, ResourceOperationService<Address>>();
@@ -51,6 +51,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<PersonalDto>, PersonalDtoValidator>();
             services.AddScoped<IValidator<NewCommentDto>, CommentDtoValidator>();
             services.AddScoped<IValidator<ChangePasswordRequestDto>, ChangePasswordRequestDtoValidator>();
+            services.AddScoped<IValidator<ProfileQuery>, ProfileQueryValidator>();
 
             return services;
         }

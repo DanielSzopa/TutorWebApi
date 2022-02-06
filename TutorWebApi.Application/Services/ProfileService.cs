@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Enum;
+using TutorWebApi.Application.Models.Page;
 using TutorWebApi.Application.Models.Profile;
 using TutorWebApi.Domain.Interfaces;
 
@@ -16,11 +18,12 @@ namespace TutorWebApi.Application.Services
         private readonly ILogger<ProfileService> _logger;
         private readonly IResourceOperationService<Domain.Entities.Profile> _resourceOperationService;
         private readonly ILikeRepository _likeRepository;
+        private readonly IPaginationService _paginationService;
 
         public ProfileService(IProfileRepository profileRepository, IUserContextService userContextService
             , IMapper mapper, ILogger<ProfileService> logger,
             IResourceOperationService<Domain.Entities.Profile> resourceOperationInterface,
-            ILikeRepository likeRepository)
+            ILikeRepository likeRepository, IPaginationService paginationService)
         {
             _profileRepository = profileRepository;
             _userContextService = userContextService;
@@ -28,6 +31,7 @@ namespace TutorWebApi.Application.Services
             _logger = logger;
             _resourceOperationService = resourceOperationInterface;
             _likeRepository = likeRepository;
+            _paginationService = paginationService;
         }
 
         public async Task<int> CreateProfile(ProfileDto profileDto)
@@ -71,17 +75,38 @@ namespace TutorWebApi.Application.Services
             return profileDto;
         }
 
-        public async Task<IEnumerable<SmallProfileDto>> GetAllSmallProfiles(string searchPhrase)
+        public async Task<PagedResult<SmallProfileDto>> GetAllSmallProfiles(ProfileQuery profileQuery)
         {
             var profiles = await _profileRepository.GetAllProfiles();
-            var mappedDto = _mapper.Map<IEnumerable<SmallProfileDto>>(profiles);
-            var profileDtos = mappedDto.Where(p => searchPhrase == null || (p.FullName.ToLower().Contains(searchPhrase.ToLower())
-                || p.Description.ToLower().Contains(searchPhrase.ToLower())));
+            var mappedDtos = _mapper.Map<IEnumerable<SmallProfileDto>>(profiles);
+
+            var baseQuery = mappedDtos.Where(p => profileQuery.SearchPhrase == null
+            || (p.FullName.ToLower().Contains(profileQuery.SearchPhrase.ToLower())
+                || p.Description.ToLower().Contains(profileQuery.SearchPhrase.ToLower())));
+
+            if(!string.IsNullOrEmpty(profileQuery.SortBy))
+            {
+                var columnsSelectors = new Dictionary<string, Func<SmallProfileDto, object>>
+                {
+                    { nameof(SmallProfileDto.FullName), r => r.FullName},
+                    { nameof(SmallProfileDto.City), r => r.City},
+                };
+
+                var selectedColumn = columnsSelectors[profileQuery.SortBy];
+                baseQuery = _paginationService
+                    .SortRecords<SmallProfileDto>(selectedColumn, profileQuery.SortDirection, baseQuery.ToList());
+            }
+
+            var profileDtos = _paginationService
+                .ReturnRecordsToShow(profileQuery.PageNumber, profileQuery.PageSize, baseQuery.ToList());
+
             foreach (var dto in profileDtos)
             {
                 dto.Likes = await _likeRepository.CountLikesByProfil(dto.Id);
             }
-            return profileDtos;
+
+            var result = new PagedResult<SmallProfileDto>(profileDtos,baseQuery.Count(),profileQuery.PageSize, profileQuery.PageNumber);          
+            return result;
         }
 
         public async Task<int> UpdateProfile(ProfileDto profileDto, int profileId)
