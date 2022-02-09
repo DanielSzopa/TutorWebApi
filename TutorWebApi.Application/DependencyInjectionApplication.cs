@@ -31,6 +31,7 @@ namespace TutorWebApi.Application
             services.AddScoped<ILikeService, LikeService>();
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<IAchievementService, AchievementService>();
+            services.AddScoped<ISubjectService, SubjectService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IPaginationService, PaginationService>();

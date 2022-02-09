@@ -2,6 +2,7 @@
 using TutorWebApi.Application.Models.Comment;
 using TutorWebApi.Application.Models.Like;
 using TutorWebApi.Application.Models.Profile;
+using TutorWebApi.Application.Models.Subject;
 using TutorWebApi.Application.Models.User;
 using TutorWebApi.Domain.Entities;
 
@@ -54,6 +55,8 @@ namespace TutorWebApi.Application.Mapping
             CreateMap<ExperienceDto, Experience>()
                 .ReverseMap();
 
+            CreateMap<Subject, SubjectDto>()
+                .ForMember(s => s.Subject, opt => opt.MapFrom(s => s.Name));
         }
     }
 }
