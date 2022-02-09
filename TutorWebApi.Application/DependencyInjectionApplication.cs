@@ -5,6 +5,7 @@ using System.Reflection;
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Account;
+using TutorWebApi.Application.Models.Advert;
 using TutorWebApi.Application.Models.Comment;
 using TutorWebApi.Application.Models.Profile;
 using TutorWebApi.Application.Models.User;
@@ -14,7 +15,7 @@ using TutorWebApi.Application.Validators.Comment;
 using TutorWebApi.Application.Validators.Profile;
 using TutorWebApi.Application.Validators.User;
 using TutorWebApi.Domain.Entities;
-using TutorWebApi.Domain.Interfaces;
+using TutorWebApi.Application.Validators.Advert;
 
 namespace TutorWebApi.Application
 {
@@ -54,6 +55,8 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<ChangePasswordRequestDto>, ChangePasswordRequestDtoValidator>();
             services.AddScoped<IValidator<ProfileQuery>, ProfileQueryValidator>();
             services.AddScoped<IValidator<CommentQuery>, CommentQuaryValidator>();
+            services.AddScoped<IValidator<NewAdvertDto>, NewAdvertDtoValidator>();
+            services.AddScoped<IValidator<NewAdvertContact>, NewAdvertContactDtoValidator>();
 
             return services;
         }
