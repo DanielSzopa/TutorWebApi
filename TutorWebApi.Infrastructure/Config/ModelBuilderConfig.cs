@@ -83,6 +83,10 @@ namespace TutorWebApi.Infrastructure.Config
              .Property(ac => ac.Mail)
              .HasMaxLength(100)
              .IsRequired();
+
+            modelBuilder.Entity<AdvertContact>()
+            .Property(ac => ac.Number)
+            .HasMaxLength(20);
         }
 
         public static void AddCommentConfig(this ModelBuilder modelBuilder)

@@ -10,6 +10,9 @@ namespace TutorWebApi.Application.Validators.Advert
             RuleFor(a => a.Mail)
                 .MaximumLength(100).WithMessage("Mail can not have more letters than 100")
                 .NotEmpty().WithMessage("Mail can not be empty");
+
+            RuleFor(a => a.Number)
+                .MaximumLength(20).WithMessage("Number can not have more letters than 20");
         }
     }
 }

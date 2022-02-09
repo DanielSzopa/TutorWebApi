@@ -21,5 +21,12 @@ namespace TutorWebApi.Application.Services
             var subjectDtos = _mapper.Map<List<SubjectDto>>(subjects);
             return subjectDtos;
         }
+
+        public async Task<List<int>> GetAllSubjectsId()
+        {
+            var subjects = await _subjectRepository.GetAllSubjects();
+            var result = subjects.Select(s => s.Id).ToList();
+            return result;
+        }
     }
 }
