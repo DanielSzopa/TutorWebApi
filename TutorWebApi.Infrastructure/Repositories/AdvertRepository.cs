@@ -32,5 +32,17 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .FirstOrDefaultAsync(a => a.Id == id);
             return advert;
         }
+
+        public async Task<List<Advert>> GetAllAdverts()
+        {
+            var adverts = await _dbContext.Adverts
+                .Include(a => a.AdvertContact)
+                .Include(a => a.Subject)
+                .Include(a => a.Profil)
+                .ThenInclude(p => p.User)
+                .ToListAsync();
+
+            return adverts;
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace TutorWebApi.Domain.Interfaces
     {
         Task<int> CreateAdvert(Advert advert);
         Task<Advert> GetAdvertById(int id);
+        Task<List<Advert>> GetAllAdverts();
     }
 }

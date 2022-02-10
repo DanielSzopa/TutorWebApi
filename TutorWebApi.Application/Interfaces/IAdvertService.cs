@@ -1,4 +1,5 @@
 ﻿using TutorWebApi.Application.Models.Advert;
+using TutorWebApi.Application.Models.Page;
 
 namespace TutorWebApi.Application.Interfaces
 {
@@ -6,5 +7,6 @@ namespace TutorWebApi.Application.Interfaces
     {
         Task<int> CreateAdvert(NewAdvertDto advertDto);
         Task<AdvertDto> GetAdvertById(int id);
+        Task<PagedResult<AdvertDto>> GetAllAdverts(AdvertQuery advertQuery);
     }
 }

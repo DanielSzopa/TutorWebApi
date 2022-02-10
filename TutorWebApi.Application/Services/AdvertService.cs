@@ -3,6 +3,7 @@ using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Advert;
+using TutorWebApi.Application.Models.Page;
 using TutorWebApi.Domain.Entities;
 using TutorWebApi.Domain.Interfaces;
 
@@ -14,15 +15,18 @@ namespace TutorWebApi.Application.Services
         private readonly IMapper _mapper;
         private readonly IUserContextService _contextService;
         private readonly IProfileRepository _profileRepository;
+        private readonly IPaginationService _paginationService;
 
         public AdvertService(IAdvertRepository advertRepository, IMapper mapper,
              IUserContextService contextService,
-             IProfileRepository profileRepository)
+             IProfileRepository profileRepository,
+             IPaginationService paginationService)
         {
             _advertRepository = advertRepository;
             _mapper = mapper;
             _contextService = contextService;
             _profileRepository = profileRepository;
+            _paginationService = paginationService;
         }
 
         public async Task<int> CreateAdvert(NewAdvertDto advertDto)
@@ -45,6 +49,34 @@ namespace TutorWebApi.Application.Services
                 throw new NotFoundException("Advert not found");
             var advertDto = _mapper.Map<AdvertDto>(advert);
             return advertDto;
+        }
+
+        public async Task<PagedResult<AdvertDto>> GetAllAdverts(AdvertQuery advertQuery)
+        {
+            var adverts = await _advertRepository.GetAllAdverts();
+            var advertDtos = _mapper.Map<IEnumerable<AdvertDto>>(adverts);
+
+            var baseQuery = advertDtos.Where(a => advertQuery.SearchPhrase == null ||
+            (a.FullName.ToLower().Contains(advertQuery.SearchPhrase.ToLower()))
+            || a.City.ToLower().Contains(advertQuery.SearchPhrase.ToLower()));
+
+            if(!string.IsNullOrEmpty(advertQuery.SortBy))
+            {
+                var columnsSelectors = new Dictionary<string, Func<AdvertDto, object>>
+                {
+                    { nameof(AdvertDto.City), r => r.City},
+                    { nameof(AdvertDto.Subject), r => r.Subject},
+                };
+
+                var selectedColumn = columnsSelectors[advertQuery.SortBy];
+                baseQuery = _paginationService.SortRecords<AdvertDto>(selectedColumn, advertQuery.SortDirection, baseQuery.ToList());
+            }
+
+            var paginationResult = _paginationService.ReturnRecordsToShow
+                (advertQuery.PageNumber, advertQuery.PageSize, baseQuery.ToList());
+
+            var result = new PagedResult<AdvertDto>(paginationResult, baseQuery.Count(), advertQuery.PageSize, advertQuery.PageNumber);
+            return result;
         }
     }
 }

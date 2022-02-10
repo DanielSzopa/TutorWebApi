@@ -24,6 +24,13 @@ namespace TutorWebApi.Controllers
             return Created($"api/v1/advert/{advertId}", null);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetAllAdverts([FromBody]AdvertQuery advertQuery)
+        {
+            var adverts = await _advertService.GetAllAdverts(advertQuery);
+            return Ok(adverts);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetAdvert(int id)
         {

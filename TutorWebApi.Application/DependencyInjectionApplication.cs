@@ -58,6 +58,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<CommentQuery>, CommentQuaryValidator>();
             services.AddScoped<IValidator<NewAdvertDto>, NewAdvertDtoValidator>();
             services.AddScoped<IValidator<NewAdvertContact>, NewAdvertContactDtoValidator>();
+            services.AddScoped<IValidator<AdvertQuery>, AdvertQueryValidator>();
 
             return services;
         }
