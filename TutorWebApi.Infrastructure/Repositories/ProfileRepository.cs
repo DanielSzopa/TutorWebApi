@@ -106,6 +106,13 @@ namespace TutorWebApi.Infrastructure.Repositories
             return profile.Id;
         }
 
+        public async Task<Profile> GetProfileByUserId(int userId)
+        {
+            var profile = await _context.Profiles
+                .FirstOrDefaultAsync(p => p.UserRef == userId);
+            return profile;
+        }
+
         public async Task DeleteAllAchievementsByProfile(int profileId)
         {
             var achievements = _context.Achievements

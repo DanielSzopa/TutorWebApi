@@ -1,4 +1,5 @@
 ﻿using TutorWebApi.Application.Models.Account;
+using TutorWebApi.Application.Models.Advert;
 using TutorWebApi.Application.Models.Comment;
 using TutorWebApi.Application.Models.Like;
 using TutorWebApi.Application.Models.Profile;
@@ -57,6 +58,13 @@ namespace TutorWebApi.Application.Mapping
 
             CreateMap<Subject, SubjectDto>()
                 .ForMember(s => s.Subject, opt => opt.MapFrom(s => s.Name));
+
+            CreateMap<NewAdvertDto, Advert>();
+            CreateMap<NewAdvertContact, AdvertContact>();
+            CreateMap<Advert, AdvertDto>()
+                .ForMember(a => a.FullName, opt => opt.MapFrom(a => $"{a.Profil.User.FirstName} {a.Profil.User.LastName}"))
+                .ForMember(a => a.Mail, opt => opt.MapFrom(a => a.AdvertContact.Mail))
+                .ForMember(a => a.Number, opt => opt.MapFrom(a => a.AdvertContact.Number));
         }
     }
 }
