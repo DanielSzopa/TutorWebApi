@@ -26,6 +26,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         {
             var advert = await _dbContext.Adverts
                 .Include(a => a.AdvertContact)
+                .Include(a => a.Subject)
                 .Include(a => a.Profil)
                 .ThenInclude(p => p.User)
                 .FirstOrDefaultAsync(a => a.Id == id);

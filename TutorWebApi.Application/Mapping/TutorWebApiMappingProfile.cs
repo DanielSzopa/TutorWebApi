@@ -64,7 +64,8 @@ namespace TutorWebApi.Application.Mapping
             CreateMap<Advert, AdvertDto>()
                 .ForMember(a => a.FullName, opt => opt.MapFrom(a => $"{a.Profil.User.FirstName} {a.Profil.User.LastName}"))
                 .ForMember(a => a.Mail, opt => opt.MapFrom(a => a.AdvertContact.Mail))
-                .ForMember(a => a.Number, opt => opt.MapFrom(a => a.AdvertContact.Number));
+                .ForMember(a => a.Number, opt => opt.MapFrom(a => a.AdvertContact.Number))
+                .ForMember(a => a.Subject, opt => opt.MapFrom(a => a.Subject.Name));
         }
     }
 }

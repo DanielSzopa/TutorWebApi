@@ -10,7 +10,7 @@
         public string City { get; set; }
         public decimal Price { get; set; }
         public bool IsOnline { get; set; }
-        public int SubjectId { get; set; }
+        public string Subject { get; set; }
         public string Number { get; set; }
         public string Mail { get; set; }
     }
