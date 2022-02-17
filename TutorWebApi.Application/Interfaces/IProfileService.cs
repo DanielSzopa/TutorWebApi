@@ -12,7 +12,6 @@ namespace TutorWebApi.Application.Interfaces
         Task<int> UpdateProfile(ProfileDto profileDto, int profileId);
         Task<int> UpdateProfileDescription(string description, int profileId);
         Task DeleteProfile(int profileId);
-        Task<Profile> GetProfileIfExist(int profileId);
 
     }
 }

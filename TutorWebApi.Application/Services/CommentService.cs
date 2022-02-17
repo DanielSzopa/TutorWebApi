@@ -19,7 +19,7 @@ namespace TutorWebApi.Application.Services
         private readonly IPaginationService _paginationService;
 
         public CommentService(ICommentRepository commentRepository, IProfileRepository profileRepository,
-            IMapper mapper, IUserContextService userContextService, 
+            IMapper mapper, IUserContextService userContextService,
             IResourceOperationService<Comment> resourceOperationService,
             IPaginationService paginationService)
         {
@@ -44,7 +44,7 @@ namespace TutorWebApi.Application.Services
             return commentId;
         }
 
-        public async Task<PagedResult<CommentDto>> GetAllComments(CommentQuery commentQuery,int profileId)
+        public async Task<PagedResult<CommentDto>> GetAllComments(CommentQuery commentQuery, int profileId)
         {
             var profile = await GetProfileIfExist(profileId);
             var comments = await _commentRepository.GetAllActiveComments(profileId);
@@ -88,7 +88,7 @@ namespace TutorWebApi.Application.Services
             await _commentRepository.DeleteComment(commentId);
         }
 
-        public async Task<Comment> GetCommentIfExist(int commentId)
+        private async Task<Comment> GetCommentIfExist(int commentId)
         {
             var comment = await _commentRepository.GetCommentById(commentId);
             if (comment is null || comment.IsActive == false)
@@ -97,7 +97,7 @@ namespace TutorWebApi.Application.Services
             return comment;
         }
 
-        public async Task<Domain.Entities.Profile> GetProfileIfExist(int profileId)
+        private async Task<Domain.Entities.Profile> GetProfileIfExist(int profileId)
         {
             var profile = await _profileRepository.GetProfileById(profileId);
             if (profile is null || profile.IsActive == false)

@@ -16,7 +16,7 @@ namespace TutorWebApi.Application.Services
             return records;
         }
 
-        public int GetExcludeRecordsToPagination(int pageNumber, int pageSize)
+        private int GetExcludeRecordsToPagination(int pageNumber, int pageSize)
         {
             var result = pageSize * (pageNumber - 1);
             return result;

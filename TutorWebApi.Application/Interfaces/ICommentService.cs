@@ -11,7 +11,5 @@ namespace TutorWebApi.Application.Interfaces
         Task<CommentDto> GetCommentById(int profileId, int commentId);
         Task UpdateComment(NewCommentDto commentDto, int commentId, int profileId);
         Task DeleteComment(int profileId, int commentId);
-        Task<Profile> GetProfileIfExist(int profileId);
-        Task<Comment> GetCommentIfExist(int commentId);
     }
 }

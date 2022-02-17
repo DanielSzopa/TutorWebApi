@@ -76,7 +76,7 @@ namespace TutorWebApi.Application.Services
             return true;
         }
 
-        public string GenerateJwt(UserForJwtDto userForJwtDto)
+        private string GenerateJwt(UserForJwtDto userForJwtDto)
         {
             var claims = new List<Claim>()
             {

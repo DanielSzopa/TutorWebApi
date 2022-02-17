@@ -72,7 +72,7 @@ namespace TutorWebApi.Application.Services
             await _experienceRepository.DeleteExperience(experienceId);
         }
 
-        public async Task<Domain.Entities.Profile> GetProfileIfExist(int profileId)
+        private async Task<Domain.Entities.Profile> GetProfileIfExist(int profileId)
         {
             var profile = await _profileRepository.GetProfileById(profileId);
             if (profile is null || profile.IsActive == false)

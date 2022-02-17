@@ -7,6 +7,5 @@ namespace TutorWebApi.Application.Interfaces
         Task CreateExperience(ExperienceDto experienceDto, int profileId);
         Task UpdateExperience(ExperienceDto experienceDto, int experienceId, int profileId);
         Task DeleteExperience(int experienceId, int profileId);
-        Task<Domain.Entities.Profile> GetProfileIfExist(int profileId);
     }
 }

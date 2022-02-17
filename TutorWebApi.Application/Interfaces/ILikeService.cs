@@ -8,6 +8,5 @@ namespace TutorWebApi.Application.Interfaces
         Task Like(int profileId);
         Task Unlike(int profileId);
         Task<IEnumerable<LikeDto>> GetAllLikes(int profileId);
-        Task<Profile> GetProfileIfExist(int profileId);
     }
 }
