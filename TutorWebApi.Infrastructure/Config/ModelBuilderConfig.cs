@@ -197,6 +197,10 @@ namespace TutorWebApi.Infrastructure.Config
                 .HasOne(u => u.Address)
                 .WithOne(a => a.User)
                 .HasForeignKey<Address>(a => a.UserRef);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.RoleId)
+                .HasDefaultValue(1);
         }
     }
 }

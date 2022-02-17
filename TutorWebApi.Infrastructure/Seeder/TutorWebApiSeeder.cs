@@ -21,6 +21,13 @@ namespace TutorWebApi.Infrastructure.Seeder
                     await _dbContext.AddRangeAsync(subjects);
                     await _dbContext.SaveChangesAsync();
                 }
+
+                if (!_dbContext.Roles.Any())
+                {
+                    var roles = GetRoles();
+                    await _dbContext.AddRangeAsync(roles);
+                    await _dbContext.SaveChangesAsync();
+                }
             }
         }
 
@@ -48,7 +55,16 @@ namespace TutorWebApi.Infrastructure.Seeder
             };
 
             return subjects;
+        }
 
+        private IEnumerable<Role> GetRoles()
+        {
+            var roles = new List<Role>()
+            {
+                new Role {RoleName = "User"},
+                new Role {RoleName = "Admin"}
+            };
+            return roles;
         }
     }
 }

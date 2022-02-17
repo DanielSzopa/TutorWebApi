@@ -18,6 +18,7 @@ namespace TutorWebApi.Infrastructure.Context
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         private readonly IUserContextService _userContextService;
         public TutorWebApiDbContext(DbContextOptions dbContextOptions, IUserContextService userContextService) : base(dbContextOptions)
