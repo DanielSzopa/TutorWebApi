@@ -82,6 +82,7 @@ namespace TutorWebApi.Application.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, userForJwtDto.Id.ToString()),
                 new Claim(ClaimTypes.Name,$"{userForJwtDto.FirstName} {userForJwtDto.LastName}"),
+                new Claim(ClaimTypes.Role, userForJwtDto.Role),
                 new Claim("Country", userForJwtDto.Country)
             };
 

@@ -22,5 +22,12 @@ namespace TutorWebApi.Controllers
             var subjects = await _subjectService.GetAllSubjects();
             return Ok(subjects);
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> CreateSubject()
+        {
+            return Ok("subject");
+        }
     }
 }

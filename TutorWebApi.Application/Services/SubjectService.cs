@@ -28,5 +28,6 @@ namespace TutorWebApi.Application.Services
             var result = subjects.Select(s => s.Id).ToList();
             return result;
         }
+
     }
 }

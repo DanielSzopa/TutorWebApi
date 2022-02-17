@@ -27,7 +27,8 @@ namespace TutorWebApi.Application.Mapping
                 .ForMember(u => u.DateOfBirth, opt => opt.MapFrom(p => p.DateOfBirth));
 
             CreateMap<User, UserForJwtDto>()
-                .ForMember(u => u.Country, opt => opt.MapFrom(u => u.Address.Country));
+                .ForMember(u => u.Country, opt => opt.MapFrom(u => u.Address.Country))
+                .ForMember(u => u.Role, opt => opt.MapFrom(u => u.Role.RoleName));
 
             CreateMap<ProfileDto, Profile>();
             CreateMap<Profile, SmallProfileDto>()

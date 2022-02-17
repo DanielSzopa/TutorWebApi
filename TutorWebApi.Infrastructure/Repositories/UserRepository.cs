@@ -44,6 +44,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         {
             var user = await _context.Users
                 .Include(u => u.Address)
+                .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Mail == mail);
 
             return user;
