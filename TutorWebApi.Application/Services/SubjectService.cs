@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Subject;
 using TutorWebApi.Domain.Entities;
@@ -43,6 +44,17 @@ namespace TutorWebApi.Application.Services
             if (subjectEntity is null)
                 return false;
             return true;
+        }
+
+        public async Task UpdateSubject(NewSubjectDto subjectDto, int subjectId)
+        {
+            var subject = await _subjectRepository.GetSubjectById(subjectId);
+            if (subject is null)
+                throw new NotFoundException("Subject not found");
+
+            subject = _mapper.Map<Subject>(subjectDto);
+            subject.Id = subjectId;
+            await _subjectRepository.UpdateSubject(subject);
         }
     }
 }

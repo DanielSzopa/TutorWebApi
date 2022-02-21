@@ -17,19 +17,28 @@ namespace TutorWebApi.Controllers
             _subjectService = subjectService;
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> CreateSubject([FromBody] NewSubjectDto newSubjectDto)
+        {
+            await _subjectService.CreateSubject(newSubjectDto);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> UpdateSubject([FromBody] NewSubjectDto newSubjectDto, [FromRoute]int id)
+        {           
+            await _subjectService.UpdateSubject(newSubjectDto,id);
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<ActionResult> GetSubjects()
         {
             var subjects = await _subjectService.GetAllSubjects();
             return Ok(subjects);
         }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> CreateSubject([FromBody]NewSubjectDto newSubjectDto)
-        {
-            await _subjectService.CreateSubject(newSubjectDto);
-            return Ok();
-        }
+      
     }
 }

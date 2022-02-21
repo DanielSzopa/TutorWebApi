@@ -20,10 +20,26 @@ namespace TutorWebApi.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task UpdateSubject(Subject subject)
+        {
+            var entity = await _dbContext.Subjects
+               .FindAsync(subject.Id);
+            entity.Name = subject.Name;
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<List<Subject>> GetAllSubjects()
         {
             var subjects = await _dbContext.Subjects.ToListAsync();
             return subjects;
+        }
+
+        public async Task<Subject> GetSubjectById(int subjectId)
+        {
+            var subject = await _dbContext.Subjects
+                .FirstOrDefaultAsync(s => s.Id == subjectId);
+            return subject;
         }
 
         public async Task<Subject> GetSubjectByName(string subject)
@@ -32,5 +48,6 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .FirstOrDefaultAsync(s => s.Name == subject);
             return result;
         }
+        
     }
 }
