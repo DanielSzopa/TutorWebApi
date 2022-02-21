@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Subject;
 
 namespace TutorWebApi.Controllers
 {
@@ -25,9 +26,10 @@ namespace TutorWebApi.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> CreateSubject()
+        public async Task<ActionResult> CreateSubject([FromBody]NewSubjectDto newSubjectDto)
         {
-            return Ok("subject");
+            await _subjectService.CreateSubject(newSubjectDto);
+            return Ok();
         }
     }
 }

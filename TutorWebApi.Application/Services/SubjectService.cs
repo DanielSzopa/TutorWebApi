@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Subject;
+using TutorWebApi.Domain.Entities;
 using TutorWebApi.Domain.Interfaces;
 
 namespace TutorWebApi.Application.Services
@@ -15,6 +16,13 @@ namespace TutorWebApi.Application.Services
             _subjectRepository = subjectRepository;
             _mapper = mapper;
         }
+
+        public async Task CreateSubject(NewSubjectDto subjectDto)
+        {
+            var subject = _mapper.Map<Subject>(subjectDto);
+            await _subjectRepository.CreateSubject(subject);
+        }
+
         public async Task<List<SubjectDto>> GetAllSubjects()
         {
             var subjects = await _subjectRepository.GetAllSubjects();
@@ -29,5 +37,12 @@ namespace TutorWebApi.Application.Services
             return result;
         }
 
+        public async Task<bool> IsSubjectExist(string subject)
+        {
+            var subjectEntity = await _subjectRepository.GetSubjectByName(subject);
+            if (subjectEntity is null)
+                return false;
+            return true;
+        }
     }
 }

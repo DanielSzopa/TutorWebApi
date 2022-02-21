@@ -14,10 +14,23 @@ namespace TutorWebApi.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task CreateSubject(Subject subject)
+        {
+            await _dbContext.Subjects.AddAsync(subject);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<List<Subject>> GetAllSubjects()
         {
             var subjects = await _dbContext.Subjects.ToListAsync();
             return subjects;
+        }
+
+        public async Task<Subject> GetSubjectByName(string subject)
+        {
+            var result = await _dbContext.Subjects
+                .FirstOrDefaultAsync(s => s.Name == subject);
+            return result;
         }
     }
 }

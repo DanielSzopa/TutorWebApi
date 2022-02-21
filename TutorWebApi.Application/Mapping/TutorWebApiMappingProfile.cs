@@ -60,6 +60,9 @@ namespace TutorWebApi.Application.Mapping
             CreateMap<Subject, SubjectDto>()
                 .ForMember(s => s.Subject, opt => opt.MapFrom(s => s.Name));
 
+            CreateMap<NewSubjectDto, Subject>()
+                .ForMember(s => s.Name, opt => opt.MapFrom(s => s.Subject));
+
             CreateMap<NewAdvertDto, Advert>();
             CreateMap<NewAdvertContact, AdvertContact>();
             CreateMap<Advert, AdvertDto>()

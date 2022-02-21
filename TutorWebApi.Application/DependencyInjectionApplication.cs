@@ -16,6 +16,8 @@ using TutorWebApi.Application.Validators.Profile;
 using TutorWebApi.Application.Validators.User;
 using TutorWebApi.Domain.Entities;
 using TutorWebApi.Application.Validators.Advert;
+using TutorWebApi.Application.Models.Subject;
+using TutorWebApi.Application.Validators.Subject;
 
 namespace TutorWebApi.Application
 {
@@ -59,6 +61,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<NewAdvertDto>, NewAdvertDtoValidator>();
             services.AddScoped<IValidator<NewAdvertContact>, NewAdvertContactDtoValidator>();
             services.AddScoped<IValidator<AdvertQuery>, AdvertQueryValidator>();
+            services.AddScoped<IValidator<NewSubjectDto>, NewSubjectDtoValidator>();
 
             return services;
         }
