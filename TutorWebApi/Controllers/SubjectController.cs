@@ -39,6 +39,14 @@ namespace TutorWebApi.Controllers
             var subjects = await _subjectService.GetAllSubjects();
             return Ok(subjects);
         }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteSubject(int id)
+        {
+            await _subjectService.DeleteSubject(id);
+            return NoContent();
+        }
       
     }
 }

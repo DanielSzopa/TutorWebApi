@@ -20,9 +20,25 @@ namespace TutorWebApi.Application.Services
 
         public async Task CreateSubject(NewSubjectDto subjectDto)
         {
-            var subject = _mapper.Map<Subject>(subjectDto);
-            await _subjectRepository.CreateSubject(subject);
-        }
+            var subject = await _subjectRepository.GetSubjectByName(subjectDto.Subject);
+            if(!(subject is null))
+            {
+                if(subject.IsActive == true)
+                {
+                    throw new BadRequestException("Can not create the same subject");
+                }
+                else
+                {
+                    await _subjectRepository.ActiveSubject(subject.Id);
+                    return;
+                }
+            }
+            else
+            {
+                subject = _mapper.Map<Subject>(subjectDto);
+                await _subjectRepository.CreateSubject(subject);
+            }           
+        }      
 
         public async Task<List<SubjectDto>> GetAllSubjects()
         {
@@ -41,20 +57,35 @@ namespace TutorWebApi.Application.Services
         public async Task<bool> IsSubjectExist(string subject)
         {
             var subjectEntity = await _subjectRepository.GetSubjectByName(subject);
-            if (subjectEntity is null)
+            if (subjectEntity is null || subjectEntity.IsActive == false)
                 return false;
             return true;
         }
 
         public async Task UpdateSubject(NewSubjectDto subjectDto, int subjectId)
         {
-            var subject = await _subjectRepository.GetSubjectById(subjectId);
+            var subject = await GetSubjectIfExist(subjectId);
             if (subject is null)
                 throw new NotFoundException("Subject not found");
 
             subject = _mapper.Map<Subject>(subjectDto);
             subject.Id = subjectId;
             await _subjectRepository.UpdateSubject(subject);
+        }
+
+        public async Task DeleteSubject(int subjectId)
+        {
+            var subject = await GetSubjectIfExist(subjectId);
+            await _subjectRepository.DeleteSubject(subjectId);
+        }
+
+        private async Task<Subject> GetSubjectIfExist(int id)
+        {
+            var subject = await _subjectRepository.GetSubjectById(id);
+            if (subject is null || subject.IsActive == false)
+                throw new NotFoundException("Subject not found");
+
+            return subject;
         }
     }
 }

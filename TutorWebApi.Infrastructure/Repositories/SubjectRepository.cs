@@ -28,6 +28,14 @@ namespace TutorWebApi.Infrastructure.Repositories
 
             await _dbContext.SaveChangesAsync();
         }
+        public async Task DeleteSubject(int subjectId)
+        {
+            var subject = await _dbContext.Subjects
+              .FindAsync(subjectId);
+
+            _dbContext.Subjects.Remove(subject);
+            await _dbContext.SaveChangesAsync();
+        }
 
         public async Task<List<Subject>> GetAllSubjects()
         {
@@ -48,6 +56,13 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .FirstOrDefaultAsync(s => s.Name == subject);
             return result;
         }
-        
+
+        public async Task ActiveSubject(int subjectId)
+        {
+            var subject = await _dbContext.Subjects
+                .FindAsync(subjectId);
+            subject.IsActive = true;
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
