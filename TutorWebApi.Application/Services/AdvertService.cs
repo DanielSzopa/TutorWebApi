@@ -57,6 +57,15 @@ namespace TutorWebApi.Application.Services
             await _advertRepository.UpdateAdvert(advert);
         }
 
+        public async Task DeleteAdvert(int id)
+        {
+            var advert = await GetAdvertIfExist(id);
+            var user = await _contextService.GetUser();
+            await _resourceOperationService
+                .ResourceAuthorizationException(user, advert, new ResourceOperationRequirement(ResourceOperation.Delete));
+            await _advertRepository.DeleteAdvert(id);
+        }
+
         public async Task<AdvertDto> GetAdvertById(int id)
         {
             var advert = await GetAdvertIfExist(id);

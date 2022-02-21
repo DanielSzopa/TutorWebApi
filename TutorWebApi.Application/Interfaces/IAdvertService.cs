@@ -7,6 +7,7 @@ namespace TutorWebApi.Application.Interfaces
     {
         Task<int> CreateAdvert(NewAdvertDto advertDto);
         Task UpdateAdvert(NewAdvertDto advertDto, int id);
+        Task DeleteAdvert(int id);
         Task<AdvertDto> GetAdvertById(int id);
         Task<PagedResult<AdvertDto>> GetAllAdverts(AdvertQuery advertQuery);
     }

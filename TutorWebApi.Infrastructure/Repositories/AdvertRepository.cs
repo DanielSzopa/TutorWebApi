@@ -41,6 +41,17 @@ namespace TutorWebApi.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteAdvert(int advertId)
+        {
+            var advert = await _dbContext.Adverts
+                .Include(a => a.AdvertContact)
+                .FirstOrDefaultAsync(a => a.Id == advertId);
+
+            _dbContext.Adverts.Remove(advert);
+            _dbContext.AdvertContacts.Remove(advert.AdvertContact);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<Advert> GetAdvertById(int id)
         {
             var advert = await _dbContext.Adverts
@@ -59,6 +70,7 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .Include(a => a.Subject)
                 .Include(a => a.Profil)
                 .ThenInclude(p => p.User)
+                .Where(a => a.IsActive == true)
                 .ToListAsync();
 
             return adverts;

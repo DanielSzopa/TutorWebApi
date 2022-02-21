@@ -43,6 +43,13 @@ namespace TutorWebApi.Controllers
         {
             var adverts = await _advertService.GetAllAdverts(advertQuery);
             return Ok(adverts);
-        }        
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAdvert([FromRoute]int id)
+        {
+            await _advertService.DeleteAdvert(id);
+            return NoContent();
+        }
     }
 }
