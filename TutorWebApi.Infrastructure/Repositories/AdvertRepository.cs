@@ -48,7 +48,6 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .FirstOrDefaultAsync(a => a.Id == advertId);
 
             _dbContext.Adverts.Remove(advert);
-            _dbContext.AdvertContacts.Remove(advert.AdvertContact);
             await _dbContext.SaveChangesAsync();
         }
 

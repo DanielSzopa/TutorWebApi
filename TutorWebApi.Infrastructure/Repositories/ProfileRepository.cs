@@ -111,42 +111,21 @@ namespace TutorWebApi.Infrastructure.Repositories
             var profile = await _context.Profiles
                 .FirstOrDefaultAsync(p => p.UserRef == userId);
             return profile;
-        }
-
-        public async Task DeleteAllAchievementsByProfile(int profileId)
-        {
-            var achievements = _context.Achievements
-                .Where(a => a.ProfilId == profileId);
-            if (await achievements.AnyAsync())
-            {
-                _context.Achievements.RemoveRange(achievements);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task DeleteAllExperiencesByProfile(int profileId)
-        {
-            var experiences = _context.Experiences
-                .Where(a => a.ProfileId == profileId);
-            if (await experiences.AnyAsync())
-            {
-                _context.Experiences.RemoveRange(experiences);
-                await _context.SaveChangesAsync();
-            }
-        }
+        }      
 
         public async Task DeleteProfile(int profileId)
         {
             var profile = await _context.Profiles
                 .Include(p => p.Achievements)
                 .Include(p => p.Experiences)
+                .Include(p => p.Likes)
+                .Include(p => p.Comments)
+                .Include(p => p.Adverts)
+                .ThenInclude(a => a.AdvertContact)
                 .FirstOrDefaultAsync(p => p.Id == profileId);
 
-            if (!(profile is null))
-            {
                 _context.Profiles.Remove(profile);
-                await _context.SaveChangesAsync();
-            }
+                await _context.SaveChangesAsync();         
         }
     }
 }
