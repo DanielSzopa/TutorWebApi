@@ -22,6 +22,25 @@ namespace TutorWebApi.Infrastructure.Repositories
             return advert.Id;
         }
 
+        public async Task UpdateAdvert(Advert advert)
+        {
+            var entity = await _dbContext.Adverts
+                .Include(a => a.AdvertContact)
+                .FirstOrDefaultAsync(a => a.Id == advert.Id);
+
+            entity.Title = advert.Title;
+            entity.Description = advert.Description;
+            entity.City = advert.City;
+            entity.Price = advert.Price;
+            entity.IsOnline = advert.IsOnline;
+            entity.SubjectId = advert.SubjectId;
+            entity.SubjectId = advert.SubjectId;
+            entity.AdvertContact.Mail = advert.AdvertContact.Mail;
+            entity.AdvertContact.Number = advert.AdvertContact.Number;
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<Advert> GetAdvertById(int id)
         {
             var advert = await _dbContext.Adverts

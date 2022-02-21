@@ -36,6 +36,7 @@ namespace TutorWebApi.Extensions
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Like>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Achievement>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Experience>>();
+            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Advert>>();
             return services;
         }
 

@@ -24,6 +24,13 @@ namespace TutorWebApi.Controllers
             return Created($"api/v1/advert/{advertId}", null);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAdvert([FromBody] NewAdvertDto advertDto, [FromRoute]int id)
+        {
+            await _advertService.UpdateAdvert(advertDto, id);
+            return Ok();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetAdvert(int id)
         {

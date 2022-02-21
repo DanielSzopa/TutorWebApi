@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
@@ -16,17 +17,20 @@ namespace TutorWebApi.Application.Services
         private readonly IUserContextService _contextService;
         private readonly IProfileRepository _profileRepository;
         private readonly IPaginationService _paginationService;
+        private readonly IResourceOperationService<Advert> _resourceOperationService;
 
         public AdvertService(IAdvertRepository advertRepository, IMapper mapper,
              IUserContextService contextService,
              IProfileRepository profileRepository,
-             IPaginationService paginationService)
+             IPaginationService paginationService,
+             IResourceOperationService<Advert> resourceOperationService)
         {
             _advertRepository = advertRepository;
             _mapper = mapper;
             _contextService = contextService;
             _profileRepository = profileRepository;
             _paginationService = paginationService;
+            _resourceOperationService = resourceOperationService;
         }
 
         public async Task<int> CreateAdvert(NewAdvertDto advertDto)
@@ -42,11 +46,20 @@ namespace TutorWebApi.Application.Services
             return advertId;
         }
 
+        public async Task UpdateAdvert(NewAdvertDto advertDto, int id)
+        {
+            var advert = await GetAdvertIfExist(id);
+            var user = await _contextService.GetUser();            
+            await _resourceOperationService
+                .ResourceAuthorizationException(user,advert, new ResourceOperationRequirement(ResourceOperation.Update));
+            advert = _mapper.Map<Advert>(advertDto);
+            advert.Id = id;
+            await _advertRepository.UpdateAdvert(advert);
+        }
+
         public async Task<AdvertDto> GetAdvertById(int id)
         {
-            var advert = await _advertRepository.GetAdvertById(id);
-            if (advert is null)
-                throw new NotFoundException("Advert not found");
+            var advert = await GetAdvertIfExist(id);
             var advertDto = _mapper.Map<AdvertDto>(advert);
             return advertDto;
         }
@@ -77,6 +90,14 @@ namespace TutorWebApi.Application.Services
 
             var result = new PagedResult<AdvertDto>(paginationResult, baseQuery.Count(), advertQuery.PageSize, advertQuery.PageNumber);
             return result;
+        }
+
+        private async Task<Advert> GetAdvertIfExist(int id)
+        {
+            var advert = await _advertRepository.GetAdvertById(id);
+            if (advert is null || advert.IsActive == false)
+                throw new NotFoundException("Advert not found");
+            return advert;
         }
     }
 }
