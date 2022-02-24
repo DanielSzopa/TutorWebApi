@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
@@ -17,11 +18,13 @@ namespace TutorWebApi.Application.Services
         private readonly IUserContextService _userContextService;
         private readonly IResourceOperationService<Comment> _resourceOperationService;
         private readonly IPaginationService _paginationService;
+        private readonly ILogger<CommentService> _logger;
 
         public CommentService(ICommentRepository commentRepository, IProfileRepository profileRepository,
             IMapper mapper, IUserContextService userContextService,
             IResourceOperationService<Comment> resourceOperationService,
-            IPaginationService paginationService)
+            IPaginationService paginationService,
+            ILogger<CommentService> logger)
         {
             _commentRepository = commentRepository;
             _profileRepository = profileRepository;
@@ -29,6 +32,7 @@ namespace TutorWebApi.Application.Services
             _userContextService = userContextService;
             _resourceOperationService = resourceOperationService;
             _paginationService = paginationService;
+            _logger = logger;
         }
 
         public async Task<int> CreateComment(NewCommentDto commentDto, int profileId)
@@ -82,7 +86,10 @@ namespace TutorWebApi.Application.Services
         {
             var profile = await GetProfileIfExist(profileId);
             var comment = await GetCommentIfExist(commentId);
-            var user = await _userContextService.GetUser();
+            var userId = await _userContextService.GetUserId();
+            _logger.LogInformation($"Advert with id: {commentId} DELETE action invoked by user with id: {userId}");
+
+            var user = await _userContextService.GetUser();           
             await _resourceOperationService.ResourceAuthorizationException
                 (user, comment, new ResourceOperationRequirement(ResourceOperation.Delete));
             await _commentRepository.DeleteComment(commentId);

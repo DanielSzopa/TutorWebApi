@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
@@ -18,12 +19,14 @@ namespace TutorWebApi.Application.Services
         private readonly IProfileRepository _profileRepository;
         private readonly IPaginationService _paginationService;
         private readonly IResourceOperationService<Advert> _resourceOperationService;
+        private readonly ILogger<AdvertService> _logger;
 
         public AdvertService(IAdvertRepository advertRepository, IMapper mapper,
              IUserContextService contextService,
              IProfileRepository profileRepository,
              IPaginationService paginationService,
-             IResourceOperationService<Advert> resourceOperationService)
+             IResourceOperationService<Advert> resourceOperationService,
+             ILogger<AdvertService> logger)
         {
             _advertRepository = advertRepository;
             _mapper = mapper;
@@ -31,6 +34,7 @@ namespace TutorWebApi.Application.Services
             _profileRepository = profileRepository;
             _paginationService = paginationService;
             _resourceOperationService = resourceOperationService;
+            _logger = logger;
         }
 
         public async Task<int> CreateAdvert(NewAdvertDto advertDto)
@@ -60,6 +64,9 @@ namespace TutorWebApi.Application.Services
         public async Task DeleteAdvert(int id)
         {
             var advert = await GetAdvertIfExist(id);
+            var userId = await _contextService.GetUserId();
+            _logger.LogInformation($"Advert with id: {id} DELETE action invoked by user with id: {userId}");
+
             var user = await _contextService.GetUser();
             await _resourceOperationService
                 .ResourceAuthorizationException(user, advert, new ResourceOperationRequirement(ResourceOperation.Delete));

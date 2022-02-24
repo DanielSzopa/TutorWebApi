@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
-using TutorWebApi.Application.Models.Enum;
 using TutorWebApi.Application.Models.Page;
 using TutorWebApi.Application.Models.Profile;
 using TutorWebApi.Domain.Interfaces;
@@ -28,7 +27,6 @@ namespace TutorWebApi.Application.Services
             _profileRepository = profileRepository;
             _userContextService = userContextService;
             _mapper = mapper;
-            _logger = logger;
             _resourceOperationService = resourceOperationInterface;
             _likeRepository = likeRepository;
             _paginationService = paginationService;
@@ -138,10 +136,10 @@ namespace TutorWebApi.Application.Services
         }
 
         public async Task DeleteProfile(int profileId)
-        {
-            var user = await _userContextService.GetUser();
+        {           
             var userId = await _userContextService.GetUserId();
-            _logger.LogInformation($"Profile id: {profileId} with userRef:{userId} Delete action invoked");
+            _logger.LogInformation($"Profile with id: {profileId} DELETE action invoked by user with id: {userId}");
+            var user = await _userContextService.GetUser();
 
             var result = await _profileRepository.IsUserHaveProfile(userId);
             if (!result)

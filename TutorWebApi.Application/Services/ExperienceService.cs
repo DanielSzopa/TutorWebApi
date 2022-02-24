@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
@@ -15,17 +16,20 @@ namespace TutorWebApi.Application.Services
         private readonly IMapper _mapper;
         private readonly IUserContextService _userContextService;
         private readonly IResourceOperationService<Experience> _resourceOperationService;
+        private readonly ILogger<ExperienceService> _logger;
 
         public ExperienceService(IExperienceRepository experienceRepository, IProfileRepository profileRepository,
             IMapper mapper,
             IUserContextService userContextService,
-            IResourceOperationService<Experience> resourceOperationService)
+            IResourceOperationService<Experience> resourceOperationService,
+            ILogger<ExperienceService> logger)
         {
             _experienceRepository = experienceRepository;
             _profileRepository = profileRepository;
             _mapper = mapper;
             _userContextService = userContextService;
             _resourceOperationService = resourceOperationService;
+            _logger = logger;
         }
 
         public async Task CreateExperience(ExperienceDto experienceDto, int profileId)
@@ -60,8 +64,10 @@ namespace TutorWebApi.Application.Services
         public async Task DeleteExperience(int experienceId, int profileId)
         {
             var profile = await GetProfileIfExist(profileId);
-            var user = await _userContextService.GetUser();
+            var userId = await _userContextService.GetUserId();
+            _logger.LogInformation($"Experience with id: {experienceId} DELETE action invoked by user with id: {userId}");
 
+            var user = await _userContextService.GetUser();           
             var experience = await _experienceRepository.GetExperienceById(experienceId);
             if (experience is null || experience.IsActive == false)
                 throw new NotFoundException("Experience not found");

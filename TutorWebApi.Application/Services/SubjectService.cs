@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Subject;
@@ -11,11 +12,16 @@ namespace TutorWebApi.Application.Services
     {
         private readonly ISubjectRepository _subjectRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<SubjectService> _logger;
+        private readonly IUserContextService _userContextService;
 
-        public SubjectService(ISubjectRepository subjectRepository, IMapper mapper)
+        public SubjectService(ISubjectRepository subjectRepository, IMapper mapper
+            ,ILogger<SubjectService> logger, IUserContextService userContextService)
         {
             _subjectRepository = subjectRepository;
             _mapper = mapper;
+            _logger = logger;
+            _userContextService = userContextService;
         }
 
         public async Task CreateSubject(NewSubjectDto subjectDto)
@@ -76,6 +82,8 @@ namespace TutorWebApi.Application.Services
         public async Task DeleteSubject(int subjectId)
         {
             var subject = await GetSubjectIfExist(subjectId);
+            var userId = await _userContextService.GetUserId();
+            _logger.LogInformation($"Subject with id: {subjectId} DELETE action invoked by user with id: {userId}");           
             await _subjectRepository.DeleteSubject(subjectId);
         }
 
