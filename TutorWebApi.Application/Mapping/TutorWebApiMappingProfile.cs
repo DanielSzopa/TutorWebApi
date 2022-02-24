@@ -3,6 +3,7 @@ using TutorWebApi.Application.Models.Advert;
 using TutorWebApi.Application.Models.Comment;
 using TutorWebApi.Application.Models.Like;
 using TutorWebApi.Application.Models.Profile;
+using TutorWebApi.Application.Models.Role;
 using TutorWebApi.Application.Models.Subject;
 using TutorWebApi.Application.Models.User;
 using TutorWebApi.Domain.Entities;
@@ -70,6 +71,9 @@ namespace TutorWebApi.Application.Mapping
                 .ForMember(a => a.Mail, opt => opt.MapFrom(a => a.AdvertContact.Mail))
                 .ForMember(a => a.Number, opt => opt.MapFrom(a => a.AdvertContact.Number))
                 .ForMember(a => a.Subject, opt => opt.MapFrom(a => a.Subject.Name));
+
+            CreateMap<Role, RoleDto>()
+                .ForMember(r => r.Role, opt => opt.MapFrom(r => r.RoleName));
         }
     }
 }
