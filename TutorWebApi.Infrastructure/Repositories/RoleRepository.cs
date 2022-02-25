@@ -19,5 +19,15 @@ namespace TutorWebApi.Infrastructure.Repositories
             var roles = await _dbContext.Roles.ToListAsync();
             return roles;
         }
+
+        public async Task UpdateRole(int userId, string role)
+        {
+            var user = await _dbContext.Users.FindAsync(userId);
+            var roleId = await _dbContext.Roles.Where(r => r.RoleName == role)
+                .Select(r => r.Id).FirstAsync();
+
+            user.RoleId = roleId;
+            await _dbContext.SaveChangesAsync();               
+        }
     }
 }

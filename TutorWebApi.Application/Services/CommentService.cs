@@ -87,7 +87,7 @@ namespace TutorWebApi.Application.Services
             var profile = await GetProfileIfExist(profileId);
             var comment = await GetCommentIfExist(commentId);
             var userId = await _userContextService.GetUserId();
-            _logger.LogInformation($"Advert with id: {commentId} DELETE action invoked by user with id: {userId}");
+            _logger.LogInformation($"Comment with id: {commentId} DELETE action invoked by user with id: {userId}");
 
             var user = await _userContextService.GetUser();           
             await _resourceOperationService.ResourceAuthorizationException

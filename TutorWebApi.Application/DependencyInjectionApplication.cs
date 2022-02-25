@@ -18,6 +18,8 @@ using TutorWebApi.Domain.Entities;
 using TutorWebApi.Application.Validators.Advert;
 using TutorWebApi.Application.Models.Subject;
 using TutorWebApi.Application.Validators.Subject;
+using TutorWebApi.Application.Models.Role;
+using TutorWebApi.Application.Validators.Role;
 
 namespace TutorWebApi.Application
 {
@@ -64,6 +66,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<NewAdvertContact>, NewAdvertContactDtoValidator>();
             services.AddScoped<IValidator<AdvertQuery>, AdvertQueryValidator>();
             services.AddScoped<IValidator<NewSubjectDto>, NewSubjectDtoValidator>();
+            services.AddScoped<IValidator<ChangeRoleRequestDto>, ChangeRoleRequestDtoValidator>();
 
             return services;
         }

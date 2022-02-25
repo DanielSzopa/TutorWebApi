@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Role;
 
 namespace TutorWebApi.Controllers
 {
@@ -23,10 +24,11 @@ namespace TutorWebApi.Controllers
             return Ok(roles);
         }
 
-        //[HttpPut]
-        //public async Task<ActionResult> ChangeRole([FromBody] ChangeRoleRequestDto dto)
-        //{
-
-        //}
+        [HttpPut]
+        public async Task<ActionResult> ChangeRole([FromBody] ChangeRoleRequestDto request)
+        {
+            await _roleService.UpdateRole(request);
+            return Ok();
+        }
     }
 }

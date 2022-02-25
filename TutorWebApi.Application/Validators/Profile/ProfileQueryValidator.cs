@@ -16,7 +16,7 @@ namespace TutorWebApi.Application.Validators.Profile
                 .Custom((value, context) =>
                 {
                     if (!allowedPageSizes.Contains(value))
-                        context.AddFailure("PageSize", $"PageSize must in [{string.Join(",", allowedPageSizes)}]");
+                        context.AddFailure("PageSize", $"PageSize must be in [{string.Join(",", allowedPageSizes)}]");
                 });
 
             RuleFor(r => r.SortBy)
