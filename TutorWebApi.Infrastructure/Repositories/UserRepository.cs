@@ -106,5 +106,11 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .AnyAsync(u => u.Mail == mail);
             return result;
         }
+
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+            return users;
+        }
     }
 }

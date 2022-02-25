@@ -61,5 +61,13 @@ namespace TutorWebApi.Application.Services
             var result = await _userRepository.IsMailIsTaken(mail);
             return result;
         }
+
+        public async Task<IEnumerable<UserDto>> GetAllUsers()
+        {
+            var users = await _userRepository.GetAllUsers();
+            var mappedDto = _mapper.Map<IEnumerable<UserDto>>(users);
+
+            return mappedDto;
+        }
     }
 }

@@ -5,7 +5,7 @@ using TutorWebApi.Application.Models.User;
 
 namespace TutorWebApi.Controllers
 {
-    [Route("/api/v1/[controller]/{id}")]
+    [Route("/api/v1/[controller]")]
     [ApiController]
     [Authorize]
     public class UserController : ControllerBase
@@ -17,14 +17,21 @@ namespace TutorWebApi.Controllers
             _userService = userService;
         }
 
-        [HttpPut("address")]
+        [HttpGet]
+        public async Task<ActionResult> GetUsers()
+        {
+            var users = await _userService.GetAllUsers();
+            return Ok(users);
+        }
+
+        [HttpPut("address/{id}")]
         public async Task<ActionResult> UpdateAddress([FromBody] AddressDto addressDto, [FromRoute] int id)
         {
             await _userService.UpdateAddress(addressDto, id);
             return Ok();
         }
 
-        [HttpPut("personal")]
+        [HttpPut("personal/{id}")]
         public async Task<ActionResult> UpdatePersonal([FromBody] PersonalDto personalDto, [FromRoute] int id)
         {
             await _userService.UpdatePersonal(personalDto, id);
