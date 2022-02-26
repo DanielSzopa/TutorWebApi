@@ -30,6 +30,7 @@ namespace TutorWebApi.Application.Services
             _resourceOperationService = resourceOperationInterface;
             _likeRepository = likeRepository;
             _paginationService = paginationService;
+            _logger = logger;
         }
 
         public async Task<int> CreateProfile(ProfileDto profileDto)
