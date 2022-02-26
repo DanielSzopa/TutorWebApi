@@ -15,7 +15,7 @@ namespace TutorWebApi.Application.Validators.Role
                     if(!(roles.Contains(value)))
                     {
                         var message = $"Role must be in [{String.Join(",", roles)}]";
-                        context.AddFailure("Role", message);
+                        context.AddFailure(nameof(ChangeRoleRequestDto.Role), message);
                     }
                 });
 

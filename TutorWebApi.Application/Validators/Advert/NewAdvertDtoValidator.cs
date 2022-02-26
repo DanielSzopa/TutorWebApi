@@ -24,7 +24,7 @@ namespace TutorWebApi.Application.Validators.Advert
                 {
                     var subjects = subjectService.GetAllSubjectsId().Result;
                     if (!(subjects.Contains(value)))
-                        context.AddFailure("SubjectId", $"Subject must be in {string.Join(",", subjects)}");
+                        context.AddFailure(nameof(NewAdvertDto.SubjectId), $"Subject must be in {string.Join(",", subjects)}");
                 });
 
             RuleFor(a => a.AdvertContact)

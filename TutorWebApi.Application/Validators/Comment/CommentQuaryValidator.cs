@@ -15,7 +15,7 @@ namespace TutorWebApi.Application.Validators.Comment
                 .Custom((value, context) =>
                 {
                     if (!(allowedPageSize.Contains(value)))
-                        context.AddFailure("PageSize", $"PageSize must in [{string.Join(",", allowedPageSize)}]");
+                        context.AddFailure(nameof(CommentQuery.PageSize), $"PageSize must in [{string.Join(",", allowedPageSize)}]");
                 });
         }
     }

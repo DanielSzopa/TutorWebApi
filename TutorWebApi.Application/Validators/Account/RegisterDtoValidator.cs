@@ -21,7 +21,7 @@ namespace TutorWebApi.Application.Validators.Account
                 {
                     var isEmailIsTaken = userService.IsMailIsTaken(value).Result;
                     if (isEmailIsTaken)
-                        context.AddFailure("Mail", "That email is taken");
+                        context.AddFailure(nameof(RegisterDto.Mail), "That email is taken");
                 });
 
             RuleFor(r => r.Mail)

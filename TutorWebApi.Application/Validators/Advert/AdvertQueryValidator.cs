@@ -16,7 +16,7 @@ namespace TutorWebApi.Application.Validators.Advert
                 .Custom((value, context) =>
                 {
                     if (!allowedPageSize.Contains(value))
-                        context.AddFailure("PageSize", $"PageSize must in [{string.Join(",", allowedPageSize)}]");
+                        context.AddFailure(nameof(AdvertQuery.PageSize), $"PageSize must in [{string.Join(",", allowedPageSize)}]");
                 });
 
             RuleFor(a => a.SortBy)
