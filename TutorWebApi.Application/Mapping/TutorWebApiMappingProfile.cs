@@ -75,7 +75,11 @@ namespace TutorWebApi.Application.Mapping
             CreateMap<Role, RoleDto>()
                 .ForMember(r => r.Role, opt => opt.MapFrom(r => r.RoleName));
 
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>()
+                .ForMember(u => u.FullName, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))
+                .ForMember(u => u.City, opt => opt.MapFrom(u => u.Address.City))
+                .ForMember(u => u.Role, opt => opt.MapFrom(r => r.Role.RoleName));
+            
         }
     }
 }

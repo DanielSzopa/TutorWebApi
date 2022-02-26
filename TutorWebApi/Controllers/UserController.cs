@@ -18,9 +18,9 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetUsers()
+        public async Task<ActionResult> GetUsers(UserQuery query)
         {
-            var users = await _userService.GetAllUsers();
+            var users = await _userService.GetAllUsers(query);
             return Ok(users);
         }
 

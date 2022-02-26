@@ -67,6 +67,7 @@ namespace TutorWebApi.Application
             services.AddScoped<IValidator<AdvertQuery>, AdvertQueryValidator>();
             services.AddScoped<IValidator<NewSubjectDto>, NewSubjectDtoValidator>();
             services.AddScoped<IValidator<ChangeRoleRequestDto>, ChangeRoleRequestDtoValidator>();
+            services.AddScoped<IValidator<UserQuery>, UserQueryValidator>();
 
             return services;
         }

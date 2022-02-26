@@ -109,7 +109,10 @@ namespace TutorWebApi.Infrastructure.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users
+                .Include(u => u.Address)
+                .Include(u => u.Role)
+                .ToListAsync();
             return users;
         }
     }

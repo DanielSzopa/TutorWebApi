@@ -2,6 +2,7 @@
 using TutorWebApi.Application.Authorization;
 using TutorWebApi.Application.Exceptions;
 using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Page;
 using TutorWebApi.Application.Models.User;
 using TutorWebApi.Domain.Entities;
 using TutorWebApi.Domain.Interfaces;
@@ -15,16 +16,19 @@ namespace TutorWebApi.Application.Services
         private readonly IResourceOperationService<User> _resourceOperationServiceUser;
         private readonly IUserContextService _userContextService;
         private readonly IMapper _mapper;
+        private readonly IPaginationService _paginationService;
 
         public UserService(IUserRepository userRepository, IResourceOperationService<Address> resourceOperationServiceAddress,
              IResourceOperationService<User> resourceOperationServiceUser,
-            IUserContextService userContextService, IMapper mapper)
+            IUserContextService userContextService, IMapper mapper,
+            IPaginationService paginationService)
         {
             _userRepository = userRepository;
             _resourceOperationServiceAddress = resourceOperationServiceAddress;
             _resourceOperationServiceUser = resourceOperationServiceUser;
             _userContextService = userContextService;
             _mapper = mapper;
+            _paginationService = paginationService;
         }
 
         public async Task UpdateAddress(AddressDto addressDto, int userId)
@@ -62,12 +66,35 @@ namespace TutorWebApi.Application.Services
             return result;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAllUsers()
+        public async Task<PagedResult<UserDto>> GetAllUsers(UserQuery userQuery)
         {
             var users = await _userRepository.GetAllUsers();
-            var mappedDto = _mapper.Map<IEnumerable<UserDto>>(users);
+            var mappedDtos = _mapper.Map<IEnumerable<UserDto>>(users);
 
-            return mappedDto;
+            var baseQuery = mappedDtos.Where(p => userQuery.SearchPhrase == null
+           || (p.FullName.ToLower().Contains(userQuery.SearchPhrase.ToLower())
+               || p.City.ToLower().Contains(userQuery.SearchPhrase.ToLower())));
+
+            if (!string.IsNullOrEmpty(userQuery.SortBy))
+            {
+                var columnsSelectors = new Dictionary<string, Func<UserDto, object>>
+                {
+                    { nameof(UserDto.FullName), r => r.FullName},
+                    { nameof(UserDto.City), r => r.City},
+                    { nameof(UserDto.Role), r => r.Role}
+                };
+
+                var selectedColumn = columnsSelectors[userQuery.SortBy];
+                baseQuery = _paginationService
+                    .SortRecords<UserDto>(selectedColumn, userQuery.SortDirection, baseQuery.ToList());
+            }
+
+            var userDtos = _paginationService
+                .ReturnRecordsToShow(userQuery.PageNumber, userQuery.PageSize, baseQuery.ToList());
+
+            var result = new PagedResult<UserDto>(userDtos, baseQuery.Count(), userQuery.PageSize, userQuery.PageNumber);
+
+            return result;
         }
     }
 }
