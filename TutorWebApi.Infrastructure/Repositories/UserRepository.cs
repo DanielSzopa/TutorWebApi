@@ -43,6 +43,14 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<User> GetUserByMail(string mail)
         {
             var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Mail == mail);
+
+            return user;
+        }
+
+        public async Task<User> GetUserWithRoleAndAddressByMail(string mail)
+        {
+            var user = await _context.Users
                 .Include(u => u.Address)
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Mail == mail);

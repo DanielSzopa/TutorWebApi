@@ -69,7 +69,6 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<Profile> GetProfileById(int profileId)
         {
             var profile = await _context.Profiles
-                .Include(p => p.User)
                 .FirstOrDefaultAsync(p => p.Id == profileId);
 
             return profile;

@@ -8,6 +8,7 @@ namespace TutorWebApi.Domain.Interfaces
         Task SetCreateIdForAddress(int userId);
         Task SetCreateIdForUser(int userId);
         Task<User> GetUserByMail(string mail);
+        Task<User> GetUserWithRoleAndAddressByMail(string mail);
         Task<User> GetUserById(int userId);
         Task<IEnumerable<User>> GetAllUsers();
         Task UpdateAddress(Address address, int userId);
