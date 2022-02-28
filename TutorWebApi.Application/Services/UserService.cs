@@ -68,12 +68,8 @@ namespace TutorWebApi.Application.Services
 
         public async Task<PagedResult<UserDto>> GetAllUsers(UserQuery userQuery)
         {
-            var users = await _userRepository.GetAllUsers();
-            var mappedDtos = _mapper.Map<IEnumerable<UserDto>>(users);
-
-            var baseQuery = mappedDtos.Where(p => userQuery.SearchPhrase == null
-           || (p.FullName.ToLower().Contains(userQuery.SearchPhrase.ToLower())
-               || p.City.ToLower().Contains(userQuery.SearchPhrase.ToLower())));
+            var users = await _userRepository.GetAllUsers(userQuery.SearchPhrase);
+            var userDtos = _mapper.Map<List<UserDto>>(users);
 
             if (!string.IsNullOrEmpty(userQuery.SortBy))
             {
@@ -85,15 +81,14 @@ namespace TutorWebApi.Application.Services
                 };
 
                 var selectedColumn = columnsSelectors[userQuery.SortBy];
-                baseQuery = _paginationService
-                    .SortRecords<UserDto>(selectedColumn, userQuery.SortDirection, baseQuery.ToList());
+                userDtos = _paginationService
+                    .SortRecords<UserDto>(selectedColumn, userQuery.SortDirection, userDtos);
             }
 
-            var userDtos = _paginationService
-                .ReturnRecordsToShow(userQuery.PageNumber, userQuery.PageSize, baseQuery.ToList());
+            userDtos = _paginationService
+                .ReturnRecordsToShow(userQuery.PageNumber, userQuery.PageSize, userDtos);
 
-            var result = new PagedResult<UserDto>(userDtos, baseQuery.Count(), userQuery.PageSize, userQuery.PageNumber);
-
+            var result = new PagedResult<UserDto>(userDtos, userDtos.Count(), userQuery.PageSize, userQuery.PageNumber);
             return result;
         }
     }

@@ -74,11 +74,14 @@ namespace TutorWebApi.Infrastructure.Repositories
             return profile;
         }
 
-        public async Task<List<Profile>> GetAllProfiles()
+        public async Task<List<Profile>> GetAllProfiles(string searchPhrase)
         {
             var profiles = await _context.Profiles
                 .Include(p => p.User)
                 .ThenInclude(u => u.Address)
+                .Where(p => searchPhrase == null ||
+                (p.User.FirstName + " " + p.User.LastName).ToLower().Contains(searchPhrase.ToLower())
+                || p.Description.ToLower().Contains(searchPhrase.ToLower()))              
                 .ToListAsync();
 
             return profiles;

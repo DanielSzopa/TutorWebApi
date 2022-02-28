@@ -115,12 +115,16 @@ namespace TutorWebApi.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers(string searchPhrase)
         {
             var users = await _context.Users
                 .Include(u => u.Address)
                 .Include(u => u.Role)
+                .Where(p => searchPhrase == null ||
+                 ((p.FirstName + " " + p.LastName).ToLower().Contains(searchPhrase.ToLower()) ||
+                 p.Address.City.ToLower().Contains(searchPhrase.ToLower())))
                 .ToListAsync();
+
             return users;
         }
     }

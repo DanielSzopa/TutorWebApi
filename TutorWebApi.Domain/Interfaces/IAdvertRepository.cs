@@ -8,6 +8,6 @@ namespace TutorWebApi.Domain.Interfaces
         Task UpdateAdvert(Advert advert);
         Task DeleteAdvert(int advertId);
         Task<Advert> GetAdvertById(int id);
-        Task<List<Advert>> GetAllAdverts();
+        Task<List<Advert>> GetAllAdverts(string searchPhrase);
     }
 }

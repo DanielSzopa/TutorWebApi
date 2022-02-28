@@ -10,7 +10,7 @@ namespace TutorWebApi.Domain.Interfaces
         Task<User> GetUserByMail(string mail);
         Task<User> GetUserWithRoleAndAddressByMail(string mail);
         Task<User> GetUserById(int userId);
-        Task<IEnumerable<User>> GetAllUsers();
+        Task<IEnumerable<User>> GetAllUsers(string searchPhrase);
         Task UpdateAddress(Address address, int userId);
         Task UpdatePersonal(User user);
         Task ChangePassword(string password, int userId);

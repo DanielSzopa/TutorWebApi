@@ -82,14 +82,10 @@ namespace TutorWebApi.Application.Services
 
         public async Task<PagedResult<AdvertDto>> GetAllAdverts(AdvertQuery advertQuery)
         {
-            var adverts = await _advertRepository.GetAllAdverts();
-            var advertDtos = _mapper.Map<IEnumerable<AdvertDto>>(adverts);
+            var adverts = await _advertRepository.GetAllAdverts(advertQuery.SearchPhrase);
+            var advertDtos = _mapper.Map<List<AdvertDto>>(adverts);
 
-            var baseQuery = advertDtos.Where(a => advertQuery.SearchPhrase == null ||
-            (a.FullName.ToLower().Contains(advertQuery.SearchPhrase.ToLower()))
-            || a.City.ToLower().Contains(advertQuery.SearchPhrase.ToLower()));
-
-            if(!string.IsNullOrEmpty(advertQuery.SortBy))
+            if (!string.IsNullOrEmpty(advertQuery.SortBy))
             {
                 var columnsSelectors = new Dictionary<string, Func<AdvertDto, object>>
                 {
@@ -98,13 +94,13 @@ namespace TutorWebApi.Application.Services
                 };
 
                 var selectedColumn = columnsSelectors[advertQuery.SortBy];
-                baseQuery = _paginationService.SortRecords<AdvertDto>(selectedColumn, advertQuery.SortDirection, baseQuery.ToList());
+                advertDtos = _paginationService.SortRecords<AdvertDto>(selectedColumn, advertQuery.SortDirection, advertDtos);
             }
 
             var paginationResult = _paginationService.ReturnRecordsToShow
-                (advertQuery.PageNumber, advertQuery.PageSize, baseQuery.ToList());
+                (advertQuery.PageNumber, advertQuery.PageSize, advertDtos);
 
-            var result = new PagedResult<AdvertDto>(paginationResult, baseQuery.Count(), advertQuery.PageSize, advertQuery.PageNumber);
+            var result = new PagedResult<AdvertDto>(paginationResult, advertDtos.Count, advertQuery.PageSize, advertQuery.PageNumber);
             return result;
         }
 

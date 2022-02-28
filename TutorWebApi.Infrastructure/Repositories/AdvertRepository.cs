@@ -62,16 +62,18 @@ namespace TutorWebApi.Infrastructure.Repositories
             return advert;
         }
 
-        public async Task<List<Advert>> GetAllAdverts()
+        public async Task<List<Advert>> GetAllAdverts(string searchPhrase)
         {
             var adverts = await _dbContext.Adverts
                 .Include(a => a.AdvertContact)
                 .Include(a => a.Subject)
                 .Include(a => a.Profil)
                 .ThenInclude(p => p.User)
-                .Where(a => a.IsActive == true)
+                .Where(a => searchPhrase == null || 
+                (a.Profil.User.FirstName + " " + a.Profil.User.LastName).ToLower().Contains(searchPhrase.ToLower()) ||
+                a.City.ToLower().Contains(searchPhrase.ToLower()) && a.IsActive == true)
                 .ToListAsync();
-
+           
             return adverts;
         }
     }

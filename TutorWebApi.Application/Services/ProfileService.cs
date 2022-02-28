@@ -76,12 +76,8 @@ namespace TutorWebApi.Application.Services
 
         public async Task<PagedResult<SmallProfileDto>> GetAllSmallProfiles(ProfileQuery profileQuery)
         {
-            var profiles = await _profileRepository.GetAllProfiles();
-            var mappedDtos = _mapper.Map<IEnumerable<SmallProfileDto>>(profiles);
-
-            var baseQuery = mappedDtos.Where(p => profileQuery.SearchPhrase == null
-            || (p.FullName.ToLower().Contains(profileQuery.SearchPhrase.ToLower())
-                || p.Description.ToLower().Contains(profileQuery.SearchPhrase.ToLower())));
+            var profiles = await _profileRepository.GetAllProfiles(profileQuery.SearchPhrase);
+            var mappedDtos = _mapper.Map<List<SmallProfileDto>>(profiles);
 
             if(!string.IsNullOrEmpty(profileQuery.SortBy))
             {
@@ -92,19 +88,19 @@ namespace TutorWebApi.Application.Services
                 };
 
                 var selectedColumn = columnsSelectors[profileQuery.SortBy];
-                baseQuery = _paginationService
-                    .SortRecords<SmallProfileDto>(selectedColumn, profileQuery.SortDirection, baseQuery.ToList());
+                mappedDtos = _paginationService
+                    .SortRecords<SmallProfileDto>(selectedColumn, profileQuery.SortDirection, mappedDtos);
             }
 
             var profileDtos = _paginationService
-                .ReturnRecordsToShow(profileQuery.PageNumber, profileQuery.PageSize, baseQuery.ToList());
+                .ReturnRecordsToShow(profileQuery.PageNumber, profileQuery.PageSize, mappedDtos);
 
             foreach (var dto in profileDtos)
             {
                 dto.Likes = await _likeRepository.CountLikesByProfil(dto.Id);
             }
 
-            var result = new PagedResult<SmallProfileDto>(profileDtos,baseQuery.Count(),profileQuery.PageSize, profileQuery.PageNumber);          
+            var result = new PagedResult<SmallProfileDto>(profileDtos, mappedDtos.Count(),profileQuery.PageSize, profileQuery.PageNumber);          
             return result;
         }
 
