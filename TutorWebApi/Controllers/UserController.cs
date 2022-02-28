@@ -18,21 +18,21 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetUsers(UserQuery query)
+        public async Task<ActionResult> Get(UserQuery query)
         {
             var users = await _userService.GetAllUsers(query);
             return Ok(users);
         }
 
         [HttpPut("address/{id}")]
-        public async Task<ActionResult> UpdateAddress([FromBody] AddressDto addressDto, [FromRoute] int id)
+        public async Task<ActionResult> Update([FromBody] AddressDto addressDto, [FromRoute] int id)
         {
             await _userService.UpdateAddress(addressDto, id);
             return Ok();
         }
 
         [HttpPut("personal/{id}")]
-        public async Task<ActionResult> UpdatePersonal([FromBody] PersonalDto personalDto, [FromRoute] int id)
+        public async Task<ActionResult> Update([FromBody] PersonalDto personalDto, [FromRoute] int id)
         {
             await _userService.UpdatePersonal(personalDto, id);
             return Ok();

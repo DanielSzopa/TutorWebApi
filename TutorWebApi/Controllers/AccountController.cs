@@ -16,7 +16,7 @@ namespace TutorWebApi.Controllers
 
 
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterAccount([FromBody]RegisterDto registerDto)
+        public async Task<ActionResult> Register([FromBody]RegisterDto registerDto)
         {
             await _accountService.RegisterUserAsync(registerDto);
             return Ok();

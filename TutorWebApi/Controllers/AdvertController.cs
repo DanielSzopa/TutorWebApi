@@ -18,35 +18,35 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAdvert([FromBody]NewAdvertDto advertDto)
+        public async Task<ActionResult> Create([FromBody]NewAdvertDto advertDto)
         {
             var advertId = await _advertService.CreateAdvert(advertDto);
             return Created($"api/v1/advert/{advertId}", null);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAdvert([FromBody] NewAdvertDto advertDto, [FromRoute]int id)
+        public async Task<ActionResult> Update([FromBody] NewAdvertDto advertDto, [FromRoute]int id)
         {
             await _advertService.UpdateAdvert(advertDto, id);
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetAdvert(int id)
+        public async Task<ActionResult> Get(int id)
         {
             var advert = await _advertService.GetAdvertById(id);
             return Ok(advert);
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllAdverts([FromQuery]AdvertQuery advertQuery)
+        public async Task<ActionResult> Get([FromQuery]AdvertQuery advertQuery)
         {
             var adverts = await _advertService.GetAllAdverts(advertQuery);
             return Ok(adverts);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAdvert([FromRoute]int id)
+        public async Task<ActionResult> Delete([FromRoute]int id)
         {
             await _advertService.DeleteAdvert(id);
             return NoContent();

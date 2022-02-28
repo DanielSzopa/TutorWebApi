@@ -18,14 +18,14 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRoles()
+        public async Task<IActionResult> Get()
         {
             var roles = await _roleService.GetAllRoles();
             return Ok(roles);
         }
 
         [HttpPut]
-        public async Task<ActionResult> ChangeRole([FromBody] ChangeRoleRequestDto request)
+        public async Task<ActionResult> Update([FromBody] ChangeRoleRequestDto request)
         {
             await _roleService.UpdateRole(request);
             return Ok();

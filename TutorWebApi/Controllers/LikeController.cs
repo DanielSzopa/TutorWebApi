@@ -31,7 +31,7 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetLikes(int id)
+        public async Task<ActionResult> Get(int id)
         {
             var likes = await _likeService.GetAllLikes(id);
             return Ok(likes);

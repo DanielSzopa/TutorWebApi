@@ -18,21 +18,21 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateExperience([FromBody] ExperienceDto experienceDto, int id)
+        public async Task<ActionResult> Create([FromBody] ExperienceDto experienceDto, int id)
         {
             await _experienceService.CreateExperience(experienceDto, id);
             return Ok();
         }
 
         [HttpPut("{experienceId}")]
-        public async Task<ActionResult> UpdateExperience([FromBody] ExperienceDto experienceDto, [FromRoute] int experienceId, int id)
+        public async Task<ActionResult> Update([FromBody] ExperienceDto experienceDto, [FromRoute] int experienceId, int id)
         {
             await _experienceService.UpdateExperience(experienceDto, experienceId, id);
             return Ok();
         }
 
         [HttpDelete("{experienceId}")]
-        public async Task<ActionResult> DeleteExperience([FromRoute] int experienceId, int id)
+        public async Task<ActionResult> Delete([FromRoute] int experienceId, int id)
         {
             await _experienceService.DeleteExperience(experienceId, id);
             return NoContent();

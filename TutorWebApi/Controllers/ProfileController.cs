@@ -17,41 +17,41 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateProfile([FromBody]ProfileDto profileDto)
+        public async Task<ActionResult> Create([FromBody]ProfileDto profileDto)
         {
             var profileId = await _profileService.CreateProfile(profileDto);
             return Created($"/api/v1/profile/{profileId}", null);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult>GetProfileById([FromRoute]int id)
+        public async Task<ActionResult>Get([FromRoute]int id)
         {
             var profile = await _profileService.GetProfile(id);
             return Ok(profile);
         }
         [HttpGet]
-        public async Task<ActionResult> GetAllProfiles([FromQuery]ProfileQuery profileQuery)
+        public async Task<ActionResult> Get([FromQuery]ProfileQuery profileQuery)
         {
             var profiles = await _profileService.GetAllSmallProfiles(profileQuery);
             return Ok(profiles);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateProfile([FromBody]ProfileDto profileDto, [FromRoute]int id)
+        public async Task<ActionResult> Update([FromBody]ProfileDto profileDto, [FromRoute]int id)
         {
             var profileId = await _profileService.UpdateProfile(profileDto, id);
             return Ok($"Profil with id: {profileId} was updated");
         }
 
         [HttpPut("{id}/description")]
-        public async Task<ActionResult> UpdateProfileDescription([FromBody]string description, [FromRoute]int id)
+        public async Task<ActionResult> Update([FromBody]string description, [FromRoute]int id)
         {
             var profileId = await _profileService.UpdateProfileDescription(description, id);
             return Ok($"Profil description with id: {profileId} was updated");
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProfile([FromRoute]int id)
+        public async Task<ActionResult> Delete([FromRoute]int id)
         {
             await _profileService.DeleteProfile(id);
             return NoContent();

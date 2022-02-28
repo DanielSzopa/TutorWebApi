@@ -19,7 +19,7 @@ namespace TutorWebApi.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> CreateSubject([FromBody] NewSubjectDto newSubjectDto)
+        public async Task<ActionResult> Create([FromBody] NewSubjectDto newSubjectDto)
         {
             await _subjectService.CreateSubject(newSubjectDto);
             return Ok();
@@ -27,14 +27,14 @@ namespace TutorWebApi.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateSubject([FromBody] NewSubjectDto newSubjectDto, [FromRoute]int id)
+        public async Task<ActionResult> Update([FromBody] NewSubjectDto newSubjectDto, [FromRoute]int id)
         {           
             await _subjectService.UpdateSubject(newSubjectDto,id);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetSubjects()
+        public async Task<ActionResult> Get()
         {
             var subjects = await _subjectService.GetAllSubjects();
             return Ok(subjects);
@@ -42,7 +42,7 @@ namespace TutorWebApi.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> DeleteSubject(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             await _subjectService.DeleteSubject(id);
             return NoContent();
