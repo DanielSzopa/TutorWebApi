@@ -46,6 +46,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<Like> GetLike(int profileId, int userId)
         {
             var like = await _dbContext.Likes
+                .AsNoTracking()
                 .FirstOrDefaultAsync
                 (l => l.ProfileId == profileId && l.UserId == userId);
 
@@ -55,6 +56,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<int> CountLikesByProfil(int profileId)
         {
             var likes = await _dbContext.Likes
+                .AsNoTracking()
                 .Where(l => l.ProfileId == profileId)
                 .ToListAsync();
             return likes.Count;
@@ -72,6 +74,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<bool> IsUserCanLikeThisProfile(int profileId, int userId)
         {
             var like = await _dbContext.Likes
+                .AsNoTracking()
                 .FirstOrDefaultAsync(l => l.UserId == userId && l.ProfileId == profileId);
 
             if (like is null)

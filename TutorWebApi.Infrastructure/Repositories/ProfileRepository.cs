@@ -51,13 +51,15 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<bool> IsUserHaveProfile(int userId)
         {
             var result = await _context.Profiles
-                  .AnyAsync(p => p.UserRef == userId);
+                .AsNoTracking()
+                .AnyAsync(p => p.UserRef == userId);
             return result;
         }
 
         public async Task<bool> IsProfileIsActive(int profileId)
         {
             var profile = await _context.Profiles
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == profileId);
 
             if (profile.IsActive)
@@ -69,6 +71,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<Profile> GetProfileById(int profileId)
         {
             var profile = await _context.Profiles
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == profileId);
 
             return profile;
@@ -103,6 +106,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<int> GetProfileIdByUser(int userId)
         {
             var profile = await _context.Profiles
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.UserRef == userId);
 
             return profile.Id;
@@ -111,6 +115,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<Profile> GetProfileByUserId(int userId)
         {
             var profile = await _context.Profiles
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.UserRef == userId);
             return profile;
         }      

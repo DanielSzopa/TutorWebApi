@@ -39,13 +39,16 @@ namespace TutorWebApi.Infrastructure.Repositories
 
         public async Task<List<Subject>> GetAllSubjects()
         {
-            var subjects = await _dbContext.Subjects.ToListAsync();
+            var subjects = await _dbContext.Subjects
+                .AsNoTracking()
+                .ToListAsync();
             return subjects;
         }
 
         public async Task<Subject> GetSubjectById(int subjectId)
         {
             var subject = await _dbContext.Subjects
+                .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.Id == subjectId);
             return subject;
         }
@@ -53,6 +56,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<Subject> GetSubjectByName(string subject)
         {
             var result = await _dbContext.Subjects
+                .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.Name == subject);
             return result;
         }

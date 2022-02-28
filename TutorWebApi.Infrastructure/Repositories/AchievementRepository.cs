@@ -40,7 +40,9 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<Achievement> GetAchievementById(int id)
         {
             var achievement = await _dbContext.Achievements
+                .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == id);
+
             return achievement;
         }
     }

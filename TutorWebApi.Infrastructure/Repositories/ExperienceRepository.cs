@@ -41,6 +41,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<Experience> GetExperienceById(int experienceId)
         {
             var experience = await _dbContext.Experiences
+                .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == experienceId);
             return experience;
         }

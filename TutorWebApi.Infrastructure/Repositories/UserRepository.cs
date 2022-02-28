@@ -43,6 +43,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<User> GetUserByMail(string mail)
         {
             var user = await _context.Users
+                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Mail == mail);
 
             return user;
@@ -61,6 +62,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<User> GetUserById(int userId)
         {
             var user = await _context.Users
+                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;
@@ -104,6 +106,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         public async Task<Address> GetAddressByUserId(int userId)
         {
             var address = await _context.Addresses
+                .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.UserRef == userId);
             return address;
         }

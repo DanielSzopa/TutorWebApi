@@ -16,7 +16,9 @@ namespace TutorWebApi.Infrastructure.Repositories
 
         public async Task<IEnumerable<Role>> GetAllRoles()
         {
-            var roles = await _dbContext.Roles.ToListAsync();
+            var roles = await _dbContext.Roles
+                .AsNoTracking()
+                .ToListAsync();
             return roles;
         }
 
