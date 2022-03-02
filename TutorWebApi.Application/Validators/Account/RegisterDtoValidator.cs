@@ -17,12 +17,12 @@ namespace TutorWebApi.Application.Validators.Account
                 .WithMessage("Passwords are not equel");
 
             RuleFor(r => r.Mail)
-                .Custom((value, context) =>
+                .MustAsync(async (value, cancelation) =>
                 {
-                    var isEmailIsTaken = userService.IsMailIsTaken(value).Result;
-                    if (isEmailIsTaken)
-                        context.AddFailure(nameof(RegisterDto.Mail), "That email is taken");
-                });
+                    bool isEmailIsTaken = await userService.IsMailIsTaken(value);
+                    return !isEmailIsTaken;
+                })
+                .WithMessage("That email is taken");
 
             RuleFor(r => r.Mail)
                 .NotEmpty().WithMessage("Mail can not be empty")

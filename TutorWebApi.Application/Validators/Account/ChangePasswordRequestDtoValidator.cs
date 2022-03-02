@@ -8,13 +8,13 @@ namespace TutorWebApi.Application.Validators.Account
     {
         public ChangePasswordRequestDtoValidator(IAccountService accountService)
         {
-            RuleFor(r => new {r.Mail, r.Password})
-                .Custom((value, context) =>
+            RuleFor(r => new { r.Mail, r.Password })
+                .MustAsync(async (value, cancellation) =>
                 {
-                    var result = accountService.IsUserCanLogin(value.Mail, value.Password).Result;
-                    if (result == false)
-                        context.AddFailure("Invalid username or password");
-                });
+                    bool result = await accountService.IsUserCanLogin(value.Mail, value.Password);
+                    return result;
+                })
+                .WithMessage("Invalid username or password");
 
             RuleFor(r => r.NewPassword)
                 .MinimumLength(8).WithMessage("Password have to have minimum 8 letters");

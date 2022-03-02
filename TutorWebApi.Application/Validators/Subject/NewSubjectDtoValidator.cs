@@ -13,12 +13,12 @@ namespace TutorWebApi.Application.Validators.Subject
                 .NotEmpty().WithMessage("Subject can not be empty");
 
             RuleFor(s => s.Subject)
-                .Custom((value, context) =>
+                .MustAsync(async (value, cancelation) =>
                 {
-                    var isExist = subjectService.IsSubjectExist(value).Result;
-                    if (isExist)
-                        context.AddFailure("Can not create the same subject");
-                });
+                    var isExist = await subjectService.IsSubjectExist(value);
+                    return !isExist;
+                })
+                .WithMessage("Can not create the same subject");
         }
     }
 }
