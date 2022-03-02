@@ -13,7 +13,7 @@ namespace TutorWebApi.Application.Authorization
             _userContextService = userContextService;
         }
 
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, T resource)
+        protected async override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, T resource)
         {
             if (requirement.ResourceOperation == ResourceOperation.Read ||
                 requirement.ResourceOperation == ResourceOperation.Create)
@@ -21,14 +21,12 @@ namespace TutorWebApi.Application.Authorization
                 context.Succeed(requirement);
             }
 
-            var userId = _userContextService.GetUserId().Result;
+            var userId = await _userContextService.GetUserId();
 
             if (resource.CreateById == userId)
             {
                 context.Succeed(requirement);
             }
-
-            return Task.CompletedTask;
         }
     }
 }
