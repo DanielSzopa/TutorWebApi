@@ -6,8 +6,6 @@ namespace TutorWebApi.Application.Validators.Advert
 {
     public class NewAdvertDtoValidator : AbstractValidator<NewAdvertDto>
     {
-        private bool result;
-        private List<int> Subjects { get; set; } = new List<int>();
         public NewAdvertDtoValidator(ISubjectService subjectService)
         {
             RuleFor(a => a.Title)
@@ -22,17 +20,12 @@ namespace TutorWebApi.Application.Validators.Advert
                 .NotEmpty().WithMessage("City can not be empty");
 
             RuleFor(a => a.SubjectId)
-                .MustAsync(async (value, cancelation) =>
+                .CustomAsync(async (value, context, token) =>
                 {
-                    Subjects = await subjectService.GetAllSubjectsId();
-                    bool isSubjectsContain = Subjects.Contains(value);
-                    result = isSubjectsContain;
-                    return isSubjectsContain;
-                })
-                .Custom((value, context) =>
-                {
-                    if(!result)
-                        context.AddFailure(nameof(NewAdvertDto.SubjectId),$"Subject must be in [{string.Join(",", Subjects)}]");
+                    var subjects = await subjectService.GetAllSubjectsId();
+                    bool isSubjectsContain = subjects.Contains(value);
+                    if (!isSubjectsContain)
+                        context.AddFailure(nameof(NewAdvertDto.SubjectId), $"Subject must be in [{string.Join(",", subjects)}]");
                 });
 
             RuleFor(a => a.AdvertContact)

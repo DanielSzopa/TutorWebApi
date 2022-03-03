@@ -6,22 +6,15 @@ namespace TutorWebApi.Application.Validators.Role
 {
     public class ChangeRoleRequestDtoValidator : AbstractValidator<ChangeRoleRequestDto>
     {
-        private IEnumerable<string> Roles = new List<string>();
-        private bool result;
         public ChangeRoleRequestDtoValidator(IRoleService roleService)
         {
             RuleFor(r => r.Role)
-                .MustAsync(async (value, cancelation) =>
+                .CustomAsync(async (value, context, token) =>
                 {
-                    Roles = await roleService.GetRolesNames();
-                    bool isRolesContain = Roles.Contains(value);
-                    result = isRolesContain;
-                    return isRolesContain;
-                })
-                .Custom((value, context) =>
-                {
-                    if (!result)
-                        context.AddFailure(nameof(ChangeRoleRequestDto.Role), $"Role must be in [{string.Join(",", Roles)}]");
+                    var roles = await roleService.GetRolesNames();
+                    bool isRolesContain = roles.Contains(value);
+                    if (!isRolesContain)
+                        context.AddFailure(nameof(ChangeRoleRequestDto.Role), $"Role must be in [{string.Join(",", roles)}]");
                 });
 
             RuleFor(r => r.UserId)

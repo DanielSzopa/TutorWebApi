@@ -9,7 +9,7 @@ namespace TutorWebApi.Application.Validators.Account
         public ChangePasswordRequestDtoValidator(IAccountService accountService)
         {
             RuleFor(r => new { r.Mail, r.Password })
-                .MustAsync(async (value, cancellation) =>
+                .MustAsync(async (value, token) =>
                 {
                     bool result = await accountService.IsUserCanLogin(value.Mail, value.Password);
                     return result;
