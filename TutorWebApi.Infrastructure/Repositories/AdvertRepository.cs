@@ -58,6 +58,7 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .Include(a => a.Subject)
                 .Include(a => a.Profil)
                 .ThenInclude(p => p.User)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == id);
             return advert;
         }
@@ -69,6 +70,7 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .Include(a => a.Subject)
                 .Include(a => a.Profil)
                 .ThenInclude(p => p.User)
+                .AsNoTracking()
                 .Where(a => searchPhrase == null || 
                 (a.Profil.User.FirstName + " " + a.Profil.User.LastName).ToLower().Contains(searchPhrase.ToLower()) ||
                 a.City.ToLower().Contains(searchPhrase.ToLower()) && a.IsActive == true)

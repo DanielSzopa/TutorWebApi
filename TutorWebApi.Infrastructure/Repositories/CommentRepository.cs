@@ -35,6 +35,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         {
             var comments = await _dbContext.Comments
                 .Include(c => c.User)
+                .AsNoTracking()
                 .Where(c => c.ProfileId == profileId && c.IsActive == true)
                 .ToListAsync();
 

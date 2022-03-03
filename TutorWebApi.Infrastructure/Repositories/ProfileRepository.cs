@@ -82,6 +82,7 @@ namespace TutorWebApi.Infrastructure.Repositories
             var profiles = await _context.Profiles
                 .Include(p => p.User)
                 .ThenInclude(u => u.Address)
+                .AsNoTracking()
                 .Where(p => searchPhrase == null ||
                 (p.User.FirstName + " " + p.User.LastName).ToLower().Contains(searchPhrase.ToLower())
                 || p.Description.ToLower().Contains(searchPhrase.ToLower()))              
@@ -97,6 +98,7 @@ namespace TutorWebApi.Infrastructure.Repositories
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Achievements.Where(a => a.IsActive == true))
                 .Include(p => p.Experiences.Where(e => e.IsActive == true))
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == profileId && p.IsActive);
 
             return profile;

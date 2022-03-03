@@ -66,6 +66,7 @@ namespace TutorWebApi.Infrastructure.Repositories
         {
             var likes = await _dbContext.Likes
                 .Include(l => l.User)
+                .AsNoTracking()
                 .Where(l => l.IsActive == true && l.ProfileId == profileId)
                 .ToListAsync();
             return likes;
