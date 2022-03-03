@@ -13,9 +13,11 @@ builder.Services.AddApplication();
 builder.Services.AddTutorWebApiServices();
 builder.Services.AddInfrastructure();
 builder.Services.AddConfigureRouting();
+builder.Services.AddCorsExtension();
 builder.AddContext();
 
 var app = builder.Build();
+app.UseCors("Client");
 await app.SeedData();
 if (app.Environment.IsDevelopment())
     app.UseSwaggerConfig();

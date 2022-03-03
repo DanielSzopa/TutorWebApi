@@ -37,6 +37,7 @@ namespace TutorWebApi.Extensions
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Achievement>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Experience>>();
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandlerBase<Advert>>();
+            
             return services;
         }
 
@@ -88,6 +89,20 @@ namespace TutorWebApi.Extensions
         public static IServiceCollection AddConfigureRouting(this IServiceCollection services)
         {
             services.AddRouting(options => options.LowercaseUrls = true);
+            return services;
+        }
+
+        public static IServiceCollection AddCorsExtension(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Client", builder =>
+
+                builder.AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowAnyOrigin()
+                );
+            });
             return services;
         }
     }
