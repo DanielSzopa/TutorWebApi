@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorWebApi", "TutorWebApi\TutorWebApi.csproj", "{6D9DD52A-3CA1-452E-B0BC-ED514944F719}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TutorWebApi", "TutorWebApi\TutorWebApi.csproj", "{6D9DD52A-3CA1-452E-B0BC-ED514944F719}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{A33AB249-DDD5-4ECF-A862-13F1692BAF50}"
 EndProject
@@ -13,11 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{3464A586-6684-4D3D-B07E-DA949BC3E41E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorWebApi.Application", "TutorWebApi.Application\TutorWebApi.Application.csproj", "{1743FB2D-2A87-4344-84BC-60BE0A2782AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TutorWebApi.Application", "TutorWebApi.Application\TutorWebApi.Application.csproj", "{1743FB2D-2A87-4344-84BC-60BE0A2782AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorWebApi.Domain", "TutorWebApi.Domain\TutorWebApi.Domain.csproj", "{6B9A0973-11A3-4B21-A568-E8931AC27AEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TutorWebApi.Domain", "TutorWebApi.Domain\TutorWebApi.Domain.csproj", "{6B9A0973-11A3-4B21-A568-E8931AC27AEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorWebApi.Infrastructure", "TutorWebApi.Infrastructure\TutorWebApi.Infrastructure.csproj", "{97395A99-3BA3-4636-90A7-F8C7EF758194}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TutorWebApi.Infrastructure", "TutorWebApi.Infrastructure\TutorWebApi.Infrastructure.csproj", "{97395A99-3BA3-4636-90A7-F8C7EF758194}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A8894F92-A97D-452E-B955-F14EF652CB6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorWebApi.IntegrationTests", "TutorWebApi.IntegrationTests\TutorWebApi.IntegrationTests.csproj", "{A21F1367-8D67-4D9F-9ADA-1D277A993A06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorWebApi.UnitTests", "TutorWebApi.UnitTests\TutorWebApi.UnitTests.csproj", "{63E89B5C-E20F-4113-A4FF-C157C00E8272}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +47,14 @@ Global
 		{97395A99-3BA3-4636-90A7-F8C7EF758194}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97395A99-3BA3-4636-90A7-F8C7EF758194}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97395A99-3BA3-4636-90A7-F8C7EF758194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A21F1367-8D67-4D9F-9ADA-1D277A993A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A21F1367-8D67-4D9F-9ADA-1D277A993A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A21F1367-8D67-4D9F-9ADA-1D277A993A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A21F1367-8D67-4D9F-9ADA-1D277A993A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63E89B5C-E20F-4113-A4FF-C157C00E8272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63E89B5C-E20F-4113-A4FF-C157C00E8272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63E89B5C-E20F-4113-A4FF-C157C00E8272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63E89B5C-E20F-4113-A4FF-C157C00E8272}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +64,8 @@ Global
 		{1743FB2D-2A87-4344-84BC-60BE0A2782AA} = {8AEA6805-F538-44B6-A98F-6C1D2316B12A}
 		{6B9A0973-11A3-4B21-A568-E8931AC27AEF} = {3464A586-6684-4D3D-B07E-DA949BC3E41E}
 		{97395A99-3BA3-4636-90A7-F8C7EF758194} = {DCD6286C-82B1-4A13-B21A-6BE6DF9C023D}
+		{A21F1367-8D67-4D9F-9ADA-1D277A993A06} = {A8894F92-A97D-452E-B955-F14EF652CB6A}
+		{63E89B5C-E20F-4113-A4FF-C157C00E8272} = {A8894F92-A97D-452E-B955-F14EF652CB6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB794AFE-620A-428C-9FEF-88F41BB0E229}
