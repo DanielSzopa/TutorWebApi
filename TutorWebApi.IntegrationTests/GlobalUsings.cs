@@ -6,7 +6,6 @@ global using System.Net.Http;
 global using Microsoft.EntityFrameworkCore;
 global using TutorWebApi.IntegrationTests.Helpers;
 global using Moq;
-global using Microsoft.EntityFrameworkCore.InMemory;
 global using Microsoft.Extensions.DependencyInjection;
 global using System;
 global using System.Collections.Generic;
