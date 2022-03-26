@@ -29,7 +29,8 @@ namespace TutorWebApi.Application.Validators.Account
 
 
             RuleFor(r => r.Personal)
-                .SetValidator(new PersonalDtoValidator());
+                .SetValidator(new PersonalDtoValidator())
+                .NotNull().WithMessage("Personal can not be null"); ;
 
             RuleFor(r => r.Address)
                 .SetValidator(new AddressDtoValidator())

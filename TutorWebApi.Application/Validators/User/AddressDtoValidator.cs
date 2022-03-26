@@ -23,7 +23,7 @@ namespace TutorWebApi.Application.Validators.User
                   .MaximumLength(50).WithMessage("Street can not have more letters than 60");
 
             RuleFor(r => r.AccommodationNumber)
-                  .MaximumLength(6).WithMessage("Accommodation Number can not have more letters than 6")
+                  .MaximumLength(6).WithMessage("Accommodation Number can not have more letters than 6");
         }
     }
 }
