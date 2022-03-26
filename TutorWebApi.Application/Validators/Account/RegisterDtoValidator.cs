@@ -6,7 +6,7 @@ using TutorWebApi.Application.Validators.User;
 namespace TutorWebApi.Application.Validators.Account
 {
     public class RegisterDtoValidator : AbstractValidator<RegisterDto>
-    {
+    {      
         public RegisterDtoValidator(IUserService userService)
         {
             RuleFor(r => r.Password)
@@ -14,7 +14,7 @@ namespace TutorWebApi.Application.Validators.Account
 
             RuleFor(r => r.ConfirmPassword)
                 .Equal(r => r.Password)
-                .WithMessage("Passwords are not equel");         
+                .WithMessage("Passwords are not equel");
 
             RuleFor(r => r.Mail)
                 .NotEmpty().WithMessage("Mail can not be empty")
@@ -32,7 +32,8 @@ namespace TutorWebApi.Application.Validators.Account
                 .SetValidator(new PersonalDtoValidator());
 
             RuleFor(r => r.Address)
-                .SetValidator(new AddressDtoValidator());
+                .SetValidator(new AddressDtoValidator())
+                .NotNull().WithMessage("Address can not be null");
 
         }
     }
