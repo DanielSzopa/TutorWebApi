@@ -36,10 +36,12 @@ namespace TutorWebApi.Infrastructure.Config
 
             modelBuilder.Entity<Address>()
               .Property(a => a.Street)
+              .IsRequired()
               .HasMaxLength(60);
 
             modelBuilder.Entity<Address>()
              .Property(a => a.AccommodationNumber)
+             .IsRequired()
              .HasMaxLength(6);
 
             modelBuilder.Entity<Address>()
