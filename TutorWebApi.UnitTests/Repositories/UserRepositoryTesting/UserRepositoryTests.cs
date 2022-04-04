@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TutorWebApi.Domain.Entities;
+﻿using TutorWebApi.Domain.Entities;
 using TutorWebApi.Domain.Interfaces;
 using TutorWebApi.Infrastructure.Context;
 using TutorWebApi.Infrastructure.Repositories;

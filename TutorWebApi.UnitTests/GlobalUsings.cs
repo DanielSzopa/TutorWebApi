@@ -7,3 +7,4 @@ global using System.Collections.Generic;
 global using System.Linq;
 global using System.Text;
 global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
