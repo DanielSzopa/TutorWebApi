@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Comment;
+using TutorWebApi.Application.Models.Page;
 
 namespace TutorWebApi.Controllers
 {
@@ -25,14 +26,14 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get([FromQuery]CommentQuery commentQuery, int id)
+        public async Task<ActionResult<PagedResult<CommentDto>>> Get([FromQuery]CommentQuery commentQuery, int id)
         {
             var comments = await _commentService.GetAllComments(commentQuery, id);
             return Ok(comments);
         }
 
         [HttpGet("{commentId}")]
-        public async Task<ActionResult> Get([FromRoute] int commentId, int id)
+        public async Task<ActionResult<CommentDto>> Get([FromRoute] int commentId, int id)
         {
             var comment = await _commentService.GetCommentById(id, commentId);
             return Ok(comment);

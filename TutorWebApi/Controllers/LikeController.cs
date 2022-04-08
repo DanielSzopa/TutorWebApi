@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Like;
 
 namespace TutorWebApi.Controllers
 {
@@ -31,7 +32,7 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult<List<LikeDto>>> Get(int id)
         {
             var likes = await _likeService.GetAllLikes(id);
             return Ok(likes);

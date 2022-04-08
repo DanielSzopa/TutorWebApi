@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TutorWebApi.Application.Interfaces;
 using TutorWebApi.Application.Models.Advert;
+using TutorWebApi.Application.Models.Page;
 
 namespace TutorWebApi.Controllers
 {
@@ -32,14 +33,14 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult<AdvertDto>> Get(int id)
         {
             var advert = await _advertService.GetAdvertById(id);
             return Ok(advert);
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get([FromQuery]AdvertQuery advertQuery)
+        public async Task<ActionResult<PagedResult<AdvertDto>>> Get([FromQuery]AdvertQuery advertQuery)
         {
             var adverts = await _advertService.GetAllAdverts(advertQuery);
             return Ok(adverts);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Page;
 using TutorWebApi.Application.Models.Profile;
 
 namespace TutorWebApi.Controllers
@@ -24,13 +25,13 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult>Get([FromRoute]int id)
+        public async Task<ActionResult<FullProfileDto>>Get([FromRoute]int id)
         {
             var profile = await _profileService.GetProfile(id);
             return Ok(profile);
         }
         [HttpGet]
-        public async Task<ActionResult> Get([FromQuery]ProfileQuery profileQuery)
+        public async Task<ActionResult<PagedResult<SmallProfileDto>>> Get([FromQuery]ProfileQuery profileQuery)
         {
             var profiles = await _profileService.GetAllSmallProfiles(profileQuery);
             return Ok(profiles);

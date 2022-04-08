@@ -18,7 +18,7 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ActionResult<List<RoleDto>>> Get()
         {
             var roles = await _roleService.GetAllRoles();
             return Ok(roles);

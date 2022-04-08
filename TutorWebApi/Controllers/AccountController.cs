@@ -23,17 +23,17 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody]LoginDto loginDto)
+        public async Task<ActionResult<string>> Login([FromBody]LoginDto loginDto)
         {
             string token = await _accountService.AuthenticateUserAsync(loginDto);
             return Ok(token);
         }
 
         [HttpPut("password")]
-        public async Task<ActionResult> ChangePassword([FromBody]ChangePasswordRequestDto changePasswordDto)
+        public async Task<ActionResult<string>> ChangePassword([FromBody]ChangePasswordRequestDto changePasswordDto)
         {
             await _accountService.ChangePassword(changePasswordDto);
-            return Ok("Password has change");
+            return Ok();
         }
     }
 }

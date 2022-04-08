@@ -34,7 +34,7 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult<List<SubjectDto>>> Get()
         {
             var subjects = await _subjectService.GetAllSubjects();
             return Ok(subjects);

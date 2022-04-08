@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TutorWebApi.Application.Interfaces;
+using TutorWebApi.Application.Models.Page;
 using TutorWebApi.Application.Models.User;
 
 namespace TutorWebApi.Controllers
@@ -18,7 +19,7 @@ namespace TutorWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get(UserQuery query)
+        public async Task<ActionResult<PagedResult<UserDto>>> Get(UserQuery query)
         {
             var users = await _userService.GetAllUsers(query);
             return Ok(users);
